@@ -7,7 +7,11 @@ export default {
     "./node_modules/flowbite/**/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      container: { 
+        center: true
+      }
+    },
   },
   plugins: [
     require("flowbite/plugin"), // Correctly include the Flowbite plugin
