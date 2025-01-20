@@ -1,6 +1,7 @@
 import { API_BASE_URL } from "./api/api";
 import Navigation from "./components/navigation/navigation";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./authentication/AuthProvider";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile";
@@ -9,6 +10,7 @@ console.log(API_BASE_URL);
 
 function App(): JSX.Element {
   return (
+    <AuthProvider> 
     <Router>
       <>
         <Navigation />
@@ -19,6 +21,7 @@ function App(): JSX.Element {
         </Routes>
       </>
     </Router>
+    </Authprovider> 
   );
 }
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "../../error-handling/error";
 
-export function LoginForm() {
+export function LoginForm(): JSX.Element {
   const navigate = useNavigate();
   const [showMessage, setShowMessage] = useState(false);
 
