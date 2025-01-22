@@ -1,181 +1,99 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import userSchema from "../../Validations/UserValidation";
+import SuccessMessage from "../../error-handling/success";
 import ErrorMessage from "../../error-handling/error";
+import UseRegistrationLogic from "../../api/register/registerFunctionality";
 
-export function RegisterForm() {
-  const navigate = useNavigate();
-  const [showMessage, setShowMessage] = useState(false);
-
-  const [values, setValues] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+function RegisterForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(userSchema),
   });
 
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const [validFields, setValidFields] = useState({
-    name: false,
-    email: false,
-    password: false,
-    confirmPassword: false,
-  });
-
-  const inputs = [
-    {
-      id: 1,
-      name: "name",
-      type: "text",
-      placeholder: "Name",
-      label: "Name",
-      errorMessage: "Name must be more than 3 characters",
-      required: true,
-      pattern: /^.{3,}$/, // Minimum 3 characters
-    },
-    {
-      id: 2,
-      name: "email",
-      type: "email",
-      placeholder: "Email",
-      label: "Email",
-      errorMessage: "Please enter a valid email",
-      required: true,
-      pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/, // Basic email validation
-    },
-    {
-      id: 3,
-      name: "password",
-      type: "password",
-      placeholder: "password",
-      label: "password",
-      errorMessage: "password must be more than 3 characters",
-      required: true,
-      pattern: /^.{3,}$/, // Minimum 3 characters
-    },
-    {
-      id: 4,
-      name: "confirmPassword",
-      type: "password",
-      placeholder: "confirm password",
-      label: "confirm password",
-      errorMessage: "password must be more than 3 characters",
-      required: true,
-      pattern: /^.{3,}$/, // Minimum 3 characters
-    },
-  ];
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-
-    const field = inputs.find((input) => input.name === name);
-    if (field) {
-      const isValid = field.pattern.test(value);
-      setValidFields({ ...validFields, [name]: isValid });
-    }
-  };
-
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    const field = inputs.find((input) => input.name === name);
-    if (field) {
-      const isValid = field.pattern.test(value);
-      setValidFields({ ...validFields, [name]: isValid });
-
-      setErrors({
-        ...errors,
-        [name]: isValid || !value ? "" : field.errorMessage,
-      });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const allValid = Object.values(validFields).every((isValid) => isValid);
-    if (allValid) {
-      // Assuming password is part of the form, add it here if necessary
-      const { name, email, password } = values; // Ensure you're including all necessary fields
-
-      fetch("https://v2.api.noroff.dev/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }), // Adjust this as needed
-      })
-        .then((res) => {
-          if (!res.ok) {
-            return res.json().then((data) => {
-              throw new Error(
-                data.errors?.[0]?.message || "Something went wrong."
-              );
-            });
-          }
-          return res.json();
-        })
-        .then(() => {
-          setShowMessage(true);
-          navigate("/success"); // Redirect after successful submission
-        })
-        .catch((error) => setErrors({ general: error.message }));
-    }
-  };
+  const url = "https://v2.api.noroff.dev/auth/register";
+  const { apiError, successMessage, onSubmit } = UseRegistrationLogic(url);
 
   return (
-    <form className="p-6 text-black" onSubmit={handleSubmit}>
-      <h2 className="text-3xl text-black my-3 text-center">Write to us</h2>
-      {inputs.map((input) => (
-        <div key={input.id} className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3">
-            <label
-              className="block text-sm font-bold mb-2"
-              htmlFor={input.name}
-            >
-              {input.label} <span className="text-red-500">*</span>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
+          Register
+        </h2>
+
+        {/* Display API error if it exists */}
+        {apiError && <ErrorMessage message={apiError} />}
+        {successMessage && <SuccessMessage message={successMessage} />}
+
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Name
             </label>
             <input
-              id={input.name}
-              name={input.name}
-              type={input.type}
-              placeholder={input.placeholder}
-              value={values[input.name]}
-              required={input.required}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              className={`appearance-none block w-full bg-gray-200 text-gray-700 border ${
-                errors[input.name]
-                  ? "border-red-500"
-                  : validFields[input.name]
-                  ? "border-green-500"
-                  : "border-gray-200"
-              } rounded py-3 px-4 mb-3 leading-tight focus:outline-blue-500 focus:bg-white`}
+              {...register("name")}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
             />
-            {errors[input.name] && (
-              <p className="text-red-500 text-xs italic">
-                {errors[input.name]}
-              </p>
-            )}
+            <p>{errors.name?.message}</p>
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              {...register("email")}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+            />
+            <p>{errors.email?.message}</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <input
+              {...register("password")}
+              type="password"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+            />
+            <p>{errors.password?.message}</p>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Confirm Password
+            </label>
+            <input
+              {...register("confirmPassword")}
+              type="password"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+            />
+            <p>{errors.confirmPassword?.message}</p>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 rounded-lg transition-colors"
+          >
+            Sign Up
+          </button>
+        </form>
+
+        <div className="mt-6 text-center text-sm text-gray-600">
+          Don't have an account?
+          <a
+            href="#"
+            className="text-indigo-600 hover:text-indigo-500 font-medium"
+          >
+            Sign up
+          </a>
         </div>
-      ))}
-      {showMessage && (
-        <div className="p-4 mb-4 text-sm text-green-800 rounded bg-green-50">
-          Form submitted. Please wait...
-        </div>
-      )}
-      {errors.general && <ErrorMessage message={errors.general} />}
-      <button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Submit
-      </button>
-    </form>
+      </div>
+    </div>
   );
 }
 
