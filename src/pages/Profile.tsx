@@ -1,50 +1,29 @@
-import { useState, useEffect } from "react";
-import { GetHeaders } from "../api/headers";
+import useFetchAPI from "../api/read";
 import { useParams } from "react-router-dom";
 import RenderProfile from "../components/profile/renderProfile";
-
+import { GetHeaders } from "../api/headers";
 
 function ProfilePage() {
-  const [data, setData] = useState([]); // State to store the fetched data
-  const [loading, setLoading] = useState(true); // State to track loading
-  const [error, setError] = useState(null); // State to track errors
-  const [page, setPage] = useState(1);
+  const { username } = useParams(); // Extract the 'id' from the route parameter
 
-  const { username } = useParams<{ username: string }>(); // Get username from URL
-  useEffect(() => {
-    // Fetch data when the component mounts
-    const fetchProfileData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `https://v2.api.noroff.dev/holidaze/profiles/${username}?_bookings/`,
-          {
-            headers: GetHeaders("GET"),
-          }
-        );
-        const result = await response.json();
-        const data = result.data;
-        setData(data); // Set the fetched data
-      } catch (err) {
-        setError(err.message); // Handle errors
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    };
-    fetchProfileData();
-  }, [page]);
+  const { data, isLoading, isError } = useFetchAPI({
+    url: `https://v2.api.noroff.dev/holidaze/profiles/${username}?_bookings=true`,
+    options: {
+      headers: GetHeaders("GET"),
+    },
+  });
 
-  // Loading and error states
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-  if (error) {
-    return <p>Error: {error}</p>;
+  console.log(data);
+
+  if (isLoading) {
+    return <div>Loading data...</div>;
   }
 
-  return (
-   <RenderProfile profile={data}/> 
-  );
+  if (isError) {
+    return <div>Error loading data. Please try again later.</div>;
+  }
+
+  return <RenderProfile profile={data} />;
 }
 
 export default ProfilePage;

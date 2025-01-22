@@ -1,4 +1,5 @@
 import { FaWifi } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 interface Venue {
   id: string;
@@ -20,19 +21,21 @@ const RenderVenues: React.FC<VenuesProps> = ({ data, page, setPage }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
         {data.map((venue) => (
           <div key={venue.id}>
-            <img
-              className="h-56 bg-cover bg-center w-full"
-              src={
-                venue.media && venue.media.length > 0
-                  ? venue.media[0].url
-                  : "default-image-url"
-              }
-              alt={
-                venue.media && venue.media.length > 0
-                  ? venue.media[0].alt
-                  : "default alt text"
-              }
-            />
+            <Link to={`/venues/${venue.id}`}>
+              <img
+                className="h-56 bg-cover bg-center w-full"
+                src={
+                  venue.media && venue.media.length > 0
+                    ? venue.media[0].url
+                    : "default-image-url"
+                }
+                alt={
+                  venue.media && venue.media.length > 0
+                    ? venue.media[0].alt
+                    : "default alt text"
+                }
+              />
+            </Link>
             <h2 className="text-3xl font-bold">{venue.name}</h2>
             <p className="text-md">
               {venue.description.length > 150

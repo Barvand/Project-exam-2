@@ -1,41 +1,23 @@
-import { useState, useEffect } from "react";
-import { Venues } from "../types/venue.array";
+import { useState } from "react";
+import useFetchAPI from "../api/read";
 import RenderVenues from "../components/venues/venues";
 
 function VenuesPage() {
-  const [data, setData] = useState<Venues[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1); // Initialize as a number
+  const { data, isLoading, isError } = useFetchAPI({
+    url: `https://v2.api.noroff.dev/holidaze/venues?page=${page}&sort=created&sortOrder=desc`,
+  });
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `https://v2.api.noroff.dev/holidaze/venues?page=${page}`
-        );
-        const result = await response.json();
-        const venues = result.data as Venues[];
-        setData(venues); // Set the fetched data
-      } catch (err) {
-        setError(err.message); // Handle errors
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    };
+  console.log(data)
 
-    fetchProfileData();
-  }, [page]);
-
-  // Loading and error states
-  if (loading) {
-    return <p>Loading...</p>;
+  if (isLoading) {
+    return <div>Loading data...</div>;
   }
-  if (error) {
-    return <p>Error: {error}</p>;
+
+  if (isError) {
+    return <div>Error loading data. Please try again later.</div>;
   }
-  
+
   return <RenderVenues data={data} page={page} setPage={setPage} />;
 }
 
