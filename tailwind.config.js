@@ -8,9 +8,15 @@ export default {
   ],
   theme: {
     extend: {
-      container: { 
-        center: true
-      }
+      container: {
+        center: true,
+      },
+      colors: {
+        primary: "var(--color-primary)",
+        secondary: "var(--color-secondary)",
+        background: "var(--color-background)",
+        logoText: "var(--color-logoText)"
+      },
     },
   },
   plugins: [

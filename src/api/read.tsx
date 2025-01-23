@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 function useFetchAPI({
   url,
@@ -11,16 +11,19 @@ function useFetchAPI({
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
+  // Memoize options to avoid unnecessary re-fetching
+  const memoizedOptions = useMemo(() => options, [JSON.stringify(options)]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setIsError(false);
-        const response = await fetch(url, options); // Use options if provided
+        const response = await fetch(url, memoizedOptions); // Use memoized options
         if (!response.ok) {
           throw new Error(`Error: ${response.statusText}`);
         }
         const json = await response.json();
-        setData(json.data || json); // Handle cases where `json.data` might not exist
+        setData(json.data || json); // Handle cases where json.data might not exist
       } catch (error) {
         setIsError(true);
         console.error("Fetch Error:", error);
@@ -30,7 +33,7 @@ function useFetchAPI({
     };
 
     fetchData();
-  }, [url, options]); // Add `options` to the dependency array
+  }, [url, memoizedOptions]); // Use memoized options in the dependency array
 
   return { data, isLoading, isError };
 }

@@ -8,8 +8,6 @@ function VenuesPage() {
     url: `https://v2.api.noroff.dev/holidaze/venues?page=${page}&sort=created&sortOrder=desc`,
   });
 
-  console.log(data)
-
   if (isLoading) {
     return <div>Loading data...</div>;
   }

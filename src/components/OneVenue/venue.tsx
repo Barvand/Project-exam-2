@@ -2,14 +2,15 @@ import { FaWifi } from "react-icons/fa";
 import { IoFastFoodSharp } from "react-icons/io5";
 import { MdOutlinePets } from "react-icons/md";
 import { FaParking } from "react-icons/fa";
-import { Location } from "../../types/venue.array";
+import { Location, Owner } from "../../types/venue.array";
+import { Link } from "react-router-dom";
 
 interface Venue {
   name: string;
   description: string;
   media: { url: string; alt: string }[];
   meta: { wifi: boolean; breakfast: boolean; pets: boolean; parking: boolean };
-  owner: string;
+  owner: Owner;
   location: Location;
 }
 
@@ -35,6 +36,7 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
         />
         <div className="px-6 py-4">
           <h2 className="text-3xl font-bold py-4">{data.name}</h2>
+          <Link to={`/profiles/${data.owner.name}`} className="text-3xl font-bold py-4">{data.owner.name}</Link>
           <p className="text-md">{data.description}</p>
           <div className="py-4 w-96 bg-slate-50">
             <p className="flex gap-2 align-center">

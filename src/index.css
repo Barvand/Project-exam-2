@@ -2,3 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #854cf9;
+  --color-secondary: #854cf9;
+  --color-background: #e7e7e7;
+  --color-logoText: #FFBB00
+}
+
+
+.header {
+  --blue-treshold: calc(100% - 20px);
+  background: linear-gradient(
+    var(--color-primary), 
+    var(--color-primary) var(--blue-treshold), 
+    transparent var(--blue-treshold)
+  );
+}
+
+body { 
+  background-color: var(--color-background);
+}

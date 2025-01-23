@@ -1,5 +1,6 @@
 import { FaWifi } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { Owner } from "../../types/venue.array";
 
 interface Venue {
   id: string;
@@ -7,6 +8,7 @@ interface Venue {
   description: string;
   media: { url: string; alt: string }[];
   meta: { wifi: boolean; breakfast: boolean };
+  owner: Owner;
 }
 
 interface VenuesProps {
@@ -16,6 +18,7 @@ interface VenuesProps {
 }
 
 const RenderVenues: React.FC<VenuesProps> = ({ data, page, setPage }) => {
+
   return (
     <div className="container">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
@@ -24,6 +27,7 @@ const RenderVenues: React.FC<VenuesProps> = ({ data, page, setPage }) => {
             <Link to={`/venues/${venue.id}`}>
               <img
                 className="h-56 bg-cover bg-center w-full"
+                loading="lazy"
                 src={
                   venue.media && venue.media.length > 0
                     ? venue.media[0].url
@@ -36,7 +40,9 @@ const RenderVenues: React.FC<VenuesProps> = ({ data, page, setPage }) => {
                 }
               />
             </Link>
-            <h2 className="text-3xl font-bold">{venue.name}</h2>
+            <div className="flex">
+              <h1 className="text-2xl font-bold text-secondary">{venue.name}</h1>
+            </div>
             <p className="text-md">
               {venue.description.length > 150
                 ? venue.description.slice(0, 150) + "..."
