@@ -1,27 +1,28 @@
 import { useState } from "react";
-import venueManager from "./venueManager";
+import venueManager from "./venueManager"; // Import the venueManager function
 
 function RenderProfile({ profile }) {
   // Use state to store and update profile data
   const [profileState, setProfileState] = useState(profile);
 
-  // Handle the toggle of the VenueManager status
+
   const handleToggle = async () => {
     try {
-      // Call the venueManager function to update the profile on the backend
-      const updatedProfile = await venueManager(profileState);
-      // Update the state with the new profile data
+      // Pass the entire profileState object to the venueManager function
+      await venueManager(profileState);
+      // After toggling, you might want to update the profile state in the component
       setProfileState((prevState) => ({
         ...prevState,
-        venueManager: updatedProfile.venueManager,
+        venueManager: !prevState.venueManager, // Toggle the venueManager locally
       }));
     } catch (error) {
       console.error("Failed to toggle venue manager status:", error);
     }
   };
 
+
   return (
-    <div className="container relative">
+    <div className="container relative mb-[200px]">
       <div
         className="h-64 w-full bg-cover bg-center"
         style={{ backgroundImage: `url(${profileState.banner.url})` }}

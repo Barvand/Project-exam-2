@@ -3,6 +3,7 @@ import useFetchAPI from "../api/read";
 import { useParams } from "react-router-dom";
 import RenderProfile from "../components/profile/renderProfile";
 import { GetHeaders } from "../api/headers";
+import CreatePostForm from "../components/profile/createVenue";
 
 function ProfilePage() {
   const { username } = useParams(); // Extract the 'username' from the route parameter
@@ -18,8 +19,6 @@ function ProfilePage() {
     },
   });
 
-  console.log(data);
-
   if (isLoading) {
     return <div>Loading data...</div>;
   }
@@ -28,7 +27,12 @@ function ProfilePage() {
     return <div>Error loading data. Please try again later.</div>;
   }
 
-  return <RenderProfile profile={data} />;
+  return (
+    <div>
+      <RenderProfile profile={data} />;
+      <CreatePostForm />
+    </div>
+  );
 }
 
 export default ProfilePage;

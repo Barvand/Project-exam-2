@@ -74,6 +74,17 @@ function RegisterForm() {
             />
             <p>{errors.confirmPassword?.message}</p>
           </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Want to become a venue manager?
+            </label>
+            <input
+              {...register("venueManager")}
+              type="checkbox"
+              className="border rounded border-gray-300 focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
+            />
+            <p>{errors.confirmPassword?.message}</p>
+          </div>
 
           <button
             type="submit"
