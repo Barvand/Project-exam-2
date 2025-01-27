@@ -1,10 +1,10 @@
 import { useState } from "react";
 import venueManager from "./venueManager"; // Import the venueManager function
+import DeleteVenue from "./deleteVenue";
 
 function RenderProfile({ profile }) {
   // Use state to store and update profile data
   const [profileState, setProfileState] = useState(profile);
-
 
   const handleToggle = async () => {
     try {
@@ -20,15 +20,15 @@ function RenderProfile({ profile }) {
     }
   };
 
-
   return (
     <div className="container relative mb-[200px]">
+      {/* Inline styles */}
       <div
         className="h-64 w-full bg-cover bg-center"
         style={{ backgroundImage: `url(${profileState.banner.url})` }}
         aria-label={profileState.banner.alt}
       />
-      <div className="absolute top-1/2 left-0 transform grid grid-cols-3 bg-slate-400 p-4 rounded">
+      <div className="absolute top-1/2 left-0 transform grid grid-cols-3 bg-secondary p-4 rounded">
         <img
           className="h-64 rounded-full object-cover border-4 border-white"
           src={profileState.avatar.url}

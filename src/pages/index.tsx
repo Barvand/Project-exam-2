@@ -2,6 +2,8 @@ import VenuesPage from "./Venues";
 import SearchBar from "../components/index/searchBar";
 
 function IndexPage() {
+ 
+
   return (
     <>
       <div className="header">
@@ -20,6 +22,7 @@ function IndexPage() {
       </div>
       <div className="container mt-5">
         <VenuesPage />
+        
       </div>
     </>
   );

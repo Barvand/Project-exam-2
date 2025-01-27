@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RegisterPage from "./pages/Register";
 import LoginPage from "./pages/Login";
 import ProfilePage from "./pages/Profile.tsx";
-import { AuthProvider } from "./authentication/authProvider";
+import { AuthProvider } from "./authentication/AuthProvider.tsx";
 import VenuesPage from "./pages/Venues";
 import VenuePage from "./pages/OneVenue.tsx";
 import IndexPage from "./pages/index.tsx";

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import RenderProfile from "../components/profile/renderProfile";
 import { GetHeaders } from "../api/headers";
 import CreatePostForm from "../components/profile/createVenue";
+import BookingsByUser from "../components/profile/BookingsByUser";
 
 function ProfilePage() {
   const { username } = useParams(); // Extract the 'username' from the route parameter
@@ -29,8 +30,15 @@ function ProfilePage() {
 
   return (
     <div>
-      <RenderProfile profile={data} />;
-      <CreatePostForm />
+      <div className="header">
+        <RenderProfile profile={data} />;
+      </div>
+
+      <BookingsByUser />
+      <div className="container">
+        <h1 className="text-5xl"> Venue manager only </h1>
+        <CreatePostForm />
+      </div>
     </div>
   );
 }

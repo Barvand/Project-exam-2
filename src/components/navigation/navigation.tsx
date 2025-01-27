@@ -1,7 +1,10 @@
-import ProfileMenu from "./profileMenu";
 import { Link } from "react-router-dom";
+import { Dropdown } from "flowbite-react";
+import { useAuth } from "../../authentication/AuthProvider";
 
 function Navigation(): JSX.Element {
+  const { isLoggedIn, userProfile, logout } = useAuth();
+
   return (
     <div>
       <nav className="bg-secondary">
@@ -15,6 +18,7 @@ function Navigation(): JSX.Element {
               Holidaze
             </span>
           </Link>
+
           <button
             data-collapse-toggle="navbar-user"
             type="button"
@@ -32,13 +36,14 @@ function Navigation(): JSX.Element {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M1 1h15M1 7h15M1 13h15"
               />
             </svg>
           </button>
+
           <div
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
             id="navbar-user"
@@ -52,22 +57,72 @@ function Navigation(): JSX.Element {
                   Venues
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/login"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-secondary md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Login
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/register"
-                  className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-secondary md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                >
-                  Register
-                </Link>
-              </li>
+
+              {!isLoggedIn ? (
+                <>
+                  <li>
+                    <Link
+                      to="/login"
+                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-secondary md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                    >
+                      Login
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/register"
+                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-secondary md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                    >
+                      Register
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <Link
+                      to={`profiles/${userProfile.name}`}
+                      className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-secondary md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                    >
+                      Profile
+                    </Link>
+                  </li>
+
+                  <Dropdown
+                    label={"Menu"}
+                    style={{
+                      border: "none",
+                      outline: "none",
+                      boxShadow: "none",
+                      color: "black",
+                      fontWeight: "700",
+                    }}
+                  >
+                    <Dropdown.Header>
+                      <div className="flex items-center space-x-2">
+                        <img
+                          src={userProfile.avatar.url}
+                          alt="User Avatar"
+                          className="w-8 h-8 rounded-full"
+                        />
+                        <div>
+                          <span className="block text-sm font-semibold">
+                            {userProfile.name}
+                          </span>
+                          <span className="block text-xs text-gray-500 truncate">
+                            {userProfile.email}
+                          </span>
+                        </div>
+                      </div>
+                    </Dropdown.Header>
+                    <Dropdown.Item>Dashboard</Dropdown.Item>
+                    <Dropdown.Item>Settings</Dropdown.Item>
+                    <Dropdown.Item>Earnings</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item onClick={logout}>Sign out</Dropdown.Item>
+                  </Dropdown>
+                </>
+              )}
             </ul>
           </div>
         </div>
