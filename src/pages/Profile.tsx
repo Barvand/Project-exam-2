@@ -5,6 +5,7 @@ import RenderProfile from "../components/profile/renderProfile";
 import { GetHeaders } from "../api/headers";
 import CreatePostForm from "../components/profile/createVenue";
 import BookingsByUser from "../components/profile/BookingsByUser";
+import SideMenu from "../components/profile/sideMenu";
 
 function ProfilePage() {
   const { username } = useParams(); // Extract the 'username' from the route parameter
@@ -30,11 +31,12 @@ function ProfilePage() {
 
   return (
     <div>
+      <SideMenu />
       <div className="header">
         <RenderProfile profile={data} />;
       </div>
 
-      <BookingsByUser />
+      <BookingsByUser username={data.name}/>
       <div className="container">
         <h1 className="text-5xl"> Venue manager only </h1>
         <CreatePostForm />

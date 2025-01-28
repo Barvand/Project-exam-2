@@ -1,6 +1,5 @@
 import { useState } from "react";
 import venueManager from "./venueManager"; // Import the venueManager function
-import DeleteVenue from "./deleteVenue";
 
 function RenderProfile({ profile }) {
   // Use state to store and update profile data

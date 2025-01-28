@@ -20,7 +20,6 @@ function VenuePage() {
     return <div>Error loading data. Please try again later.</div>;
   }
 
-  console.log(data.id)
   return (
     <div>
       <RenderVenue data={data} />

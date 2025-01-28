@@ -1,13 +1,15 @@
 import useFetchAPI from "../../api/read";
 import { GetHeaders } from "../../api/headers";
-import { useAuth } from "../../authentication/AuthProvider";
 import { Link } from "react-router-dom";
 import { FaWifi } from "react-icons/fa";
 
-function BookingsByUser() {
-  const { userProfile } = useAuth();
+interface BookingsByUserProps {
+  username: string;
+}
+
+function BookingsByUser({ username }: BookingsByUserProps) {
   const { data, isLoading, isError } = useFetchAPI({
-    url: `https://v2.api.noroff.dev/holidaze/profiles/${userProfile.name}/bookings?_venue=true`,
+    url: `https://v2.api.noroff.dev/holidaze/profiles/${username}/bookings?_venue=true`,
     options: {
       headers: GetHeaders("GET"),
     },
@@ -39,54 +41,46 @@ function BookingsByUser() {
   return (
     <div>
       <div className="container">
-        <h1 className="text-2xl font-bold py-5"> Upcoming bookings </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-          {data.map((booking) => (
-            // Add the code to display booking details here
-            <div key={booking.id}>
-              <Link to={`/venues/${booking.venue.id}`}>
-                <img
-                  className="h-56 bg-cover bg-center w-full"
-                  loading="lazy"
-                  src={
-                    booking.venue.media && booking.venue.media.length > 0
-                      ? booking.venue.media[0].url
-                      : "default-image-url"
-                  }
-                  alt={
-                    booking.venue.media && booking.venue.media.length > 0
-                      ? booking.venue.media[0].alt
-                      : "default alt text"
-                  }
-                />
-              </Link>
-              <div className="flex">
-                <h1 className="text-2xl font-bold text-secondary">
-                  {booking.venue.name}
-                </h1>
-              </div>
-              <p className="text-md">
-                Check-in
-                <span className="text-green-500 font-bold">
-                  {formattedFromDate}
-                </span>
-                til
-                <span> {formattedToDate} </span>
-              </p>
-              <div className="py-4">
-                <p className="flex gap-2 align-center">
-                  <FaWifi />{" "}
-                  {booking.venue.meta.wifi ? "Available" : "Not Available"}
-                </p>
-                <p>
-                  {booking.venue.meta.breakfast
-                    ? "Breakfast: Available"
-                    : "Breakfast: Not Available"}
+        <h1 className="text-2xl font-bold py-5">Upcoming bookings</h1>
+        {data.length === 0 ? (
+          <p>No bookings available at the moment.</p> // Display this message if there are no bookings
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+            {data.map((booking) => (
+              <div key={booking.id}>
+                <Link to={`/venues/${booking.venue.id}`}>
+                  <img
+                    className="h-56 bg-cover bg-center w-full"
+                    loading="lazy"
+                    src={
+                      booking.venue.media && booking.venue.media.length > 0
+                        ? booking.venue.media[0].url
+                        : "default-image-url"
+                    }
+                    alt={
+                      booking.venue.media && booking.venue.media.length > 0
+                        ? booking.venue.media[0].alt
+                        : "default alt text"
+                    }
+                  />
+                </Link>
+                <div className="flex">
+                  <h1 className="text-2xl font-bold text-secondary">
+                    {booking.venue.name}
+                  </h1>
+                </div>
+                <p className="text-md">
+                  Check-in
+                  <span className="text-green-500 font-bold">
+                    {formattedFromDate}
+                  </span>
+                   til
+                  <span> {formattedToDate} </span>
                 </p>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

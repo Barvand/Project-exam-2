@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Delete from "../../api/delete";
 import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 
