@@ -71,10 +71,10 @@ function BookingsByUser({ username }: BookingsByUserProps) {
                 </div>
                 <p className="text-md">
                   Check-in
-                  <span className="text-green-500 font-bold">
+                  <span className="text-successText font-bold">
                     {formattedFromDate}
                   </span>
-                   til
+                  til
                   <span> {formattedToDate} </span>
                 </p>
               </div>

@@ -11,9 +11,8 @@ function IndexPage() {
           <div className="flex flex-col">
             <div className="h-96 text-center flex flex-col justify-center gap-5">
               <h1 className="text-5xl text-bold"> Welcome to Holidaze </h1>
-              <h2 className="text-4xl text-logoText text-bold">
-                {" "}
-                Get going, Get Holidazing{" "}
+              <h2 className="text-4xl text-primaryButton text-bold">
+                Get going, Get Holidazing
               </h2>
             </div>
             <SearchBar />
@@ -22,7 +21,6 @@ function IndexPage() {
       </div>
       <div className="container mt-5">
         <VenuesPage />
-        
       </div>
     </>
   );

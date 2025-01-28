@@ -15,7 +15,9 @@ export default {
         primary: "var(--color-primary)",
         secondary: "var(--color-secondary)",
         background: "var(--color-background)",
-        logoText: "var(--color-logoText)"
+        logoText: "var(--color-logoText)",
+        successText: "var(--color-successText)",
+        primaryButton: "var(--color-primaryButton)"
       },
     },
   },

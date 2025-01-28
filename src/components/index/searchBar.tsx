@@ -108,7 +108,7 @@ export default function SearchBar() {
             }}
             className="w-full outline-none text-sm text-black rounded"
           />
-          <div className="p-3 bg-red-500">
+          <div className="p-3 bg-primaryButton">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 192.904 192.904"
