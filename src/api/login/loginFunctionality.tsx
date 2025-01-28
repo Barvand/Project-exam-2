@@ -2,11 +2,15 @@ import { useState } from "react";
 import { save } from "../localstorage/save";
 import { useNavigate } from "react-router-dom";
 import { GetHeaders } from "../headers";
+import { useAuth } from "../../authentication/AuthProvider"; // Make sure you're importing the hook
 
 function UseLoginLogic() {
   const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>("");
+
+  // Destructure the context values
+  const { setIsLoggedIn, setUserProfile } = useAuth();
 
   const onSubmit = async (data: any) => {
     setApiError(""); // Clear previous errors
@@ -42,6 +46,11 @@ function UseLoginLogic() {
       console.log("Access Token:", accessToken); // Debug log to confirm token
       save("token", accessToken); // Save token to local storage
       save("profile", user); // Save user profile
+
+      // Update context with login status and user profile
+      setIsLoggedIn(true);
+      setUserProfile(user);
+
       navigate(`/profiles/${user.name}`);
     } catch (err) {
       console.error("Error:", err);

@@ -3,6 +3,9 @@ import useFetchAPI from "../api/read";
 import { useParams } from "react-router-dom";
 import RenderProfile from "../components/profile/renderProfile";
 import { GetHeaders } from "../api/headers";
+import CreatePostForm from "../components/profile/createVenue";
+import BookingsByUser from "../components/profile/BookingsByUser";
+import SideMenu from "../components/profile/sideMenu";
 
 function ProfilePage() {
   const { username } = useParams(); // Extract the 'username' from the route parameter
@@ -18,8 +21,6 @@ function ProfilePage() {
     },
   });
 
-  console.log(data);
-
   if (isLoading) {
     return <div>Loading data...</div>;
   }
@@ -28,7 +29,20 @@ function ProfilePage() {
     return <div>Error loading data. Please try again later.</div>;
   }
 
-  return <RenderProfile profile={data} />;
+  return (
+    <div>
+      <SideMenu />
+      <div className="header">
+        <RenderProfile profile={data} />;
+      </div>
+
+      <BookingsByUser username={data.name}/>
+      <div className="container">
+        <h1 className="text-5xl"> Venue manager only </h1>
+        <CreatePostForm />
+      </div>
+    </div>
+  );
 }
 
 export default ProfilePage;

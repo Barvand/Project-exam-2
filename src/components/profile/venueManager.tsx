@@ -6,17 +6,19 @@ async function venueManager(profile): Promise<void> {
     return;
   }
 
-  // Toggle the current `venueManager` value
-  const updatedProfile = { venueManager: !profile.venueManager };
-
   try {
-    // Make the API request
+    // Toggle the current venueManager value
+    const updatedProfile = {
+      venueManager: !profile.venueManager, // Toggle the boolean value
+    };
+
+    // Make the API request with only the updated venueManager value
     const response = await fetch(
       `https://v2.api.noroff.dev/holidaze/profiles/${profile.name}`,
       {
         method: "PUT",
         headers: GetHeaders("PUT"),
-        body: JSON.stringify(updatedProfile),
+        body: JSON.stringify(updatedProfile), // Send only the toggled venueManager
       }
     );
 

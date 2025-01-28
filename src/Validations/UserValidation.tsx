@@ -15,6 +15,7 @@ const userSchema = yup.object().shape({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match")
     .required("Confirm Password is required"),
+  venueManager: yup.boolean(),
 });
 
 export default userSchema;
