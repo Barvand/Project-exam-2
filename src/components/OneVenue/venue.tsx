@@ -19,24 +19,77 @@ interface VenueProps {
 }
 const RenderVenue: React.FC<VenueProps> = ({ data }) => {
   return (
-    <div className="container">
-      <div className="grid grid-cols-1 gap-2">
-        <img
-          className="bg-cover bg-center w-full px-6"
-          src={
-            data.media && data.media.length > 0
-              ? data.media[0].url
-              : "default-image-url"
-          }
-          alt={
-            data.media && data.media.length > 0
-              ? data.media[0].alt
-              : "default alt text"
-          }
-        />
-        <div className="px-6 py-4">
-          <h2 className="text-3xl font-bold py-4">{data.name}</h2>
-          <Link to={`/profiles/${data.owner.name}`} className="text-3xl font-bold py-4">{data.owner.name}</Link>
+    <section className="container mt-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 grid-rows-[500px] gap-1 p-1">
+        {/* Main Image - Left (Takes 2 columns) */}
+        <div className="col-span-2">
+          <img
+            className="object-cover w-full h-full rounded-lg"
+            src={
+              data.media && data.media.length > 0
+                ? data.media[0].url
+                : "default-image-url"
+            }
+            alt={
+              data.media && data.media.length > 0
+                ? data.media[0].alt
+                : "default alt text"
+            }
+          />
+        </div>
+
+        {/* Right Side Grid (Stacked Images) */}
+        <div className="col-span-2 sm:col-span-1 grid grid-rows-2 gap-2">
+          {/* Image 1 */}
+          <div className="md:h-[245px]">
+            <img
+              className="object-cover w-full h-full rounded-lg"
+              src={
+                data.media && data.media.length > 0
+                  ? data.media[0].url
+                  : "default-image-url"
+              }
+              alt={
+                data.media && data.media.length > 0
+                  ? data.media[0].alt
+                  : "default alt text"
+              }
+            />
+          </div>
+          {/* Image 2 */}
+          <div className="sm:h-[245px]">
+            <img
+              className="object-cover w-full h-full rounded-lg"
+              src={
+                data.media && data.media.length > 0
+                  ? data.media[0].url
+                  : "default-image-url"
+              }
+              alt={
+                data.media && data.media.length > 0
+                  ? data.media[0].alt
+                  : "default alt text"
+              }
+            />
+          </div>
+        </div>
+
+        {/* Venue Details Section */}
+        <div className="px-6">
+          <h2 className="text-2xl font-bold pt-1 text-primary">{data.name}</h2>
+          <div className="flex gap-2">
+            <img
+              className="rounded-full w-12 h-12"
+              src={data.owner.avatar.url}
+              alt={data.owner.name}
+            />
+            <Link
+              to={`/profiles/${data.owner.name}`}
+              className="text-md font-bold py-4 text-gray-600"
+            >
+              {data.owner.name}
+            </Link>
+          </div>
           <p className="text-md">{data.description}</p>
           <div className="py-4 w-96 bg-slate-50">
             <p className="flex gap-2 align-center">
@@ -65,7 +118,7 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

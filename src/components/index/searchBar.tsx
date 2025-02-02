@@ -3,52 +3,32 @@ import { Link } from "react-router-dom";
 
 export default function SearchBar() {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchContainerRef = useRef(null);
 
   useEffect(() => {
-    const fetchAllProducts = async () => {
+    if (!search) {
+      setData([]); // Clear results when empty
+      return;
+    }
+
+    const fetchVenues = async () => {
       try {
-        const cachedData = localStorage.getItem("allVenues");
-
-        if (cachedData) {
-          setData(JSON.parse(cachedData));
-          setIsLoading(false);
-          return;
-        }
-
-        let allData = [];
-        let page = 1;
-        const limit = 100;
-
-        while (true) {
-          const url = `https://v2.api.noroff.dev/holidaze/venues?page=${page}&limit=${limit}`;
-          const response = await fetch(url);
-          const results = await response.json();
-
-          if (results.data && results.data.length > 0) {
-            allData = [...allData, ...results.data];
-            page += 1;
-          } else {
-            break;
-          }
-        }
-
-        localStorage.setItem("allVenues", JSON.stringify(allData));
-        setData(allData);
+        const response = await fetch(
+          `https://v2.api.noroff.dev/holidaze/venues/search?q=${search}`
+        );
+        const results = await response.json();
+        setData(results.data || []);
       } catch (error) {
-        console.error("Error fetching products:", error);
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
+        console.error("Error fetching venues:", error);
       }
     };
 
-    fetchAllProducts();
-  }, []);
+    fetchVenues();
+  }, [search]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -60,36 +40,9 @@ export default function SearchBar() {
       }
     };
 
-    const handleEscapeKey = (event) => {
-      if (event.key === "Escape") {
-        setIsDropdownOpen(false);
-      }
-    };
-
     document.addEventListener("click", handleClickOutside);
-    document.addEventListener("keydown", handleEscapeKey);
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-      document.removeEventListener("keydown", handleEscapeKey);
-    };
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center">
-        <div className="loader"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div>Oops, something went wrong: {error}</div>;
-  }
-
-  const filteredVenues = data.filter((venue) =>
-    venue.name.toLowerCase().includes(search.toLowerCase())
-  );
 
   return (
     <div
@@ -128,8 +81,12 @@ export default function SearchBar() {
             >
               Close
             </button>
-            {filteredVenues.length > 0 ? (
-              filteredVenues.map((venue) => (
+            {isLoading ? (
+              <div className="px-4 py-2 text-white">Loading...</div>
+            ) : error ? (
+              <div className="px-4 py-2 text-red-500">{error}</div>
+            ) : data.length > 0 ? (
+              data.map((venue) => (
                 <div
                   key={venue.id}
                   className="w-full px-4 py-2 hover:bg-gray-800"
@@ -142,7 +99,7 @@ export default function SearchBar() {
                     }}
                     className="flex items-center gap-2"
                   >
-                    {venue.media[0] ? (
+                    {venue.media?.[0] ? (
                       <img
                         src={venue.media[0].url}
                         alt={venue.media[0].alt || "Venue image"}
