@@ -24,6 +24,9 @@ body {
   background-color: var(--color-background);
 }
 
+section { 
+  margin-top: 100px;
+}
 /* Loader animation */
 .loader {
   color: #000000;
@@ -36,6 +39,7 @@ body {
   animation: mulShdSpin 1.3s infinite linear;
   transform: translateZ(0);
 }
+
 
 @keyframes mulShdSpin {
   0%,

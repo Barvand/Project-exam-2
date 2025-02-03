@@ -23,12 +23,9 @@ function IndexPage() {
             Get going, Get Holidazing
           </h2>
         </div>
-      </div>
-
-      <div className="container mt-5">
         <SearchBar />
-        <VenuesPage />
       </div>
+      <VenuesPage />
     </>
   );
 }

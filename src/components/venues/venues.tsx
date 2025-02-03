@@ -94,6 +94,7 @@ const RenderVenues: React.FC<VenuesProps> = ({ data, page, setPage, meta }) => {
                 ? venue.description.slice(0, 150) + "..."
                 : venue.description}
             </p>
+            <p> {venue.price} per night</p>
             <div className="py-4">
               <p className="flex gap-2 align-center">
                 <FaWifi /> {venue.meta.wifi ? "Available" : "Not Available"}

@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import useFetchAPI from "../../api/read";
 import { useNavigate } from "react-router-dom";
+import Loading from "../../features/loading";
+import ErrorMessage from "../../error-handling/error";
 
 export default function SearchBar() {
   const [data, setData] = useState([]);
@@ -56,11 +58,11 @@ export default function SearchBar() {
   return (
     <div
       ref={searchContainerRef}
-      className="flex justify-center relative text-black"
+      className="flex justify-center absolute bottom-[-20px] text-black w-full"
     >
       <div className="flex flex-col border-1 p-1 border-white overflow-hidden w-full md:w-1/2">
         <div className="flex items-center">
-          <form className="w-full flex"onSubmit={handleSearch}>
+          <form className="w-full flex" onSubmit={handleSearch}>
             <input
               type="text"
               placeholder="Find your dream destination"
@@ -94,11 +96,9 @@ export default function SearchBar() {
             </button>
 
             {isLoading ? (
-              <div className="px-4 py-2 text-white">Loading...</div>
+              <Loading />
             ) : isError ? (
-              <div className="px-4 py-2 text-red-500">
-                Error loading data. Please try again later.
-              </div>
+              <ErrorMessage message={"Something went wrong"}/>
             ) : data.length > 0 ? (
               data.map((venue) => (
                 <div
