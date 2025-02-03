@@ -1,6 +1,10 @@
 import { GetHeaders } from "./headers";
 
-async function Delete({ id }) {
+interface DeleteProps { 
+  id: string; 
+}
+
+async function Delete({ id }: DeleteProps) {
   if (!id) {
     console.error("Error: Venue ID is required.");
     return;

@@ -8,6 +8,7 @@ function UseLoginLogic() {
   const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>("");
+  const [setLoading, setIsLoading] = useState(false);
 
   // Destructure the context values
   const { setIsLoggedIn, setUserProfile } = useAuth();
@@ -15,6 +16,7 @@ function UseLoginLogic() {
   const onSubmit = async (data: any) => {
     setApiError(""); // Clear previous errors
     setSuccessMessage(""); // Clear previous success message
+    setIsLoading(true);
 
     try {
       const response = await fetch("https://v2.api.noroff.dev/auth/login", {
@@ -22,6 +24,7 @@ function UseLoginLogic() {
         headers: GetHeaders("POST"),
         body: JSON.stringify(data), // Send form data to the API
       });
+      setIsLoading(false);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -43,7 +46,6 @@ function UseLoginLogic() {
       const { data: userData } = await response.json(); // Destructure 'data'
       const { accessToken, ...user } = userData; // Destructure 'accessToken' from 'data'
 
-      console.log("Access Token:", accessToken); // Debug log to confirm token
       save("token", accessToken); // Save token to local storage
       save("profile", user); // Save user profile
 

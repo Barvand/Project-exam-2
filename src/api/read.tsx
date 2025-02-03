@@ -10,6 +10,7 @@ function useFetchAPI({
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [meta, setMeta] = useState(null)
 
   // Memoize options to avoid unnecessary re-fetching
   const memoizedOptions = useMemo(() => options, [JSON.stringify(options)]);
@@ -24,6 +25,7 @@ function useFetchAPI({
         }
         const json = await response.json();
         setData(json.data || json); // Handle cases where json.data might not exist
+        setMeta(json.meta || json);
       } catch (error) {
         setIsError(true);
         console.error("Fetch Error:", error);
@@ -35,7 +37,7 @@ function useFetchAPI({
     fetchData();
   }, [url, memoizedOptions]); // Use memoized options in the dependency array
 
-  return { data, isLoading, isError };
+  return { data, meta, isLoading, isError };
 }
 
 export default useFetchAPI;
