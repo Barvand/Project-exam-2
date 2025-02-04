@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "../../Validations/LoginValidation";
 import SuccessMessage from "../../error-handling/success";
 import ErrorMessage from "../../error-handling/error";
-import UseLoginLogic from "../../api/login/loginFunctionality";
+import LoginUser from "../../api/users/loginUser";
 
 function LoginForm() {
   const {
@@ -14,7 +14,7 @@ function LoginForm() {
     resolver: yupResolver(loginSchema),
   });
 
-  const { apiError, successMessage, onSubmit } = UseLoginLogic();
+  const { apiError, successMessage, onSubmit } = LoginUser();
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">

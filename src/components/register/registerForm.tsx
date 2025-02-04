@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import userSchema from "../../Validations/UserValidation";
 import SuccessMessage from "../../error-handling/success";
 import ErrorMessage from "../../error-handling/error";
-import UseRegistrationLogic from "../../api/register/registerFunctionality";
+import CreateUser from "../../api/users/createUser";
 
 function RegisterForm() {
   const {
@@ -15,7 +15,7 @@ function RegisterForm() {
   });
 
   const url = "https://v2.api.noroff.dev/auth/register";
-  const { apiError, successMessage, onSubmit } = UseRegistrationLogic(url);
+  const { apiError, successMessage, onSubmit } = CreateUser(url);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">

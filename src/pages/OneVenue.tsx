@@ -1,15 +1,10 @@
-import useFetchAPI from "../api/read";
+import GetVenue from "../api/venue/getVenue";
 import RenderVenue from "../components/OneVenue/venue";
-import { useParams } from "react-router-dom";
-import DeleteVenue from "../components/profile/deleteVenue";
+import RenderDeleteVenue from "../components/profile/deleteVenue";
 import Loading from "../features/loading";
 
 function VenuePage() {
-  const { id } = useParams(); // Extract the 'id' from the route parameter
-
-  const { data, isLoading, isError } = useFetchAPI({
-    url: `https://v2.api.noroff.dev/holidaze/venues/${id}?_owner=true`,
-  });
+  const { data, isLoading, isError } = GetVenue();
 
   if (isLoading) {
     return <Loading />;
@@ -22,7 +17,7 @@ function VenuePage() {
   return (
     <div>
       <RenderVenue data={data} />
-      <DeleteVenue id={data.id} />
+      <RenderDeleteVenue id={data.id} />
     </div>
   );
 }

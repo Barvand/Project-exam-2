@@ -1,10 +1,10 @@
-import { GetHeaders } from "./headers";
+import { GetHeaders } from "../headers";
 
-interface DeleteProps { 
-  id: string; 
+interface DeleteProps {
+  id: string;
 }
 
-async function Delete({ id }: DeleteProps) {
+async function DeleteVenue({ id }: DeleteProps) {
   if (!id) {
     console.error("Error: Venue ID is required.");
     return;
@@ -15,7 +15,7 @@ async function Delete({ id }: DeleteProps) {
       `https://v2.api.noroff.dev/holidaze/venues/${id}`,
       {
         method: "DELETE",
-        headers: GetHeaders("DELETE"),
+        headers: GetHeaders(),
       }
     );
 
@@ -30,4 +30,4 @@ async function Delete({ id }: DeleteProps) {
   }
 }
 
-export default Delete;
+export default DeleteVenue;

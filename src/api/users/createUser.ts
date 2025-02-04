@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function UseRegistrationLogic() {
+function CreateUser() {
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>("");
 
@@ -40,4 +40,4 @@ function UseRegistrationLogic() {
   };
 }
 
-export default UseRegistrationLogic; 
+export default CreateUser;

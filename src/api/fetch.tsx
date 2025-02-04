@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 
-function useFetchAPI({
+export default function useFetchAPI({
   url,
   options = {},
 }: {
@@ -10,7 +10,7 @@ function useFetchAPI({
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [meta, setMeta] = useState(null)
+  const [meta, setMeta] = useState(null);
 
   // Memoize options to avoid unnecessary re-fetching
   const memoizedOptions = useMemo(() => options, [JSON.stringify(options)]);
@@ -39,5 +39,3 @@ function useFetchAPI({
 
   return { data, meta, isLoading, isError };
 }
-
-export default useFetchAPI;

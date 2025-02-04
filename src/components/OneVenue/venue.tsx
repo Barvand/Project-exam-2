@@ -28,7 +28,7 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
             src={
               data.media && data.media.length > 0
                 ? data.media[0].url
-                : "default-image-url"
+                : "/unknown-user.png"
             }
             alt={
               data.media && data.media.length > 0
@@ -47,7 +47,7 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
               src={
                 data.media && data.media.length > 0
                   ? data.media[0].url
-                  : "default-image-url"
+                  : "/unknown-user.png"
               }
               alt={
                 data.media && data.media.length > 0

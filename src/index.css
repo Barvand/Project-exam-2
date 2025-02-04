@@ -40,6 +40,12 @@ section {
   transform: translateZ(0);
 }
 
+.profile-title { 
+  border-top: #1a73e8 2px solid; 
+  border-left: #1a73e8 2px solid; 
+  border-right: #1a73e8 2px solid;
+  border-radius: 25px 25px 0 0; 
+}
 
 @keyframes mulShdSpin {
   0%,

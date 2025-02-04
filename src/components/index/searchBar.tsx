@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import useFetchAPI from "../../api/read";
+import useFetchAPI from "../../api/fetch";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../features/loading";
 import ErrorMessage from "../../error-handling/error";
 
 export default function SearchBar() {
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(undefined);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchContainerRef = useRef(null);
 
@@ -98,7 +98,7 @@ export default function SearchBar() {
             {isLoading ? (
               <Loading />
             ) : isError ? (
-              <ErrorMessage message={"Something went wrong"}/>
+              <ErrorMessage message={"Something went wrong"} />
             ) : data.length > 0 ? (
               data.map((venue) => (
                 <div

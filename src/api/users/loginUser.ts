@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { GetHeaders } from "../headers";
 import { useAuth } from "../../authentication/AuthProvider"; // Make sure you're importing the hook
 
-function UseLoginLogic() {
+function LoginUser() {
   const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>("");
@@ -21,7 +21,7 @@ function UseLoginLogic() {
     try {
       const response = await fetch("https://v2.api.noroff.dev/auth/login", {
         method: "POST",
-        headers: GetHeaders("POST"),
+        headers: GetHeaders(),
         body: JSON.stringify(data), // Send form data to the API
       });
       setIsLoading(false);
@@ -67,4 +67,4 @@ function UseLoginLogic() {
   };
 }
 
-export default UseLoginLogic;
+export default LoginUser;

@@ -1,56 +1,75 @@
-import { useState } from "react";
-import useFetchAPI from "../api/read";
+import { useState, useEffect } from "react";
 import RenderVenues from "../components/venues/venues";
 import Loading from "../features/loading";
 import VenueFilters from "../features/VenueFilter";
+import GetVenues from "../api/venues/getVenues";
 
 function VenuesPage() {
-  const [page, setPage] = useState(1); // Current page
-  const [sortOrder, setSortOrder] = useState("desc"); // Sort order (asc/desc)
-  const [limit, setLimit] = useState(10); // Number of items per page
-  const [sortBy, setSortBy] = useState("created"); // Field to sort by
-  const [activeSort, setActiveSort] = useState("created"); // Store the active sort type
+  const [page, setPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState("desc");
+  const [limit, setLimit] = useState(100);
+  const [sortBy, setSortBy] = useState("created");
+  const [activeSort, setActiveSort] = useState("created");
+  const [accumulatedData, setAccumulatedData] = useState([]); // Store accumulated data
 
-  // Construct the URL with dynamic query parameters
-  const url = `https://v2.api.noroff.dev/holidaze/venues?page=${page}&limit=${limit}&sort=${sortBy}&sortOrder=${sortOrder}`;
+  const { data, isLoading, isError, meta } = GetVenues({
+    page,
+    limit,
+    sortBy,
+    sortOrder,
+  });
 
-  const { data, isLoading, isError, meta } = useFetchAPI({ url });
+  // Accumulate data when new data is fetched, avoiding duplicates
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setAccumulatedData((prevData) => {
+        const newData = data.filter(
+          (item) =>
+            !prevData.some((existingItem) => existingItem.id === item.id) // Check for duplicates
+        );
+        return [...prevData, ...newData]; // Add only unique items
+      });
+    }
+  }, [data]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
+  if (isError) return <div>Error loading data. Please try again later.</div>;
 
-  if (isError) {
-    return <div>Error loading data. Please try again later.</div>;
-  }
-
-  // Function to change the sorting field
   const changeSortBy = (field) => {
     setSortBy(field);
-    setActiveSort(field); // Update the active sort state
+    setActiveSort(field);
     setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+    setAccumulatedData([]); // Reset accumulated data when sorting changes
+    setPage(1); // Reset to the first page
   };
 
-  // Function to change the limit
   const changeLimit = (newLimit) => {
     setLimit(newLimit);
-    setPage(1); // Reset to the first page when changing the limit
+    setPage(1);
+    setAccumulatedData([]); // Reset accumulated data when limit changes
+  };
+
+  const loadMore = () => {
+    setPage((prevPage) => prevPage + 1); // Increment page to load more data
   };
 
   return (
     <section className="container">
-      {/* Use the VenueFilters component */}
       <VenueFilters
         activeSort={activeSort}
         sortOrder={sortOrder}
         changeSortBy={changeSortBy}
         limit={limit}
         changeLimit={changeLimit}
-        meta={meta} // Pass meta if needed for totalCount
+        meta={meta}
       />
-
-      {/* Render Venues */}
-      <RenderVenues data={data} page={page} setPage={setPage} meta={meta} />
+      <RenderVenues
+        data={accumulatedData} // Pass accumulated data instead of just the current page's data
+        page={page}
+        setPage={setPage}
+        meta={meta}
+        loadMore={loadMore} // Add a "Load More" button or infinite scroll trigger
+      />
     </section>
   );
 }

@@ -1,6 +1,6 @@
 import { GetHeaders } from "../../api/headers";
 
-async function venueManager(profile): Promise<void> {
+async function UpdateVenueManager(profile): Promise<void> {
   if (!profile || !profile.name) {
     console.error("Error: Invalid profile data.");
     return;
@@ -17,7 +17,7 @@ async function venueManager(profile): Promise<void> {
       `https://v2.api.noroff.dev/holidaze/profiles/${profile.name}`,
       {
         method: "PUT",
-        headers: GetHeaders("PUT"),
+        headers: GetHeaders(),
         body: JSON.stringify(updatedProfile), // Send only the toggled venueManager
       }
     );
@@ -27,7 +27,6 @@ async function venueManager(profile): Promise<void> {
     }
 
     const data = await response.json();
-    console.log("Profile updated:", data);
     return data; // Return the updated data
   } catch (error) {
     console.error("Error updating venue manager status:", error);
@@ -35,4 +34,4 @@ async function venueManager(profile): Promise<void> {
   }
 }
 
-export default venueManager;
+export default UpdateVenueManager;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import useFetchAPI from "../api/read";
+import useFetchAPI from "../api/fetch";
 import Loading from "../features/loading";
 import RenderVenues from "../components/venues/venues";
 

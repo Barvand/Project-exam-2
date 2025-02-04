@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { FaWifi } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Owner } from "../../types/venue.array";
@@ -44,29 +43,11 @@ interface VenuesProps {
  * @example
  * <RenderVenues data={venues} page={1} setPage={setPage} meta={meta} />
  */
-const RenderVenues: React.FC<VenuesProps> = ({ data, page, setPage, meta }) => {
-  const [allVenues, setAllVenues] = useState<Venue[]>([]);
-
-  // Reset `allVenues` when the first page is loaded or when the data source changes
-  useEffect(() => {
-    if (page === 1) {
-      setAllVenues(data); // Reset the list when loading the first page
-    } else {
-      setAllVenues((prevVenues) => {
-        // Filter out duplicates by checking if the venue ID already exists
-        const newVenues = data.filter(
-          (newVenue) =>
-            !prevVenues.some((prevVenue) => prevVenue.id === newVenue.id)
-        );
-        return [...prevVenues, ...newVenues];
-      });
-    }
-  }, [data, page]);
-
+export function RenderVenues({ data, meta, page, setPage }: VenuesProps) {
   return (
     <div className="container">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-        {allVenues.map((venue) => (
+        {data.map((venue) => (
           <div key={venue.id}>
             <Link to={`/venues/${venue.id}`}>
               <img
@@ -75,7 +56,7 @@ const RenderVenues: React.FC<VenuesProps> = ({ data, page, setPage, meta }) => {
                 src={
                   venue.media && venue.media.length > 0
                     ? venue.media[0].url
-                    : "default-image-url"
+                    : "unknown-user.png"
                 }
                 alt={
                   venue.media && venue.media.length > 0
@@ -120,6 +101,6 @@ const RenderVenues: React.FC<VenuesProps> = ({ data, page, setPage, meta }) => {
       </div>
     </div>
   );
-};
+}
 
 export default RenderVenues;

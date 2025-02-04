@@ -1,46 +1,62 @@
-import { useMemo } from "react";
-import useFetchAPI from "../api/read";
-import { useParams } from "react-router-dom";
-import RenderProfile from "../components/profile/renderProfile";
-import { GetHeaders } from "../api/headers";
-import CreatePostForm from "../components/profile/createVenue";
-import BookingsByUser from "../components/profile/BookingsByUser";
-import SideMenu from "../components/profile/sideMenu";
+import { useState, useEffect } from "react";
+import GetProfile from "../api/users/getUser";
+import RenderProfileInfo from "../components/profile/renderProfileInfo";
+import CreateVenueForm from "../components/profile/createVenueForm";
+import RenderBookingsProfile from "../components/profile/BookingsByUser";
+import GetBookings from "../api/bookings/read";
+import VenueManagerToggle from "../features/venueManagerToggle";
+import Loading from "../features/loading";
 
 function ProfilePage() {
-  const { username } = useParams(); // Extract the 'username' from the route parameter
+  const [profileState, setProfileState] = useState(null);
 
-  // Memoize headers to avoid recalculating them on every render
-  const headers = useMemo(() => GetHeaders("GET"), []); // Empty array to memoize once
+  // Fetch profile data
+  const {
+    data: profileData,
+    isLoading: profileLoading,
+    isError: profileError,
+  } = GetProfile();
+  const {
+    data: bookingsData,
+    isLoading: bookingsLoading,
+    isError: bookingsError,
+  } = GetBookings();
 
-  const { data, isLoading, isError } = useFetchAPI({
-    url: `https://v2.api.noroff.dev/holidaze/profiles/${username}?_bookings=true`,
-    options: {
-      method: "GET",
-      headers, // Use memoized headers
-    },
-  });
+  // Update profileState when profileData is available
+  useEffect(() => {
+    if (profileData) {
+      setProfileState(profileData);
+    }
+  }, [profileData]);
 
-  if (isLoading) {
-    return <div>Loading data...</div>;
+  const handleToggleVenueManager = () => {
+    VenueManagerToggle(profileState, setProfileState);
+  };
+
+  // Handle loading and error states
+  if (profileLoading || bookingsLoading) {
+    return <Loading />;
   }
 
-  if (isError) {
+  if (profileError || bookingsError) {
     return <div>Error loading data. Please try again later.</div>;
   }
 
   return (
-    <div>
-      <SideMenu />
-      <div className="header">
-        <RenderProfile profile={data} />;
-      </div>
+    <div className="container">
+      {profileState && (
+        <RenderProfileInfo
+          profile={profileState}
+          onToggleVenueManager={handleToggleVenueManager}
+        />
+      )}
 
-      <BookingsByUser username={data.name}/>
-      <div className="container">
-        <h1 className="text-5xl"> Venue manager only </h1>
-        <CreatePostForm />
-      </div>
+      <RenderBookingsProfile
+        username={profileState?.name}
+        bookings={bookingsData}
+      />
+
+      {profileState?.venueManager && <CreateVenueForm />}
     </div>
   );
 }

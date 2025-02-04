@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Delete from "../../api/delete";
+import DeleteVenue from "../../api/venue/deleteVenue";
 import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
 
 interface DeleteVenueProps {
@@ -16,14 +16,14 @@ interface DeleteVenueProps {
  * @returns {JSX.Element} - Returns a button element that triggers the venue deletion when clicked.
  */
 
-function DeleteVenue({ id }: DeleteVenueProps) {
+function RenderDeleteVenue({ id }: DeleteVenueProps): JSX.Element {
   const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate(); // Initialize the navigate function
 
   const handleDelete = async () => {
     try {
       setIsDeleting(true); // Set the state to show a loading indicator
-      await Delete({ id }); // Call the deleteVenue function with the venue ID
+      await DeleteVenue({ id }); // Call the deleteVenue function with the venue ID
       alert("Venue deleted successfully"); // Optionally show a success message
       // Optionally update the UI to reflect the deleted venue (e.g., remove from list)
     } catch (error) {
@@ -44,4 +44,4 @@ function DeleteVenue({ id }: DeleteVenueProps) {
   );
 }
 
-export default DeleteVenue;
+export default RenderDeleteVenue;
