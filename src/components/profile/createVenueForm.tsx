@@ -2,10 +2,12 @@ import { useForm } from "react-hook-form";
 import createVenue from "../../api/venue/createVenue";
 import { VenueFormData } from "../../types/VenueFormTypes";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Still have to implement error handling and user feedback
 
 function CreateVenueForm() {
+  const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm<VenueFormData>();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState(""); // New state for API errors
@@ -25,12 +27,13 @@ function CreateVenueForm() {
       if (!response.ok) {
         const errorData = await response.json(); // Convert response to JSON
         // Extract error messages from API response
-        const errorMessages = errorData.errors
+        const errorMessages = errorData.errors;
 
         setErrorMessage(errorMessages); // ✅ Display error messages
       } else {
-        setSuccessMessage("Your order has been submitted successfully!");
-        reset();
+        const createdVenue = await response.json();
+        setSuccessMessage("Your venue has been placed");
+        navigate(`/venues/${createdVenue.data.id}`);
       }
     } catch (error) {
       console.error("Error during venue creation:", error);

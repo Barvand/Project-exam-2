@@ -29,7 +29,7 @@ interface VenueFormData {
  * @param data - The venue data to be sent in the request body.
  * @returns A promise that resolves with the API response.
  */
-const createVenue = async (data: VenueFormData): Promise<any> => {
+async function createVenue(data: VenueFormData): Promise<any> {
   try {
     const response = await fetch("https://v2.api.noroff.dev/holidaze/venues", {
       method: "POST",
@@ -42,12 +42,11 @@ const createVenue = async (data: VenueFormData): Promise<any> => {
       throw new Error(`Failed to create venue. Status: ${response.status}`);
     }
 
-    const responseData = await response.json(); // Parse the response body as JSON
-    return responseData; // Return the response data
+    return response; // Return the response data
   } catch (error) {
     console.error("Error creating venue:", error);
     throw error; // Rethrow error for further handling in the component or elsewhere
   }
-};
+}
 
 export default createVenue;

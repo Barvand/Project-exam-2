@@ -42,6 +42,8 @@ function BookingForm() {
           if (!response.ok) {
             const errorData = await response.json(); // Convert response to JSON
 
+            console.log(errorData)
+
             // Extract error messages from API response
             const errorMessages = errorData.errors
               ? errorData.errors.map((err) => err.message).join(" ") // Join all error messages
