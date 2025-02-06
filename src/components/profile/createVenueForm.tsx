@@ -24,19 +24,25 @@ function CreateVenueForm() {
       // Use the API function to create the venue
       const response = await createVenue(data);
 
-      if (!response.ok) {
-        const errorData = await response.json(); // Convert response to JSON
-        // Extract error messages from API response
-        const errorMessages = errorData.errors;
-
-        setErrorMessage(errorMessages); // ✅ Display error messages
+      // Handle success (204 No Content or JSON response)
+      if (response === null) {
+        // Handle 204 No Content response
+        setSuccessMessage("Your venue has been created successfully!");
+        navigate("/venues"); // Navigate to a default page or venue list
       } else {
-        const createdVenue = await response.json();
-        setSuccessMessage("Your venue has been placed");
-        navigate(`/venues/${createdVenue.data.id}`);
+        // Handle JSON response (e.g., 201 Created)
+        setSuccessMessage("Your venue has been created successfully!");
+        navigate(`/venues/${response.data.id}`); // Navigate to the new venue's page
       }
     } catch (error) {
       console.error("Error during venue creation:", error);
+
+      // Handle API errors
+      if (error instanceof Error) {
+        setErrorMessage(error.message); // Display the error message
+      } else {
+        setErrorMessage("An unexpected error occurred. Please try again.");
+      }
     }
   };
 

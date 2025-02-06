@@ -1,7 +1,17 @@
-// RenderBookingsProfile.js
 import { Link } from "react-router-dom";
+import RenderDeleteBooking from "../bookings/deleteBooking";
+import { useState } from "react";
 
 function RenderBookingsProfile({ bookings }) {
+  const [newBookings, setNewBookings] = useState(bookings);
+
+  const handleDeleteBooking = (id) => {
+    // Update the newBookings state after deletion
+    setNewBookings((prevBookings) =>
+      prevBookings.filter((booking) => booking.id !== id)
+    );
+  };
+
   return (
     <div>
       <div className="container">
@@ -10,11 +20,12 @@ function RenderBookingsProfile({ bookings }) {
             Upcoming bookings
           </h1>
         </div>
-        {bookings.length === 0 ? (
+        {newBookings.length === 0 ? ( // Use `newBookings` here
           <p>No bookings available at the moment.</p> // Display this message if there are no bookings
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-            {bookings.map((booking) => {
+            {newBookings.map((booking) => {
+              // Use `newBookings` here
               const bookingFromDate = new Date(booking.checkIn);
               const formattedFromDate = bookingFromDate.toLocaleDateString(
                 "en-US",
@@ -66,6 +77,10 @@ function RenderBookingsProfile({ bookings }) {
                     til
                     <span> {formattedToDate} </span>
                   </p>
+                  <RenderDeleteBooking
+                    id={booking.id}
+                    onDelete={handleDeleteBooking}
+                  />
                 </div>
               );
             })}

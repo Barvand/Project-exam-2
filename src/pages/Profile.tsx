@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import GetProfile from "../api/users/getUser";
 import RenderProfileInfo from "../components/profile/renderProfileInfo";
 import CreateVenueForm from "../components/profile/createVenueForm";
-import RenderBookingsProfile from "../components/profile/BookingsByUser";
+
 import GetBookings from "../api/bookings/read";
 import VenueManagerToggle from "../features/venueManagerToggle";
 import Loading from "../features/loading";
@@ -50,11 +50,6 @@ function ProfilePage() {
           onToggleVenueManager={handleToggleVenueManager}
         />
       )}
-
-      <RenderBookingsProfile
-        username={profileState?.name}
-        bookings={bookingsData}
-      />
 
       {profileState?.venueManager && <CreateVenueForm />}
     </div>

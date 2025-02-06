@@ -1,45 +1,18 @@
-import { GetHeaders } from "../headers"; // Assuming GetHeaders is properly configured to handle authentication/headers
-
-interface VenueFormData {
-  name: string;
-  description: string;
-  price: number;
-  maxGuests: number;
-  rating?: number;
-  media: { url: string; alt: string }[];
-  meta: {
-    wifi?: boolean;
-    parking?: boolean;
-    breakfast?: boolean;
-    pets?: boolean;
-  };
-  location: {
-    address: string;
-    city: string;
-    zip: string;
-    country: string;
-    continent: string;
-    lat: number;
-    lng: number;
-  };
-}
+import { apiRequest } from "../fetchAPI";
 
 /**
  * Function to create a new venue.
- * @param data - The venue data to be sent in the request body.
+ * @param body - The venue data to be sent in the request body.
  * @returns A promise that resolves with the API response.
  */
-async function createVenue(data: VenueFormData): Promise<any> {
+async function createVenue(body: object) {
   try {
-    const response = await fetch("https://v2.api.noroff.dev/holidaze/venues", {
-      method: "POST",
-      headers: GetHeaders(), // Ensure this method handles authorization or other necessary headers
-      body: JSON.stringify(data), // Send the venue data as JSON
-    });
+    // Await the apiRequest call to get the actual response
+    const response = await apiRequest("/venues", "POST", body);
 
-    // Handle response status
-    if (!response.ok) {
-      throw new Error(`Failed to create venue. Status: ${response.status}`);
+    // Check if the response is empty (i.e., no content) but still successful
+    if (response === null) {
+      return { success: true }; // Handle 204 No Content response
     }
 
     return response; // Return the response data

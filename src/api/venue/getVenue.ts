@@ -1,22 +1,13 @@
-import { useMemo } from "react";
-import { useParams } from "react-router-dom";
-import useFetchAPI from "../fetch";
-import { GetHeaders } from "../headers";
+import { apiRequest } from "../fetchAPI";
 
-export default function GetVenue() {
-  const { id } = useParams(); // Get the 'username' from the route parameters
-
-  // Memoize headers to prevent unnecessary recalculations
-  const headers = useMemo(() => GetHeaders(), []);
-
-  // Fetch user data
-  const { data, isLoading, isError } = useFetchAPI({
-    url: `https://v2.api.noroff.dev/holidaze/venues/${id}?_owner=true`,
-    options: {
-      method: "GET",
-      headers,
-    },
-  });
-
-  return { data, isLoading, isError };
+async function getVenue(id: string) {
+  try {
+    const response = await apiRequest(`/venues/${id}?_owner=true`);
+    return response.data; // Return the data if the request is successful
+  } catch (error) {
+    console.error("Error fetching venue:", error);
+    throw error;
+  }
 }
+
+export default getVenue;

@@ -144,7 +144,7 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
             </div>
             <div>
               <p className="text-xl">City:</p>
-              {data.location.address ? (
+              {data.location.city ? (
                 <p className="text-md">{data.location.city}</p>
               ) : (
                 <p className="text-md">No city provided</p>
@@ -152,7 +152,7 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
             </div>
             <div>
               <p className="text-xl">Country:</p>
-              {data.location.address ? (
+              {data.location.country ? (
                 <p className="text-md">{data.location.country}</p>
               ) : (
                 <p className="text-md">No country provided</p>

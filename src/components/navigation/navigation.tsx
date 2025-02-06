@@ -1,14 +1,18 @@
 import { Link } from "react-router-dom";
-import { Dropdown } from "flowbite-react";
 import { useAuth } from "../../authentication/AuthProvider";
+import { BsHouses } from "react-icons/bs";
+import { CiLogin } from "react-icons/ci";
+import { IoPersonAddOutline } from "react-icons/io5";
+import { RiHomeHeartLine } from "react-icons/ri";
 
 function Navigation(): JSX.Element {
   const { isLoggedIn, userProfile, logout } = useAuth();
 
   return (
-    <div>
-      <nav className="bg-white">
-        <div className="container flex flex-wrap justify-between mx-auto p-4">
+    <div className="flex">
+      {/* Sidebar */}
+      <div className="w-64 h-screen bg-white shadow-md p-4">
+        <div className="flex items-center justify-between mb-8">
           <Link
             to="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -18,95 +22,101 @@ function Navigation(): JSX.Element {
               Holidaze
             </span>
           </Link>
-
-          <ul className="flex flex-col font-bold p-4 md:p-0 mt-4 border sm:flex-row gap-10 items-center border-none">
+        </div>
+        <ul className="space-y-4 font-bold">
+          <div className="link flex items-center hover:bg-gray-200">
+            <div>
+              <BsHouses className="text-2xl" />
+            </div>
             <li>
-              <Link
-                to="/venues"
-                className="py-2 px-3 rounded  md:hover:bg-transparent md:hover:text-primaryButton md:p-0 "
-              >
+              <Link to="/venues" className="block py-2 px-3 rounded-md ">
                 Venues
               </Link>
             </li>
+          </div>
 
-            {!isLoggedIn ? (
-              <>
+          {!isLoggedIn ? (
+            <>
+              <div className="link flex items-center hover:bg-gray-200">
+                <div>
+                  <CiLogin className="text-2xl" />
+                </div>
                 <li>
-                  <Link
-                    to="/login"
-                    className="py-2 px-3 rounded md:hover:bg-transparent md:hover:text-primaryButton md:p-0"
-                  >
+                  <Link to="/login" className="block py-2 px-3 rounded-md">
                     Login
                   </Link>
                 </li>
+              </div>
+              <div className="link flex items-center hover:bg-gray-200">
+                <div>
+                  <IoPersonAddOutline className="text-2xl" />
+                </div>
                 <li>
-                  <Link
-                    to="/register"
-                    className="py-2 px-3 rounded  md:hover:bg-transparent md:hover:text-primaryButton md:p-0"
-                  >
+                  <Link to="/register" className="block py-2 px-3 rounded-md">
                     Register
                   </Link>
                 </li>
-              </>
-            ) : (
-              <>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="link flex items-center">
+                <div>
+                  <BsHouses className="text-2xl" />
+                </div>
                 <li>
                   <Link
-                    to={`profiles/${userProfile.name}`}
-                    className="py-2 px-3 rounded md:hover:bg-transparent md:hover:text-primaryButton md:p-0"
+                    to={`profiles/${userProfile.name}/bookings/`}
+                    className="block py-2 px-3 rounded-md hover:bg-gray-200"
                   >
-                    Profile
+                    Your bookings
                   </Link>
                 </li>
-
-                <Dropdown
-                  arrowIcon={false}
-                  label="Menu"
-                  style={{
-                    border: "none",
-                    outline: "none",
-                    boxShadow: "none",
-                    fontWeight: "700",
-                  }}
-                  renderTrigger={(theme) => (
-                    <span
-                      className="text-sm flex items-center justify-center space-x-2"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontWeight: "700",
-                      }}
-                    >
-                      <img
-                        src="https://i1.sndcdn.com/artworks-NZstK5rBoTgmMXBK-RShAtw-t500x500.jpg"
-                        alt="User Avatar"
-                        className="w-10 h-10 rounded-full cursor-pointer"
-                      />
-                    </span>
-                  )}
+              </div>
+              <li>
+                <Link
+                  to={`profiles/${userProfile.name}`}
+                  className="block py-2 px-3 rounded-md hover:bg-gray-200"
                 >
-                  <Dropdown.Header>
-                    <div>
-                      <span className="block text-sm font-semibold">
-                        {userProfile.name}
-                      </span>
-                      <span className="block text-xs text-gray-500 truncate">
-                        {userProfile.email}
-                      </span>
-                    </div>
-                  </Dropdown.Header>
-                  <Dropdown.Item>Dashboard</Dropdown.Item>
-                  <Dropdown.Item>Settings</Dropdown.Item>
-                  <Dropdown.Item>Earnings</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item onClick={logout}>Sign out</Dropdown.Item>
-                </Dropdown>
-              </>
-            )}
-          </ul>
-        </div>
-      </nav>
+                  Your Venues
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={`profiles/${userProfile.name}`}
+                  className="block py-2 px-3 rounded-md hover:bg-gray-200"
+                >
+                  Create a venue
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={`profiles/${userProfile.name}`}
+                  className="block py-2 px-3 rounded-md hover:bg-gray-200"
+                >
+                  Profile
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to={`profiles/${userProfile.name}`}
+                  className="block py-2 px-3 rounded-md hover:bg-gray-200"
+                >
+                  Settings
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={logout}
+                  className="block py-2 px-3 rounded-md hover:bg-gray-200"
+                >
+                  Log out
+                </button>
+              </li>
+            </>
+          )}
+        </ul>
+      </div>
     </div>
   );
 }

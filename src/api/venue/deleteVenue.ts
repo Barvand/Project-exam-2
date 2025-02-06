@@ -1,33 +1,14 @@
-import { GetHeaders } from "../headers";
+import { apiRequest } from "../fetchAPI";
 
-interface DeleteProps {
-  id: string;
-}
-
-async function DeleteVenue({ id }: DeleteProps) {
-  if (!id) {
-    console.error("Error: Venue ID is required.");
-    return;
-  }
-
+export default async function deleteVenue(id: string) {
   try {
-    const response = await fetch(
-      `https://v2.api.noroff.dev/holidaze/venues/${id}`,
-      {
-        method: "DELETE",
-        headers: GetHeaders(),
-      }
-    );
+    const response = await apiRequest(`/venues/${id}?_owner=true`, "DELETE");
 
-    if (response.status === 204) {
-      console.log("Venue successfully deleted.");
-    } else {
-      throw new Error(`Failed to delete venue: ${response.statusText}`);
+    if (response === null || !response) {
+      return { success: true }; // Successfully deleted without any response body
     }
   } catch (error) {
     console.error("Error deleting venue:", error);
     throw error;
   }
 }
-
-export default DeleteVenue;
