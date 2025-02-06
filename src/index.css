@@ -24,7 +24,7 @@ body {
   background-color: var(--color-background);
 }
 
-section { 
+section {
   margin-top: 100px;
 }
 /* Loader animation */
@@ -40,11 +40,33 @@ section {
   transform: translateZ(0);
 }
 
-.profile-title { 
-  border-top: #1a73e8 2px solid; 
-  border-left: #1a73e8 2px solid; 
+.profile-title {
+  border-top: #1a73e8 2px solid;
+  border-left: #1a73e8 2px solid;
   border-right: #1a73e8 2px solid;
-  border-radius: 25px 25px 0 0; 
+  border-radius: 25px 25px 0 0;
+}
+
+/* Error message styling */
+.error {
+  color: red;
+  font-size: 0.875rem;
+  min-height: 1.25rem; 
+  display: block;
+}
+
+/* Style for the date input field */
+input[type="date"] {
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+/* Add a visual cue for the date input */
+input[type="date"]:invalid {
+  background-color: #f8d7da; /* Light red background */
+  border-color: #f5c6cb; /* Red border */
 }
 
 @keyframes mulShdSpin {

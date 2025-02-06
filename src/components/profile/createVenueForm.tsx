@@ -1,11 +1,14 @@
 import { useForm } from "react-hook-form";
 import createVenue from "../../api/venue/createVenue";
 import { VenueFormData } from "../../types/VenueFormTypes";
+import { useState } from "react";
 
 // Still have to implement error handling and user feedback
 
 function CreateVenueForm() {
   const { register, handleSubmit, reset } = useForm<VenueFormData>();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // New state for API errors
 
   const onSubmit = async (data: VenueFormData) => {
     try {
@@ -17,12 +20,18 @@ function CreateVenueForm() {
       data.location.lng = Number(data.location.lng);
 
       // Use the API function to create the venue
-      const responseData = await createVenue(data);
+      const response = await createVenue(data);
 
-      console.log("API Response:", responseData);
+      if (!response.ok) {
+        const errorData = await response.json(); // Convert response to JSON
+        // Extract error messages from API response
+        const errorMessages = errorData.errors
 
-      // Reset the form upon successful submission
-      reset();
+        setErrorMessage(errorMessages); // ✅ Display error messages
+      } else {
+        setSuccessMessage("Your order has been submitted successfully!");
+        reset();
+      }
     } catch (error) {
       console.error("Error during venue creation:", error);
     }
@@ -196,6 +205,19 @@ function CreateVenueForm() {
               placeholder="Longitude"
             />
           </div>
+          {/* Success Message */}
+          {successMessage && (
+            <div className="mt-3 text-green-600 font-semibold">
+              {successMessage}
+            </div>
+          )}
+
+          {/* API Error Message */}
+          {errorMessage && (
+            <div className="mt-3 text-red-500 font-semibold">
+              {errorMessage}
+            </div>
+          )}
 
           <button
             type="submit"

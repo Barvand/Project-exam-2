@@ -13,7 +13,7 @@ function RenderProfileInfo({ profile, onToggleVenueManager }) {
           {/* Avatar with shadow effect */}
           <div className="grid-col-1 p-5 rounded bg-customPurple-200 border-customPurple-300 border items-center flex justify-center shadow-md">
             <img
-              className="h-64 rounded-full object-cover border-4 border-white shadow-lg"
+              className="h-64 w-64 rounded-full object-cover border-4 border-white shadow-lg"
               src={profile.avatar.url}
               alt={profile.avatar.alt}
             />

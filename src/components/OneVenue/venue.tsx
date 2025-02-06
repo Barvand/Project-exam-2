@@ -4,6 +4,7 @@ import { MdOutlinePets } from "react-icons/md";
 import { FaParking } from "react-icons/fa";
 import { Location, Owner } from "../../types/venue.array";
 import { Link } from "react-router-dom";
+import BookingForm from "./bookingForm";
 
 interface Venue {
   name: string;
@@ -20,11 +21,11 @@ interface VenueProps {
 const RenderVenue: React.FC<VenueProps> = ({ data }) => {
   return (
     <section className="container mt-2">
-      <div className="grid grid-cols-1 md:grid-cols-3 grid-rows-[500px] gap-1 p-1">
-        {/* Main Image - Left (Takes 2 columns) */}
-        <div className="col-span-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 grid-rows-[auto]">
+        {/* Main Image - Takes full width on small screens, spans 2 rows on larger screens */}
+        <div className="col-span-2 sm:col-span-2 lg:col-span-2 lg:row-span-2 h-[500px]">
           <img
-            className="object-cover w-full h-full rounded-lg"
+            className="object-cover object-center w-full h-full rounded-lg"
             src={
               data.media && data.media.length > 0
                 ? data.media[0].url
@@ -38,12 +39,12 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
           />
         </div>
 
-        {/* Right Side Grid (Stacked Images) */}
-        <div className="col-span-2 sm:col-span-1 grid grid-rows-2 gap-2">
+        {/* Smaller Images (Second and third images side by side) */}
+        <div className="lg:col-span-1 lg:row-span-1">
           {/* Image 1 */}
-          <div className="md:h-[245px]">
+          <div className="h-[240px]">
             <img
-              className="object-cover w-full h-full rounded-lg"
+              className="object-fill w-full h-full rounded-lg"
               src={
                 data.media && data.media.length > 0
                   ? data.media[0].url
@@ -56,14 +57,17 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
               }
             />
           </div>
+        </div>
+
+        <div className="lg:col-span-1 lg:row-span-1">
           {/* Image 2 */}
-          <div className="sm:h-[245px]">
+          <div className="h-[240px]">
             <img
-              className="object-cover w-full h-full rounded-lg"
+              className="object-fill w-full h-full rounded-lg"
               src={
                 data.media && data.media.length > 0
                   ? data.media[0].url
-                  : "default-image-url"
+                  : "/unknown-user.png"
               }
               alt={
                 data.media && data.media.length > 0
@@ -75,48 +79,106 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
         </div>
 
         {/* Venue Details Section */}
-        <div className="px-6">
-          <h2 className="text-2xl font-bold pt-1 text-primary">{data.name}</h2>
-          <div className="flex gap-2">
-            <img
-              className="rounded-full w-12 h-12"
-              src={data.owner.avatar.url}
-              alt={data.owner.name}
-            />
-            <Link
-              to={`/profiles/${data.owner.name}`}
-              className="text-md font-bold py-4 text-gray-600"
-            >
-              {data.owner.name}
-            </Link>
-          </div>
-          <p className="text-md">{data.description}</p>
-          <div className="py-4 w-96 bg-slate-50">
-            <p className="flex gap-2 align-center">
-              <FaWifi className="text-3xl text-green-500" />
-              {data.meta.wifi ? "Available" : "Not Available"}
-            </p>
-            <p className="flex gap-2 align-center">
-              <IoFastFoodSharp className="text-3xl text-green-500" />
-              {data.meta.breakfast ? "Available" : "Not Available"}
-            </p>
-            <p className="flex gap-2 align-center">
-              <MdOutlinePets className="text-3xl text-green-500" />
-              {data.meta.pets ? "Pets: Available" : "Pets: Not Available"}
-            </p>
-            <p className="flex gap-2 align-center">
-              <FaParking className="text-3xl text-green-500" />
-              {data.meta.parking
-                ? "Parking: Available"
-                : "Parking: Not Available"}
-            </p>
-            <div className="">
-              <p> Address: {data.location.address} </p>
-              <p> City: {data.location.city} </p>
-              <p> Country: {data.location.country} </p>
+        <div className="col-span-2 sm:col-span-2 lg:col-span-3">
+          <div className="flex justify-between bg-customPurple-100 p-2 items-center rounded-lg">
+            <div>
+              <h2 className="text-2xl font-bold pt-1 text-customPurple-800 capitalize">
+                {data.name}
+              </h2>
+              <p className="text-gray-700 text-sm">
+                Information about the property:
+              </p>
+              <p className="text-md normal-case text-black">
+                {data.description}
+              </p>
             </div>
           </div>
         </div>
+
+        {/* Amenities, Address, and Booking */}
+        <div className="col-span-2 lg:grid lg:grid-cols-3 lg:gap-4 lg:col-span-3 h-[400px]">
+          {/* Amenities */}
+          <div className="p-4 bg-customPurple-100 rounded-lg mb-4">
+            <h2 className="text-2xl font-bold text-customPurple-800">
+              Amenities
+            </h2>
+            <div className="flex flex-col gap-2">
+              <p className="flex gap-2 align-center">
+                <FaWifi className="text-3xl text-customPurple-200 bg-customPurple-900 rounded-full h-8 w-8 p-1" />
+                {data.meta.wifi ? "Available" : "Not Available"}
+              </p>
+              <p className="flex gap-2 align-center">
+                <IoFastFoodSharp className="text-3xl text-customPurple-200 bg-customPurple-900 rounded-full h-8 w-8 p-1" />
+                {data.meta.breakfast ? "Included" : "Not included"}
+              </p>
+              <p className="flex gap-2 align-center">
+                <MdOutlinePets className="text-3xl text-customPurple-200 bg-customPurple-900 rounded-full h-8 w-8 p-1" />
+                {data.meta.pets ? "Pets: Allowed" : "Pets: Not allowed"}
+              </p>
+              <p className="flex gap-2 align-center">
+                <FaParking className="text-3xl text-customPurple-200 bg-customPurple-900 rounded-full h-8 w-8 p-1" />
+                {data.meta.parking
+                  ? "Parking: Included"
+                  : "Parking: Not included"}
+              </p>
+              <div className="absolute hidden group-hover:block bg-black text-white text-sm p-2 rounded mt-1 left-0">
+                Parking
+              </div>
+            </div>
+          </div>
+
+          {/* Address */}
+          <div className="p-4 bg-customPurple-200 rounded-lg mb-4">
+            <h2 className="text-2xl font-bold text-customPurple-800">
+              Address
+            </h2>
+            <div>
+              <p className="text-xl">Street:</p>
+              {data.location.address ? (
+                <p className="text-md">
+                  {data.location.address}, {data.location.zip}
+                </p>
+              ) : (
+                <p className="text-md">Very strange but, no address provided</p>
+              )}
+            </div>
+            <div>
+              <p className="text-xl">City:</p>
+              {data.location.address ? (
+                <p className="text-md">{data.location.city}</p>
+              ) : (
+                <p className="text-md">No city provided</p>
+              )}
+            </div>
+            <div>
+              <p className="text-xl">Country:</p>
+              {data.location.address ? (
+                <p className="text-md">{data.location.country}</p>
+              ) : (
+                <p className="text-md">No country provided</p>
+              )}
+            </div>
+          </div>
+
+          {/* Booking Form */}
+          <div className="bg-customPurple-300 rounded-lg flex items-center justify-center mb-4">
+            <BookingForm />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex gap-2">
+        <img
+          className="rounded-full w-12 h-12"
+          src={data.owner.avatar.url}
+          alt={data.owner.name}
+        />
+        <Link
+          to={`/profiles/${data.owner.name}`}
+          className="text-md font-bold py-4 text-customPurple-800 capitalize"
+        >
+          {data.owner.name}
+        </Link>
       </div>
     </section>
   );
