@@ -4,6 +4,8 @@ import loginSchema from "../../Validations/LoginValidation";
 import SuccessMessage from "../../error-handling/success";
 import ErrorMessage from "../../error-handling/error";
 import LoginUser from "../../api/users/loginUser";
+import { Link } from "react-router-dom";
+import { CiLogin } from "react-icons/ci";
 
 function LoginForm() {
   const {
@@ -52,20 +54,20 @@ function LoginForm() {
           </div>
           <button
             type="submit"
-            className="w-full bg-secondary hover:bg-purple-700 text-white font-medium py-2.5 rounded-lg transition-colors"
+            className="w-full bg-secondary hover:bg-customPurple-900 text-white font-medium py-3 rounded-lg transition-colors flex justify-center"
           >
-            Sign Up
+            Login <CiLogin className="text-2xl" />
           </button>
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-600">
           Don't have an account?
-          <a
-            href="#"
+          <Link
+            to="/register"
             className="text-indigo-600 hover:text-indigo-500 font-medium"
           >
             Sign up
-          </a>
+          </Link>
         </div>
       </div>
     </div>

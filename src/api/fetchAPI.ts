@@ -16,23 +16,13 @@ export async function apiRequest(
       }
     );
 
-    if (!response.ok) {
-      // Try to parse the error message from the response
-      let errorMessage = "Something went wrong.";
-      try {
-        const errorData = await response.json();
-        errorMessage = errorData.errors?.[0]?.message || errorMessage;
-      } catch (parseError) {
-        // If parsing fails, errorMessage remains unchanged
-      }
-      throw new Error(errorMessage);
-    }
-
-    // Handle 204 No Content response
-    if (response.status === 204) {
-      return { success: true }; // Indicate success without data
-    }
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.errors?.[0]?.message || "An error occurred while fetching data"
+      );
+    }
     return data;
   } catch (error) {
     console.error(`Error in ${method} ${endpoint}:`, error);

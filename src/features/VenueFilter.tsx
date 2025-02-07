@@ -15,20 +15,40 @@ function VenueFilters({
   changeLimit,
 }: VenueFilterProps) {
   return (
-    <div className="mb-10 pb-5 border-b">
-      <h1 className="text-4xl py-2"> Find your dream destination! </h1>
-
+    <div className="mb-5 pb-5 border-b">
+      <h2 className="text-center text-xl py-5 text-customPurple-900 font-bold">
+        Find your dream destination
+      </h2>
       {/* Buttons & Limit Selector */}
-      <div className="flex flex-wrap items-center gap-2">
+
+      <div className="flex flex-wrap items-center gap-2 justify-center">
+        {/* Sort By Created Date */}
+        <div className="relative group">
+          <button
+            className={`py-1 px-5 rounded w-52 flex justify-evenly items-center ${
+              activeSort === "created"
+                ? "bg-customPurple-500 text-customPurple-50"
+                : "bg-customPurple-50 text-customPurple-900"
+            }`}
+            onClick={() => changeSortBy("created")}
+          >
+            Sort By Created Date
+          </button>
+          <div className="absolute hidden group-hover:block bg-black text-white text-sm p-2 rounded mt-1 left-0">
+            Sort by Price: {sortOrder === "asc" ? "New to old" : "Old to new"}
+          </div>
+        </div>
         {/* Sort By Name */}
         <div className="relative group">
           <button
-            className={`border py-1 px-5 rounded w-52 flex justify-evenly items-center ${
-              activeSort === "name" ? "bg-blue-500 text-white" : "bg-primary"
+            className={`py-1 px-5 rounded w-52 flex justify-evenly items-center ${
+              activeSort === "name"
+                ? "bg-customPurple-500 text-customPurple-50"
+                : "bg-customPurple-50 text-customPurple-900"
             }`}
             onClick={() => changeSortBy("name")}
           >
-            Sort By Name{" "}
+            Sort By Name
             {activeSort === "name" &&
               (sortOrder === "asc" ? <IoIosArrowUp /> : <IoIosArrowDown />)}
           </button>
@@ -41,12 +61,14 @@ function VenueFilters({
         {/* Sort By Price */}
         <div className="relative group">
           <button
-            className={`border py-1 px-5 rounded w-32 flex justify-evenly items-center ${
-              activeSort === "price" ? "bg-blue-500 text-white" : "bg-primary"
+            className={`py-1 px-5 rounded w-32 flex justify-evenly items-center ${
+              activeSort === "price"
+                ? "bg-customPurple-500 text-customPurple-50"
+                : "bg-customPurple-50 text-customPurple-900"
             }`}
             onClick={() => changeSortBy("price")}
           >
-            Price{" "}
+            Price
             {activeSort === "price" &&
               (sortOrder === "asc" ? <IoIosArrowUp /> : <IoIosArrowDown />)}
           </button>
@@ -55,25 +77,9 @@ function VenueFilters({
             Sort by Price: {sortOrder === "asc" ? "Low to High" : "High to Low"}
           </div>
         </div>
-
-        {/* Sort By Created Date */}
-        <div className="relative group">
-          <button
-            className={`border py-1 px-5 rounded w-52 flex justify-evenly items-center ${
-              activeSort === "created" ? "bg-blue-500 text-white" : "bg-primary"
-            }`}
-            onClick={() => changeSortBy("created")}
-          >
-            Sort By Created Date
-          </button>
-          <div className="absolute hidden group-hover:block bg-black text-white text-sm p-2 rounded mt-1 left-0">
-            Sort by Price: {sortOrder === "asc" ? "New to old" : "Old to new"}
-          </div>
-        </div>
-
         {/* Limit Selector */}
         <select
-          className="border py-1 px-5 rounded bg-primary"
+          className="py-1 px-5 rounded bg-customPurple-50 text-customPurple-500"
           value={limit}
           onChange={(e) => changeLimit(Number(e.target.value))}
         >

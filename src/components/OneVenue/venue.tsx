@@ -5,6 +5,7 @@ import { FaParking } from "react-icons/fa";
 import { Location, Owner } from "../../types/venue.array";
 import { Link } from "react-router-dom";
 import BookingForm from "./bookingForm";
+import { useAuth } from "../../authentication/AuthProvider";
 
 interface Venue {
   name: string;
@@ -19,6 +20,8 @@ interface VenueProps {
   data: Venue;
 }
 const RenderVenue: React.FC<VenueProps> = ({ data }) => {
+  const { isLoggedIn } = useAuth();
+
   return (
     <section className="container mt-2">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 grid-rows-[auto]">
@@ -162,7 +165,21 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
 
           {/* Booking Form */}
           <div className="bg-customPurple-300 rounded-lg flex items-center justify-center mb-4">
-            <BookingForm />
+            {!isLoggedIn ? (
+              <div className="px-4 py-3 text-center flex flex-col gap-2">
+                <p className="font-bold">
+                  Log in to continue placing a booking.
+                </p>
+                <Link
+                  className="py-1 px-5 rounded w-32 flex justify-evenly items-center bg-customPurple-50 text-customPurple-900 mx-auto"
+                  to="/login"
+                >
+                  Login here
+                </Link>
+              </div>
+            ) : (
+              <BookingForm />
+            )}
           </div>
         </div>
       </div>
