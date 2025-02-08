@@ -90,11 +90,11 @@ function Navigation(): JSX.Element {
                     </li>
                     <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
                       <Link
-                        to={`/profiles/${userProfile.name}/create-venue`}
+                        to={`/profiles/${userProfile.name}/venueManager`}
                         className="block py-2"
                         onClick={closeMenu}
                       >
-                        Create Venue
+                        Venue Manager
                       </Link>
                     </li>
                     <li>

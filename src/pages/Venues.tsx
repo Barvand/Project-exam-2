@@ -6,7 +6,7 @@ import GetVenues from "../api/venues/getVenues";
 
 function VenuesPage() {
   const [page, setPage] = useState(1);
-  const [sortOrder, setSortOrder] = useState("desc");
+  const [sortOrder, setSortOrder] = useState("asc");
   const [limit, setLimit] = useState(100);
   const [sortBy, setSortBy] = useState("created");
   const [activeSort, setActiveSort] = useState("created");

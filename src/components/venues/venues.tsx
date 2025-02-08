@@ -56,7 +56,7 @@ export function RenderVenues({ data, meta, page, setPage }: VenuesProps) {
                 src={
                   venue.media && venue.media.length > 0
                     ? venue.media[0].url
-                    : "unknown-user.png"
+                    : "placeholder.png"
                 }
                 alt={
                   venue.media && venue.media.length > 0

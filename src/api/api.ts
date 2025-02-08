@@ -15,7 +15,6 @@ export async function fetchData(endpoint: string) {
 
     const data = await response.json();
 
-    console.log(data);
     if (!response.ok) {
       throw new Error(
         data.errors?.[0]?.message || "An error occurred while fetching data"

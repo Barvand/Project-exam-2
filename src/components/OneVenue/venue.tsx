@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { FaWifi } from "react-icons/fa";
 import { IoFastFoodSharp } from "react-icons/io5";
 import { MdOutlinePets } from "react-icons/md";
 import { FaParking } from "react-icons/fa";
-import { Location, Owner } from "../../types/venue.array";
 import { Link } from "react-router-dom";
 import BookingForm from "./bookingForm";
 import { useAuth } from "../../authentication/AuthProvider";
@@ -12,179 +12,118 @@ interface Venue {
   description: string;
   media: { url: string; alt: string }[];
   meta: { wifi: boolean; breakfast: boolean; pets: boolean; parking: boolean };
-  owner: Owner;
-  location: Location;
+  owner: { name: string; avatar: { url: string } };
+  location: { address?: string; zip?: string; city?: string; country?: string };
 }
 
 interface VenueProps {
   data: Venue;
 }
+
 const RenderVenue: React.FC<VenueProps> = ({ data }) => {
   const { isLoggedIn } = useAuth();
 
+  // State for currently displayed image
+  const [selectedImage, setSelectedImage] = useState(
+    data.media.length > 0 ? data.media[0].url : "/placeholder.png"
+  );
+
   return (
     <section className="container mt-2">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 grid-rows-[auto]">
-        {/* Main Image - Takes full width on small screens, spans 2 rows on larger screens */}
-        <div className="col-span-2 sm:col-span-2 lg:col-span-2 lg:row-span-2 h-[500px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Main Image - Takes up two-thirds of the width */}
+        <div className="col-span-3 lg:col-span-2 h-[500px]">
           <img
             className="object-cover object-center w-full h-full rounded-lg"
-            src={
-              data.media && data.media.length > 0
-                ? data.media[0].url
-                : "/unknown-user.png"
-            }
-            alt={
-              data.media && data.media.length > 0
-                ? data.media[0].alt
-                : "default alt text"
-            }
+            src={selectedImage}
+            alt="Main venue image"
           />
         </div>
 
-        {/* Smaller Images (Second and third images side by side) */}
-        <div className="lg:col-span-1 lg:row-span-1">
-          {/* Image 1 */}
-          <div className="h-[240px]">
-            <img
-              className="object-fill w-full h-full rounded-lg"
-              src={
-                data.media && data.media.length > 0
-                  ? data.media[0].url
-                  : "/unknown-user.png"
-              }
-              alt={
-                data.media && data.media.length > 0
-                  ? data.media[0].alt
-                  : "default alt text"
-              }
-            />
-          </div>
-        </div>
-
-        <div className="lg:col-span-1 lg:row-span-1">
-          {/* Image 2 */}
-          <div className="h-[240px]">
-            <img
-              className="object-fill w-full h-full rounded-lg"
-              src={
-                data.media && data.media.length > 0
-                  ? data.media[0].url
-                  : "/unknown-user.png"
-              }
-              alt={
-                data.media && data.media.length > 0
-                  ? data.media[0].alt
-                  : "default alt text"
-              }
-            />
-          </div>
-        </div>
-
-        {/* Venue Details Section */}
-        <div className="col-span-2 sm:col-span-2 lg:col-span-3">
-          <div className="flex justify-between bg-customPurple-100 p-2 items-center rounded-lg">
-            <div>
-              <h2 className="text-2xl font-bold pt-1 text-customPurple-800 capitalize">
-                {data.name}
-              </h2>
-              <p className="text-gray-700 text-sm">
-                Information about the property:
-              </p>
-              <p className="text-md normal-case text-black">
-                {data.description}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Amenities, Address, and Booking */}
-        <div className="col-span-2 lg:grid lg:grid-cols-3 lg:gap-4 lg:col-span-3 h-[400px]">
-          {/* Amenities */}
-          <div className="p-4 bg-customPurple-100 rounded-lg mb-4">
-            <h2 className="text-2xl font-bold text-customPurple-800">
-              Amenities
-            </h2>
-            <div className="flex flex-col gap-2">
-              <p className="flex gap-2 align-center">
-                <FaWifi className="text-3xl text-customPurple-200 bg-customPurple-900 rounded-full h-8 w-8 p-1" />
-                {data.meta.wifi ? "Available" : "Not Available"}
-              </p>
-              <p className="flex gap-2 align-center">
-                <IoFastFoodSharp className="text-3xl text-customPurple-200 bg-customPurple-900 rounded-full h-8 w-8 p-1" />
-                {data.meta.breakfast ? "Included" : "Not included"}
-              </p>
-              <p className="flex gap-2 align-center">
-                <MdOutlinePets className="text-3xl text-customPurple-200 bg-customPurple-900 rounded-full h-8 w-8 p-1" />
-                {data.meta.pets ? "Pets: Allowed" : "Pets: Not allowed"}
-              </p>
-              <p className="flex gap-2 align-center">
-                <FaParking className="text-3xl text-customPurple-200 bg-customPurple-900 rounded-full h-8 w-8 p-1" />
-                {data.meta.parking
-                  ? "Parking: Included"
-                  : "Parking: Not included"}
-              </p>
-              <div className="absolute hidden group-hover:block bg-black text-white text-sm p-2 rounded mt-1 left-0">
-                Parking
-              </div>
-            </div>
-          </div>
-
-          {/* Address */}
-          <div className="p-4 bg-customPurple-200 rounded-lg mb-4">
-            <h2 className="text-2xl font-bold text-customPurple-800">
-              Address
-            </h2>
-            <div>
-              <p className="text-xl">Street:</p>
-              {data.location.address ? (
-                <p className="text-md">
-                  {data.location.address}, {data.location.zip}
-                </p>
-              ) : (
-                <p className="text-md">Very strange but, no address provided</p>
-              )}
-            </div>
-            <div>
-              <p className="text-xl">City:</p>
-              {data.location.city ? (
-                <p className="text-md">{data.location.city}</p>
-              ) : (
-                <p className="text-md">No city provided</p>
-              )}
-            </div>
-            <div>
-              <p className="text-xl">Country:</p>
-              {data.location.country ? (
-                <p className="text-md">{data.location.country}</p>
-              ) : (
-                <p className="text-md">No country provided</p>
-              )}
-            </div>
-          </div>
-
-          {/* Booking Form */}
-          <div className="bg-customPurple-300 rounded-lg flex items-center justify-center mb-4">
-            {!isLoggedIn ? (
-              <div className="px-4 py-3 text-center flex flex-col gap-2">
-                <p className="font-bold">
-                  Log in to continue placing a booking.
-                </p>
-                <Link
-                  className="py-1 px-5 rounded w-32 flex justify-evenly items-center bg-customPurple-50 text-customPurple-900 mx-auto"
-                  to="/login"
-                >
-                  Login here
-                </Link>
-              </div>
-            ) : (
-              <BookingForm />
-            )}
+        {/* Thumbnails - Takes up one-third of the width */}
+        <div className="col-span-3 lg:col-span-1 h-[500px] flex lg:flex-col gap-2 overflow-x-auto lg:overflow-hidden">
+          <div className="grid grid-cols-5 lg:grid-cols-1 gap-2 w-full">
+            {data.media.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => setSelectedImage(image.url)}
+                className={`w-full h-[95px] rounded-lg overflow-hidden border-2 ${
+                  selectedImage === image.url
+                    ? "border-customPurple-500"
+                    : "border-transparent"
+                }`}
+              >
+                <img
+                  src={image.url}
+                  alt={image.alt || "Gallery thumbnail"}
+                  className="object-cover w-full h-full"
+                />
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="flex gap-2">
+      {/* Venue Details Section */}
+      <div className="mt-4 p-4 bg-customPurple-100 rounded-lg">
+        <h2 className="text-2xl font-bold text-customPurple-800 capitalize">
+          {data.name}
+        </h2>
+        <p className="text-gray-700 text-sm">Information about the property:</p>
+        <p className="text-md normal-case text-black">{data.description}</p>
+      </div>
+
+      {/* Amenities */}
+      <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="p-4 bg-customPurple-100 rounded-lg flex items-center gap-2">
+          <FaWifi className="text-xl text-customPurple-900" />
+          {data.meta.wifi ? "WiFi Available" : "No WiFi"}
+        </div>
+        <div className="p-4 bg-customPurple-100 rounded-lg flex items-center gap-2">
+          <IoFastFoodSharp className="text-xl text-customPurple-900" />
+          {data.meta.breakfast ? "Breakfast Included" : "No Breakfast"}
+        </div>
+        <div className="p-4 bg-customPurple-100 rounded-lg flex items-center gap-2">
+          <MdOutlinePets className="text-xl text-customPurple-900" />
+          {data.meta.pets ? "Pets Allowed" : "No Pets"}
+        </div>
+        <div className="p-4 bg-customPurple-100 rounded-lg flex items-center gap-2">
+          <FaParking className="text-xl text-customPurple-900" />
+          {data.meta.parking ? "Parking Available" : "No Parking"}
+        </div>
+      </div>
+
+      {/* Address */}
+      <div className="mt-4 p-4 bg-customPurple-200 rounded-lg">
+        <h2 className="text-2xl font-bold text-customPurple-800">Address</h2>
+        <p className="text-md">
+          {data.location.address || "No address provided"}
+        </p>
+        <p className="text-md">{data.location.city || "No city provided"}</p>
+        <p className="text-md">
+          {data.location.country || "No country provided"}
+        </p>
+      </div>
+
+      {/* Booking Form */}
+      <div className="mt-4 p-4 bg-customPurple-300 rounded-lg flex items-center justify-center">
+        {!isLoggedIn ? (
+          <div className="text-center">
+            <p className="font-bold">Log in to book this venue.</p>
+            <Link
+              className="mt-2 inline-block px-4 py-2 bg-customPurple-50 text-customPurple-900 rounded"
+              to="/login"
+            >
+              Login here
+            </Link>
+          </div>
+        ) : (
+          <BookingForm />
+        )}
+      </div>
+
+      {/* Owner Information */}
+      <div className="mt-4 flex items-center gap-2">
         <img
           className="rounded-full w-12 h-12"
           src={data.owner.avatar.url}
@@ -192,7 +131,7 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
         />
         <Link
           to={`/profiles/${data.owner.name}`}
-          className="text-md font-bold py-4 text-customPurple-800 capitalize"
+          className="text-md font-bold text-customPurple-800"
         >
           {data.owner.name}
         </Link>

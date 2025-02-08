@@ -9,7 +9,8 @@ import VenuePage from "./pages/OneVenue.tsx";
 import IndexPage from "./pages/index.tsx";
 import SearchResultsPage from "./pages/search.tsx";
 import BookingsPage from "./pages/bookings.tsx";
-import CreateVenuePage from "./pages/createVenue.tsx";
+
+import ManageVenues from "./components/venueManagerPage/ManageVenues.tsx";
 
 function App(): JSX.Element {
   return (
@@ -31,8 +32,8 @@ function App(): JSX.Element {
               element={<BookingsPage />}
             />
             <Route
-              path="profiles/:username/create-venue"
-              element={<CreateVenuePage />}
+              path="profiles/:username/venueManager"
+              element={<ManageVenues />}
             />
             <Route path="/search" element={<SearchResultsPage />} />
           </Routes>
