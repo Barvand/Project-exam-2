@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
-import createVenue from "../../api/venue/createVenue";
 import { VenueFormData } from "../../types/VenueFormTypes";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageField from "../../features/imageField";
+import { postData } from "../../api/api";
 
 // Still have to implement error handling and user feedback
 
@@ -32,7 +32,7 @@ function CreateVenueForm() {
       data.location.lat = Number(data.location.lat);
       data.location.lng = Number(data.location.lng);
 
-      const response = await createVenue(data);
+      const response = await postData("holidaze/venues/", data);
 
       {
         // Handle JSON response (e.g., 201 Created)

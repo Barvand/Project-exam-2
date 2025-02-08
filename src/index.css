@@ -60,11 +60,6 @@ input[type="date"] {
   border-radius: 4px;
 }
 
-/* Add a visual cue for the date input */
-input[type="date"]:invalid {
-  background-color: #f8d7da; /* Light red background */
-  border-color: #f5c6cb; /* Red border */
-}
 
 @keyframes mulShdSpin {
   0%,

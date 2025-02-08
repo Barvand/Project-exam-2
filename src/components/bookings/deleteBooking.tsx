@@ -1,5 +1,5 @@
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import DeleteBooking from "../../api/bookings/delete";
+import { deleteData } from "../../api/api";
 
 interface RenderDeleteBookingProps {
   id: string;
@@ -12,7 +12,7 @@ function RenderDeleteBooking({
 }: RenderDeleteBookingProps): JSX.Element {
   const handleDelete = async () => {
     try {
-      await DeleteBooking({ id }); // Call the delete function with the booking ID
+      await deleteData(`holidaze/bookings/${id}`); // Call the delete function with the booking ID
       alert("Booking deleted successfully");
       onDelete(id); // Call onDelete after successful deletion
     } catch (error) {
@@ -24,7 +24,7 @@ function RenderDeleteBooking({
     <div className="flex justify-between">
       <button
         className="bg-customPurple-500 p-2 rounded text-white"
-        onClick={() => alert("Update booking functionality here")} 
+        onClick={() => alert("Update booking functionality here")}
       >
         Update booking
       </button>

@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import userSchema from "../../Validations/UserValidation";
 import SuccessMessage from "../../error-handling/success";
 import ErrorMessage from "../../error-handling/error";
-import CreateUser from "../../api/users/createUser";
+import CreateUser from "../../api/users/registerUser";
 
 function RegisterForm() {
   const {

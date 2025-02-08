@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { apiRequest } from "../api/fetchAPI";
+import { fetchData } from "../api/api";
 import RenderProfileInfo from "../components/profile/renderProfileInfo";
 import VenueManagerToggle from "../features/venueManagerToggle";
 import Loading from "../features/loading";
@@ -13,28 +13,36 @@ function ProfilePage() {
 
   const { username } = useParams();
 
-  // Fetch profile data when the component mounts
   useEffect(() => {
+    if (!username) return;
+
     const fetchProfileData = async () => {
       try {
-        setIsLoading(true); // Set loading to true before making the request
-        const data = await apiRequest(`/profiles/${username}`, "GET"); // Adjust endpoint as needed
-        setProfileState(data); // Set profile state when data is fetched successfully
+        setIsLoading(true);
+        const response = await fetchData(
+          `holidaze/profiles/${username}?_bookings=true`
+        );
+
+        const data = response.data;
+
+        setProfileState(data);
       } catch (error) {
-        setProfileError(true); // Set error state if an error occurs
+        setProfileError(true);
         setErrorMessage(
           error.message || "An error occurred while fetching data"
-        ); // Set the error message
+        );
       } finally {
-        setIsLoading(false); // Set loading to false after request finishes
+        setIsLoading(false);
       }
     };
 
-    fetchProfileData(); // Call the function to fetch profile data
-  }, []); // Empty dependency array ensures it runs only once when component mounts
+    fetchProfileData();
+  }, [username]);
 
   const handleToggleVenueManager = () => {
-    VenueManagerToggle(profileState, setProfileState);
+    if (profileState) {
+      VenueManagerToggle(profileState, setProfileState);
+    }
   };
 
   // Handle loading and error states

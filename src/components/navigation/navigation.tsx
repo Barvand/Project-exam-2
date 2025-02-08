@@ -5,14 +5,21 @@ import { CiLogin } from "react-icons/ci";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { Spiral as Hamburger } from "hamburger-react";
 import { useState } from "react";
+import LogoutConfirmModal from "../modals/logoutModal";
 
 function Navigation(): JSX.Element {
   const { isLoggedIn, userProfile, logout } = useAuth();
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setMenuOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
-  const toggleMenu = () => setMobileMenuOpen(!isMobileMenuOpen);
-  const closeMenu = () => setMobileMenuOpen(false);
+  const toggleMenu = () => setMenuOpen(!isMenuOpen);
+  const closeMenu = () => setMenuOpen(false);
+
+  const handleLogout = () => {
+    logout(); // Perform logout
+    setShowLogoutConfirm(false); // Close the logout confirmation modal
+    closeMenu(); // Close the mobile menu if open
+  };
 
   return (
     <nav className="bg-white shadow-md relative">
@@ -27,10 +34,10 @@ function Navigation(): JSX.Element {
 
         {/* Hamburger Button */}
         <div className="relative">
-          <Hamburger toggled={isMobileMenuOpen} toggle={toggleMenu} size={30} />
+          <Hamburger toggled={isMenuOpen} toggle={toggleMenu} size={30} />
 
           {/* Mobile Menu (Only appears when open) */}
-          {isMobileMenuOpen && (
+          {isMenuOpen && (
             <div className="bg-white border shadow-md absolute right-0 top-full w-64 md:w-80 z-50 rounded-lg mt-2">
               <ul className="flex flex-col space-y-3 p-4">
                 <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
@@ -105,35 +112,12 @@ function Navigation(): JSX.Element {
           )}
         </div>
       </div>
-      {/* Logout Confirmation Modal */}
+      {/* Show the modal if the user wants to log out */}
       {showLogoutConfirm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-semibold text-gray-800">
-              Are you sure?
-            </h2>
-            <p className="text-gray-600 mt-2">Do you really want to log out?</p>
-
-            <div className="mt-4 flex justify-end space-x-2">
-              <button
-                onClick={() => setShowLogoutConfirm(false)}
-                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  logout();
-                  setShowLogoutConfirm(false);
-                  closeMobileMenu();
-                }}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-              >
-                Log out
-              </button>
-            </div>
-          </div>
-        </div>
+        <LogoutConfirmModal
+          onCancel={() => setShowLogoutConfirm(false)}
+          onLogout={handleLogout}
+        />
       )}
     </nav>
   );

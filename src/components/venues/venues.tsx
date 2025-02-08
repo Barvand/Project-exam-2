@@ -1,4 +1,3 @@
-import { FaWifi } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Owner } from "../../types/venue.array";
 import StarRating from "../../features/Ratings";

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // Import useParams
-import getVenue from "../api/venue/getVenue";
 import RenderVenue from "../components/OneVenue/venue";
 import RenderDeleteVenue from "../components/profile/deleteVenue";
 import Loading from "../features/loading";
+import { fetchData } from "../api/api";
 
 function VenuePage() {
   const { id } = useParams(); // Get ID from URL params
@@ -16,9 +16,9 @@ function VenuePage() {
 
     async function fetchVenue() {
       try {
-        const venueData = await getVenue(id);
+        const venueData = await fetchData(`holidaze/venues/${id}?_owner=true`);
 
-        setData(venueData);
+        setData(venueData.data);
       } catch (error) {
         setIsError(true);
       } finally {

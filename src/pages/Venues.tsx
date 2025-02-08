@@ -49,10 +49,6 @@ function VenuesPage() {
     setAccumulatedData([]); // Reset accumulated data when limit changes
   };
 
-  const loadMore = () => {
-    setPage((prevPage) => prevPage + 1); // Increment page to load more data
-  };
-
   return (
     <section className="container">
       <VenueFilters
@@ -64,11 +60,10 @@ function VenuesPage() {
         meta={meta}
       />
       <RenderVenues
-        data={accumulatedData} // Pass accumulated data instead of just the current page's data
+        data={accumulatedData}
         page={page}
         setPage={setPage}
         meta={meta}
-        loadMore={loadMore} // Add a "Load More" button or infinite scroll trigger
       />
     </section>
   );
