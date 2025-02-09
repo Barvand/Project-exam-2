@@ -16,9 +16,7 @@ function App(): JSX.Element {
   return (
     <Router>
       <AuthProvider>
-        {/* Sidebar */}
         <Navigation />
-        {/* Main Content */}
         <main className="flex-1 overflow-auto">
           <Routes>
             <Route path="/" element={<IndexPage />} />

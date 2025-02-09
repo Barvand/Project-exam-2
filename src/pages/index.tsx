@@ -24,11 +24,10 @@ function IndexPage() {
         {/* Text Overlay */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center bg-blue-800/40">
           <h1 className="text-5xl font-bold mb-2">Welcome to Holidaze</h1>
-          <h2 className="text-4xl text-primaryButton font-semibold">
+          <h2 className="text-4xl text-accentColor font-semibold">
             Get going, Get Holidazing
           </h2>
         </div>
-        <SearchBar />
       </div>
       <VenuesPage />
     </>

@@ -50,7 +50,7 @@ function VenuesPage() {
   };
 
   return (
-    <section className="container">
+    <div>
       <VenueFilters
         activeSort={activeSort}
         sortOrder={sortOrder}
@@ -65,7 +65,7 @@ function VenuesPage() {
         setPage={setPage}
         meta={meta}
       />
-    </section>
+    </div>
   );
 }
 

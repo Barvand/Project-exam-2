@@ -58,9 +58,9 @@ export default function SearchBar() {
   return (
     <div
       ref={searchContainerRef}
-      className="flex justify-center absolute bottom-[-20px] text-black w-full"
+      className="container flex justify-end text-black w-full relative"
     >
-      <div className="flex flex-col border-1 p-1 border-white overflow-hidden w-full md:w-1/2">
+      <div className="border-1 p-1 border-white overflow-hidden w-[250px] sm:w-[500px]">
         <div className="flex items-center">
           <form className="w-full flex" onSubmit={handleSearch}>
             <input
@@ -73,7 +73,7 @@ export default function SearchBar() {
               }}
               className="w-full outline-none text-sm text-black rounded"
             />
-            <div className="p-3 bg-primaryButton">
+            <div className="p-3 bg-accentColor">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 192.904 192.904"
@@ -87,7 +87,7 @@ export default function SearchBar() {
         </div>
 
         {isDropdownOpen && (
-          <div className="absolute bg-primary w-full md:w-1/2 top-full border-blue-500 rounded-md mt-1 z-10">
+          <div className="absolute bg-primary top-full border-blue-500 rounded-md mt-1 z-10 w-full sm:w-[500px]">
             <button
               onClick={() => setIsDropdownOpen(false)}
               className="text-sm text-white bg-gray-700 px-2 py-1 rounded absolute right-2 top-2"

@@ -8,7 +8,7 @@
   --color-background: #ffffff;
   --color-logoText: #ffbb00;
   --color-successText: #4caf50;
-  --color-primaryButton: #ff8a65;
+  --color-accentColor: #ff8a65;
 }
 
 .header {
@@ -22,7 +22,6 @@
 
 body {
   background-color: var(--color-background);
-  
 }
 /* Loader animation */
 .loader {
@@ -48,7 +47,7 @@ body {
 .error {
   color: red;
   font-size: 0.875rem;
-  min-height: 1.25rem; 
+  min-height: 1.25rem;
   display: block;
 }
 
@@ -60,6 +59,21 @@ input[type="date"] {
   border-radius: 4px;
 }
 
+.asymmetric {
+  background-color: #13559c;
+}
+.asymmetric::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 200px;
+  top: 5;
+  left: 0;
+  background-color: #13559c;
+  transform-origin: bottom left;
+  transform: skewY(-2deg);
+  z-index: -10;
+}
 
 @keyframes mulShdSpin {
   0%,
