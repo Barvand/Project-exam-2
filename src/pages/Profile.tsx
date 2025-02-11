@@ -1,63 +1,45 @@
 import { useState, useEffect } from "react";
+import GetProfile from "../api/users/getUser";
 import RenderProfileInfo from "../components/profile/renderProfileInfo";
-import VenueManagerToggle from "../components/venueManagerPage/venueManagerToggle";
+import CreateVenueForm from "../components/profile/createVenueForm";
+import RenderBookingsProfile from "../components/profile/BookingsByUser";
+import GetBookings from "../api/bookings/read";
+import VenueManagerToggle from "../features/venueManagerToggle";
 import Loading from "../features/loading";
-import { useParams } from "react-router-dom";
-import { fetchData } from "../api/api";
 
 function ProfilePage() {
   const [profileState, setProfileState] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(true); // Track loading state
-  const [profileError, setProfileError] = useState(false); // Track error state
 
-  const { username } = useParams();
+  // Fetch profile data
+  const {
+    data: profileData,
+    isLoading: profileLoading,
+    isError: profileError,
+  } = GetProfile();
+  const {
+    data: bookingsData,
+    isLoading: bookingsLoading,
+    isError: bookingsError,
+  } = GetBookings();
 
+  // Update profileState when profileData is available
   useEffect(() => {
-    if (!username) return;
-
-    const fetchProfileData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await fetchData(
-          `holidaze/profiles/${username}?_bookings=true`
-        );
-
-        const data = response.data;
-
-        setProfileState(data);
-      } catch (error) {
-        setProfileError(true);
-        setErrorMessage(
-          error.message || "An error occurred while fetching data"
-        );
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProfileData();
-  }, [username]);
+    if (profileData) {
+      setProfileState(profileData);
+    }
+  }, [profileData]);
 
   const handleToggleVenueManager = () => {
-    if (profileState) {
-      VenueManagerToggle(profileState, setProfileState);
-    }
+    VenueManagerToggle(profileState, setProfileState);
   };
 
   // Handle loading and error states
-  if (isLoading) {
+  if (profileLoading || bookingsLoading) {
     return <Loading />;
   }
 
-  if (profileError) {
-    return (
-      <div>
-        <div className="bg-red-100 text-red-800 p-4 rounded-lg">
-          {errorMessage || "Error loading data. Please try again later."}
-        </div>
-      </div>
-    );
+  if (profileError || bookingsError) {
+    return <div>Error loading data. Please try again later.</div>;
   }
 
   return (
@@ -68,6 +50,13 @@ function ProfilePage() {
           onToggleVenueManager={handleToggleVenueManager}
         />
       )}
+
+      <RenderBookingsProfile
+        username={profileState?.name}
+        bookings={bookingsData}
+      />
+
+      {profileState?.venueManager && <CreateVenueForm />}
     </div>
   );
 }
