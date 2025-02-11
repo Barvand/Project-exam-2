@@ -1,4 +1,4 @@
-import { updateData } from "../api/api";
+import { updateData } from "../../api/api";
 
 async function VenueManagerToggle(profile, setProfileState) {
   if (!profile) return; // Prevents calling API when profile is null

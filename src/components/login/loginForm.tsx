@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "../../Validations/LoginValidation";
-import SuccessMessage from "../../error-handling/success";
-import ErrorMessage from "../../error-handling/error";
+// Removed the custom SuccessMessage and ErrorMessage components to use inline styling instead
 import LoginUser from "../../api/users/loginUser";
 import { Link } from "react-router-dom";
 import { CiLogin } from "react-icons/ci";
@@ -25,9 +24,10 @@ function LoginForm() {
           Log in!
         </h2>
 
-        {/* Display API error if it exists */}
-        {apiError && <ErrorMessage message={apiError} />}
-        {successMessage && <SuccessMessage message={successMessage} />}
+        {/* Inline API Error Message */}
+        {apiError && (
+          <div className="mt-3 text-red-500 font-semibold">{apiError}</div>
+        )}
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -38,7 +38,11 @@ function LoginForm() {
               {...register("email")}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
             />
-            <p>{errors.email?.message}</p>
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
@@ -50,18 +54,22 @@ function LoginForm() {
               type="password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
             />
-            <p>{errors.password?.message}</p>
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <button
             type="submit"
             className="w-full bg-secondary hover:bg-customPurple-900 text-white font-medium py-3 rounded-lg transition-colors flex justify-center"
           >
-            Login <CiLogin className="text-2xl" />
+            Login <CiLogin className="text-2xl ml-2" />
           </button>
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-600">
-          Don't have an account?
+          Don't have an account?{" "}
           <Link
             to="/register"
             className="text-indigo-600 hover:text-indigo-500 font-medium"
@@ -70,6 +78,15 @@ function LoginForm() {
           </Link>
         </div>
       </div>
+
+      {successMessage && (
+        <div
+          className="fixed bottom-5 right-5 bg-green-500 text-white p-3 rounded-lg shadow-lg"
+          style={{ zIndex: 9999 }}
+        >
+          {successMessage}
+        </div>
+      )}
     </div>
   );
 }

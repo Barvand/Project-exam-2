@@ -1,3 +1,5 @@
+import RenderDeleteVenue from "./deleteVenue";
+
 function RenderVenues({ venues }) {
   return (
     <div>
@@ -37,6 +39,7 @@ function RenderVenues({ venues }) {
               <h2 className="text-xl"> Description: </h2>
               <p className="mb-3 text-gray-300">{venue.description}</p>
             </div>
+            <RenderDeleteVenue id={venue.id} />
           </div>
         </details>
       ))}

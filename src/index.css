@@ -51,14 +51,6 @@ body {
   display: block;
 }
 
-/* Style for the date input field */
-input[type="date"] {
-  border: 1px solid #ccc;
-  padding: 8px;
-  font-size: 14px;
-  border-radius: 4px;
-}
-
 .asymmetric {
   background-color: #13559c;
 }
@@ -66,13 +58,26 @@ input[type="date"] {
   position: absolute;
   content: "";
   width: 100%;
-  height: 200px;
-  top: 5;
+  height: 100px;
+  top: 2;
   left: 0;
   background-color: #13559c;
   transform-origin: bottom left;
   transform: skewY(-2deg);
   z-index: -10;
+}
+
+/* Style for input errors */
+.input-error {
+  border-color: red;
+}
+
+/* Style for error messages */
+.error {
+  color: red;
+  font-size: 12px; /* Small font size for error messages */
+  margin-top: 5px; /* Add space between input and error message */
+  margin-bottom: 10px; /* Add space below the error message */
 }
 
 @keyframes mulShdSpin {

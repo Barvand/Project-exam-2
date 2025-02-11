@@ -1,5 +1,4 @@
 import VenuesPage from "./Venues";
-import SearchBar from "../components/index/searchBar";
 import { useAuth } from "../authentication/AuthProvider";
 
 function IndexPage() {

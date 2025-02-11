@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { fetchData } from "../api/api";
 import RenderProfileInfo from "../components/profile/renderProfileInfo";
-import VenueManagerToggle from "../features/venueManagerToggle";
+import VenueManagerToggle from "../components/venueManagerPage/venueManagerToggle";
 import Loading from "../features/loading";
 import { useParams } from "react-router-dom";
+import { fetchData } from "../api/api";
 
 function ProfilePage() {
   const [profileState, setProfileState] = useState(null);

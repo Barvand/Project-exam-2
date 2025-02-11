@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Owner } from "../../types/venue.array";
-import StarRating from "../../features/Ratings";
+import StarRating from "./Ratings";
 
 interface Venue {
   id: string;

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // Import useParams
 import RenderVenue from "../components/OneVenue/venue";
-import RenderDeleteVenue from "../components/profile/deleteVenue";
 import Loading from "../features/loading";
 import { fetchData } from "../api/api";
+import BookingData from "../components/OneVenue/bookingData";
 
 function VenuePage() {
   const { id } = useParams(); // Get ID from URL params
@@ -36,7 +36,6 @@ function VenuePage() {
   return (
     <div>
       <RenderVenue data={data} />
-      <RenderDeleteVenue id={data.id} />
     </div>
   );
 }

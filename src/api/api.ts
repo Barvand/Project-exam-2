@@ -58,15 +58,21 @@ export async function updateData(endpoint, data) {
       headers: GetHeaders(),
       body: JSON.stringify(data),
     });
+
+    // If the response is not ok, try to parse the error message
+    const responseData = await response.json(); // This will contain error details in case of failure
     if (!response.ok) {
       throw new Error(
-        data.errors?.[0]?.message || "An error occurred while fetching data"
+        responseData.errors?.[0]?.message ||
+          "An error occurred while fetching data"
       );
     }
-    return await response.json();
+
+    // Return the updated data if the response is successful
+    return responseData;
   } catch (error) {
     console.error("Error updating data:", error);
-    throw error;
+    throw error; // Rethrow the error for further handling (e.g., in your component)
   }
 }
 
@@ -77,9 +83,12 @@ export async function deleteData(endpoint) {
       method: "DELETE",
       headers: GetHeaders(),
     });
+
+    const responseData = await response.json();
     if (!response.ok) {
       throw new Error(
-        data.errors?.[0]?.message || "An error occurred while fetching data"
+        responseData.errors?.[0]?.message ||
+          "An error occurred while fetching data"
       );
     }
   } catch (error) {

@@ -23,7 +23,7 @@ function RenderDeleteVenue({ id }: DeleteVenueProps): JSX.Element {
         navigate("/");
       }, 2000);
     } catch (error) {
-      setErrorMessage("Failed to delete venue. Please try again later.");
+      setErrorMessage(error.message);
     } finally {
       setIsDeleting(false);
       setShowModal(false); // Close the modal after the delete action is complete
@@ -70,7 +70,7 @@ function RenderDeleteVenue({ id }: DeleteVenueProps): JSX.Element {
                 Confirm
               </button>
               <button
-                onClick={() => setShowModal(false)} // Close the modal if user cancels
+                onClick={() => setShowModal(false)} 
                 className="bg-gray-500 text-white px-4 py-2 rounded"
               >
                 Cancel

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../../api/api";
-import CreateVenueForm from "../profile/createVenueForm";
 import RenderVenues from "./RenderVenues";
 
 function ManageVenues() {
@@ -33,12 +32,10 @@ function ManageVenues() {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error loading data</p>;
-  if (venues.length === 0) return <p>You do not have any venues yet.</p>;
 
   return (
     <div className="container">
       <RenderVenues venues={venues} />
-      <CreateVenueForm />
     </div>
   );
 }

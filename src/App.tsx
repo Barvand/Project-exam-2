@@ -9,8 +9,7 @@ import VenuePage from "./pages/OneVenue.tsx";
 import IndexPage from "./pages/index.tsx";
 import SearchResultsPage from "./pages/search.tsx";
 import BookingsPage from "./pages/bookings.tsx";
-
-import ManageVenues from "./components/venueManagerPage/ManageVenues.tsx";
+import VenueManagerPage from "./pages/venueManager.tsx";
 
 function App(): JSX.Element {
   return (
@@ -31,7 +30,7 @@ function App(): JSX.Element {
             />
             <Route
               path="profiles/:username/venueManager"
-              element={<ManageVenues />}
+              element={<VenueManagerPage />}
             />
             <Route path="/search" element={<SearchResultsPage />} />
           </Routes>
