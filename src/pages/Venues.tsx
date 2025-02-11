@@ -6,7 +6,7 @@ import GetVenues from "../api/venues/getVenues";
 
 function VenuesPage() {
   const [page, setPage] = useState(1);
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortOrder, setSortOrder] = useState("desc");
   const [limit, setLimit] = useState(100);
   const [sortBy, setSortBy] = useState("created");
   const [activeSort, setActiveSort] = useState("created");
@@ -49,8 +49,12 @@ function VenuesPage() {
     setAccumulatedData([]); // Reset accumulated data when limit changes
   };
 
+  const loadMore = () => {
+    setPage((prevPage) => prevPage + 1); // Increment page to load more data
+  };
+
   return (
-    <div>
+    <section className="container">
       <VenueFilters
         activeSort={activeSort}
         sortOrder={sortOrder}
@@ -60,12 +64,13 @@ function VenuesPage() {
         meta={meta}
       />
       <RenderVenues
-        data={accumulatedData}
+        data={accumulatedData} // Pass accumulated data instead of just the current page's data
         page={page}
         setPage={setPage}
         meta={meta}
+        loadMore={loadMore} // Add a "Load More" button or infinite scroll trigger
       />
-    </div>
+    </section>
   );
 }
 

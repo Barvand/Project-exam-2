@@ -1,41 +1,23 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"; // Import useParams
+import GetVenue from "../api/venue/getVenue";
 import RenderVenue from "../components/OneVenue/venue";
+import RenderDeleteVenue from "../components/profile/deleteVenue";
 import Loading from "../features/loading";
-import { fetchData } from "../api/api";
-import BookingData from "../components/OneVenue/bookingData";
 
 function VenuePage() {
-  const { id } = useParams(); // Get ID from URL params
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const { data, isLoading, isError } = GetVenue();
 
-  useEffect(() => {
-    if (!id) return; // Prevent fetching if id is missing
+  if (isLoading) {
+    return <Loading />;
+  }
 
-    async function fetchVenue() {
-      try {
-        const venueData = await fetchData(`holidaze/venues/${id}?_owner=true`);
-
-        setData(venueData.data);
-      } catch (error) {
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchVenue();
-  }, [id]); // Re-fetch if ID changes
-
-  if (isLoading) return <Loading />;
-  if (isError || !data)
+  if (isError) {
     return <div>Error loading data. Please try again later.</div>;
+  }
 
   return (
     <div>
       <RenderVenue data={data} />
+      <RenderDeleteVenue id={data.id} />
     </div>
   );
 }

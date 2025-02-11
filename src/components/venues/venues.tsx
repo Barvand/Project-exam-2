@@ -1,6 +1,6 @@
+import { FaWifi } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { Owner } from "../../types/venue.array";
-import StarRating from "./Ratings";
 
 interface Venue {
   id: string;
@@ -46,31 +46,45 @@ interface VenuesProps {
 export function RenderVenues({ data, meta, page, setPage }: VenuesProps) {
   return (
     <div className="container">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
         {data.map((venue) => (
-          <div key={venue.id} className="border rounded p-2">
+          <div key={venue.id}>
             <Link to={`/venues/${venue.id}`}>
               <img
-                className="h-48 object-cover object-center w-full opacity-90 hover:opacity-100"
+                className="h-56 object-cover object-center w-full"
                 loading="lazy"
                 src={
                   venue.media && venue.media.length > 0
                     ? venue.media[0].url
-                    : "placeholder.png"
+                    : "unknown-user.png"
                 }
                 alt={
                   venue.media && venue.media.length > 0
                     ? venue.media[0].alt
-                    : "picture of a villa"
+                    : "default alt text"
                 }
               />
             </Link>
             <div className="flex">
-              <h1 className="text-2xl font-bold">{venue.name}</h1>
+              <h1 className="text-2xl font-bold text-secondary">
+                {venue.name}
+              </h1>
             </div>
-            <StarRating rating={venue.rating} />
-            <div className="flex justify-end">
-              <p className="text-md font-bold"> ${venue.price}</p>
+            <p className="text-md">
+              {venue.description.length > 150
+                ? venue.description.slice(0, 150) + "..."
+                : venue.description}
+            </p>
+            <p> {venue.price} per night</p>
+            <div className="py-4">
+              <p className="flex gap-2 align-center">
+                <FaWifi /> {venue.meta.wifi ? "Available" : "Not Available"}
+              </p>
+              <p>
+                {venue.meta.breakfast
+                  ? "Breakfast: Available"
+                  : "Breakfast: Not Available"}
+              </p>
             </div>
           </div>
         ))}

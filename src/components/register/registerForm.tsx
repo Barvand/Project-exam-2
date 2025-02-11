@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import userSchema from "../../Validations/UserValidation";
-import CreateUser from "../../api/users/registerUser";
+import SuccessMessage from "../../error-handling/success";
+import ErrorMessage from "../../error-handling/error";
+import CreateUser from "../../api/users/createUser";
 
 function RegisterForm() {
   const {
@@ -22,10 +24,9 @@ function RegisterForm() {
           Register
         </h2>
 
-        {/* Inline API Error Message */}
-        {apiError && (
-          <p className="text-red-500 mt-2 font-semibold">{apiError}</p>
-        )}
+        {/* Display API error if it exists */}
+        {apiError && <ErrorMessage message={apiError} />}
+        {successMessage && <SuccessMessage message={successMessage} />}
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
@@ -36,9 +37,7 @@ function RegisterForm() {
               {...register("name")}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
             />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-            )}
+            <p>{errors.name?.message}</p>
           </div>
 
           <div>
@@ -49,11 +48,7 @@ function RegisterForm() {
               {...register("email")}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
             />
-            {errors.email && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email.message}
-              </p>
-            )}
+            <p>{errors.email?.message}</p>
           </div>
 
           <div>
@@ -65,11 +60,7 @@ function RegisterForm() {
               type="password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
             />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.password.message}
-              </p>
-            )}
+            <p>{errors.password?.message}</p>
           </div>
 
           <div>
@@ -81,13 +72,8 @@ function RegisterForm() {
               type="password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
             />
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.confirmPassword.message}
-              </p>
-            )}
+            <p>{errors.confirmPassword?.message}</p>
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Want to become a venue manager?
@@ -97,7 +83,7 @@ function RegisterForm() {
               type="checkbox"
               className="border rounded border-gray-300 focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
             />
-            {/* No error message is necessary here unless you add validation */}
+            <p>{errors.confirmPassword?.message}</p>
           </div>
 
           <button
@@ -109,25 +95,15 @@ function RegisterForm() {
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-600">
-          Already have an account?{" "}
+          Don't have an account?
           <a
-            href="/login"
+            href="#"
             className="text-indigo-600 hover:text-indigo-500 font-medium"
           >
-            Login
+            Sign up
           </a>
         </div>
       </div>
-
-      {/* Fixed Success Message (Bottom-Right) */}
-      {successMessage && (
-        <div
-          className="fixed bottom-5 right-5 bg-green-500 text-white p-3 rounded-lg shadow-lg"
-          style={{ zIndex: 9999 }}
-        >
-          {successMessage}
-        </div>
-      )}
     </div>
   );
 }

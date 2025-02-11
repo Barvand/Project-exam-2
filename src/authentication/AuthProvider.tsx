@@ -1,25 +1,11 @@
-import {
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-  ReactNode,
-} from "react";
-import { useNavigate } from "react-router-dom";
-
-// Define the UserProfile type
-interface UserProfile {
-  name: string;
-  email: string;
-  // Add other fields as necessary
-}
+import { useState, useEffect, createContext, useContext } from "react";
 
 // Create a context to share the login state globally
 const AuthContext = createContext<any>(null);
 
-export function useAuth() {
+export const useAuth = () => {
   return useContext(AuthContext);
-}
+};
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -27,22 +13,15 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const navigate = useNavigate();
+  const [userProfile, setUserProfile] = useState<any>(null);
 
   // Check for user info from localStorage (or wherever you store it)
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const profile = localStorage.getItem("profile");
-
+    const profile = JSON.parse(localStorage.getItem("profile") || "{}");
     if (token && profile) {
-      try {
-        const parsedProfile = JSON.parse(profile);
-        setIsLoggedIn(true);
-        setUserProfile(parsedProfile);
-      } catch (error) {
-        console.error("Failed to parse user profile", error);
-      }
+      setIsLoggedIn(true);
+      setUserProfile(profile);
     }
   }, []);
 
@@ -52,7 +31,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     localStorage.removeItem("profile");
     setIsLoggedIn(false);
     setUserProfile(null);
-    navigate("/login");
   };
 
   return (

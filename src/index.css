@@ -8,7 +8,7 @@
   --color-background: #ffffff;
   --color-logoText: #ffbb00;
   --color-successText: #4caf50;
-  --color-accentColor: #ff8a65;
+  --color-primaryButton: #ff8a65;
 }
 
 .header {
@@ -22,6 +22,10 @@
 
 body {
   background-color: var(--color-background);
+}
+
+section {
+  margin-top: 100px;
 }
 /* Loader animation */
 .loader {
@@ -47,37 +51,22 @@ body {
 .error {
   color: red;
   font-size: 0.875rem;
-  min-height: 1.25rem;
+  min-height: 1.25rem; 
   display: block;
 }
 
-.asymmetric {
-  background-color: #13559c;
-}
-.asymmetric::after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 100px;
-  top: 2;
-  left: 0;
-  background-color: #13559c;
-  transform-origin: bottom left;
-  transform: skewY(-2deg);
-  z-index: -10;
+/* Style for the date input field */
+input[type="date"] {
+  border: 1px solid #ccc;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
 }
 
-/* Style for input errors */
-.input-error {
-  border-color: red;
-}
-
-/* Style for error messages */
-.error {
-  color: red;
-  font-size: 12px; /* Small font size for error messages */
-  margin-top: 5px; /* Add space between input and error message */
-  margin-bottom: 10px; /* Add space below the error message */
+/* Add a visual cue for the date input */
+input[type="date"]:invalid {
+  background-color: #f8d7da; /* Light red background */
+  border-color: #f5c6cb; /* Red border */
 }
 
 @keyframes mulShdSpin {
