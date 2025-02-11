@@ -1,113 +1,125 @@
 import { Link } from "react-router-dom";
-import { Dropdown } from "flowbite-react";
 import { useAuth } from "../../authentication/AuthProvider";
+import { BsHouses } from "react-icons/bs";
+import { CiLogin } from "react-icons/ci";
+import { IoPersonAddOutline } from "react-icons/io5";
+import { Spiral as Hamburger } from "hamburger-react";
+import { useState } from "react";
+import LogoutConfirmModal from "../modals/logoutModal";
 
 function Navigation(): JSX.Element {
   const { isLoggedIn, userProfile, logout } = useAuth();
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+
+  const toggleMenu = () => setMenuOpen(!isMenuOpen);
+  const closeMenu = () => setMenuOpen(false);
+
+  const handleLogout = () => {
+    logout(); // Perform logout
+    setShowLogoutConfirm(false); // Close the logout confirmation modal
+    closeMenu(); // Close the mobile menu if open
+  };
 
   return (
-    <div>
-      <nav className="bg-white">
-        <div className="container flex flex-wrap justify-between mx-auto p-4">
-          <Link
-            to="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
-          >
-            <img src="/holidazelogo.png" className="h-12" alt="Holidaze Logo" />
-            <span className="self-center text-2xl font-semibold whitespace-nowrap text-primary">
-              Holidaze
-            </span>
-          </Link>
+    <nav className="bg-white shadow-md relative">
+      <div className="container mx-auto px-4 flex items-center justify-between py-4 relative">
+        {/* Logo */}
+        <Link to="/" className="flex gap-2">
+          <img src="/holidazelogo.png" className="h-12" alt="Holidaze-Logo" />
+          <span className="self-center text-2xl font-semibold text-customPurple-800">
+            Holidaze
+          </span>
+        </Link>
 
-          <ul className="flex flex-col font-bold p-4 md:p-0 mt-4 border sm:flex-row gap-10 items-center border-none">
-            <li>
-              <Link
-                to="/venues"
-                className="py-2 px-3 rounded  md:hover:bg-transparent md:hover:text-primaryButton md:p-0 "
-              >
-                Venues
-              </Link>
-            </li>
+        {/* Hamburger Button */}
+        <div className="relative">
+          <Hamburger toggled={isMenuOpen} toggle={toggleMenu} size={30} />
 
-            {!isLoggedIn ? (
-              <>
-                <li>
-                  <Link
-                    to="/login"
-                    className="py-2 px-3 rounded md:hover:bg-transparent md:hover:text-primaryButton md:p-0"
-                  >
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/register"
-                    className="py-2 px-3 rounded  md:hover:bg-transparent md:hover:text-primaryButton md:p-0"
-                  >
-                    Register
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <Link
-                    to={`profiles/${userProfile.name}`}
-                    className="py-2 px-3 rounded md:hover:bg-transparent md:hover:text-primaryButton md:p-0"
-                  >
-                    Profile
+          {/* Mobile Menu (Only appears when open) */}
+          {isMenuOpen && (
+            <div className="bg-white border shadow-md absolute right-0 top-full w-64 md:w-80 z-50 rounded-lg mt-2">
+              <ul className="flex flex-col space-y-3 p-4">
+                <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                  <Link to="/venues" className="block py-2" onClick={closeMenu}>
+                    <BsHouses className="inline-block mr-1" /> Venues
                   </Link>
                 </li>
 
-                <Dropdown
-                  arrowIcon={false}
-                  label="Menu"
-                  style={{
-                    border: "none",
-                    outline: "none",
-                    boxShadow: "none",
-                    fontWeight: "700",
-                  }}
-                  renderTrigger={(theme) => (
-                    <span
-                      className="text-sm flex items-center justify-center space-x-2"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontWeight: "700",
-                      }}
-                    >
-                      <img
-                        src="https://i1.sndcdn.com/artworks-NZstK5rBoTgmMXBK-RShAtw-t500x500.jpg"
-                        alt="User Avatar"
-                        className="w-10 h-10 rounded-full cursor-pointer"
-                      />
-                    </span>
-                  )}
-                >
-                  <Dropdown.Header>
-                    <div>
-                      <span className="block text-sm font-semibold">
-                        {userProfile.name}
-                      </span>
-                      <span className="block text-xs text-gray-500 truncate">
-                        {userProfile.email}
-                      </span>
-                    </div>
-                  </Dropdown.Header>
-                  <Dropdown.Item>Dashboard</Dropdown.Item>
-                  <Dropdown.Item>Settings</Dropdown.Item>
-                  <Dropdown.Item>Earnings</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item onClick={logout}>Sign out</Dropdown.Item>
-                </Dropdown>
-              </>
-            )}
-          </ul>
+                {!isLoggedIn ? (
+                  <>
+                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                      <Link
+                        to="/login"
+                        className="block py-2"
+                        onClick={closeMenu}
+                      >
+                        <CiLogin className="inline-block mr-1" /> Login
+                      </Link>
+                    </li>
+                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                      <Link
+                        to="/register"
+                        className="block py-2"
+                        onClick={closeMenu}
+                      >
+                        <IoPersonAddOutline className="inline-block mr-1" />{" "}
+                        Register
+                      </Link>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                      <Link
+                        to={`/profiles/${userProfile.name}/bookings`}
+                        className="block py-2"
+                        onClick={closeMenu}
+                      >
+                        Your Bookings
+                      </Link>
+                    </li>
+                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                      <Link
+                        to={`/profiles/${userProfile.name}`}
+                        className="block py-2"
+                        onClick={closeMenu}
+                      >
+                        Profile
+                      </Link>
+                    </li>
+                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                      <Link
+                        to={`/profiles/${userProfile.name}/venueManager`}
+                        className="block py-2"
+                        onClick={closeMenu}
+                      >
+                        Venue Manager
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => setShowLogoutConfirm(true)}
+                        className="block py-2 text-red-500"
+                      >
+                        Log out
+                      </button>
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          )}
         </div>
-      </nav>
-    </div>
+      </div>
+      {/* Show the modal if the user wants to log out */}
+      {showLogoutConfirm && (
+        <LogoutConfirmModal
+          onCancel={() => setShowLogoutConfirm(false)}
+          onLogout={handleLogout}
+        />
+      )}
+    </nav>
   );
 }
 

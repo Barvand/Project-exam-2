@@ -1,21 +1,43 @@
-// RenderBookingsProfile.js
 import { Link } from "react-router-dom";
+import RenderDeleteBooking from "../bookings/deleteBooking";
+import { useState } from "react";
+import RenderUpdateBooking from "../bookings/updateBooking";
 
 function RenderBookingsProfile({ bookings }) {
+  const [newBookings, setNewBookings] = useState(bookings);
+  const [errorMessage, setErrorMessage] = useState(""); // To handle error messages
+  const [successMessage, setSuccessMessage] = useState(""); // To handle success messages
+
+  const handleDeleteBooking = (id) => {
+    // Update the newBookings state after deletion
+    setNewBookings((prevBookings) =>
+      prevBookings.filter((booking) => booking.id !== id)
+    );
+  };
+
+  const handleUpdateBooking = (id, updatedBooking) => {
+    // Update the booking state with the updated booking
+    setNewBookings((prevBookings) =>
+      prevBookings.map((booking) =>
+        booking.id === id ? { ...booking, ...updatedBooking } : booking
+      )
+    );
+  };
+
   return (
     <div>
       <div className="container">
         <div className="flex justify-start">
-          <h1 className="text-2xl font-bold p-3 profile-title bg-customPurple-800 text-customPurple-200 shadow-lg">
+          <h1 className="text-2xl font-bold p-3 text-customPurple-600 shadow-lg">
             Upcoming bookings
           </h1>
         </div>
-        {bookings.length === 0 ? (
-          <p>No bookings available at the moment.</p> // Display this message if there are no bookings
+        {newBookings.length === 0 ? (
+          <p>No bookings available at the moment.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
-            {bookings.map((booking) => {
-              const bookingFromDate = new Date(booking.checkIn);
+            {newBookings.map((booking) => {
+              const bookingFromDate = new Date(booking.dateFrom);
               const formattedFromDate = bookingFromDate.toLocaleDateString(
                 "en-US",
                 {
@@ -25,7 +47,7 @@ function RenderBookingsProfile({ bookings }) {
                 }
               );
 
-              const bookingToDate = new Date(booking.checkOut);
+              const bookingToDate = new Date(booking.dateTo);
               const formattedToDate = bookingToDate.toLocaleDateString(
                 "en-US",
                 {
@@ -58,14 +80,19 @@ function RenderBookingsProfile({ bookings }) {
                       {booking.venue.name}
                     </h1>
                   </div>
-                  <p className="text-md">
-                    Check-in
-                    <span className="text-successText font-bold">
-                      {formattedFromDate}
-                    </span>
-                    til
-                    <span> {formattedToDate} </span>
+                  <p className="text-successText font-bold">
+                    {formattedFromDate}
                   </p>
+                  <p className="text-red-500 font-bold">{formattedToDate}</p>
+                  <RenderDeleteBooking
+                    id={booking.id}
+                    onDelete={handleDeleteBooking}
+                  />
+                  <RenderUpdateBooking
+                    id={booking.id}
+                    booking={booking}
+                    onUpdate={handleUpdateBooking} // Pass handleUpdateBooking here
+                  />
                 </div>
               );
             })}

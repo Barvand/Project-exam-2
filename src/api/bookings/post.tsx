@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
 import { GetHeaders } from "../headers";
+import { postData } from "../api";
 
 interface CreateBookingProps {
   value: {
@@ -12,13 +12,9 @@ interface CreateBookingProps {
 
 async function CreateBooking({ value }: CreateBookingProps) {
   try {
-    const response = await fetch(
+    const response = await postData(
       `https://v2.api.noroff.dev/holidaze/bookings/`,
-      {
-        method: "POST",
-        headers: GetHeaders(),
-        body: JSON.stringify(value), // Send the booking data in the request body
-      }
+      value
     );
     return response;
   } catch (error) {

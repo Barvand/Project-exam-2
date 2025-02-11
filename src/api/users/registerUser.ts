@@ -1,8 +1,9 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 function CreateUser() {
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>("");
+  const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
     setApiError("");
@@ -28,6 +29,7 @@ function CreateUser() {
       setSuccessMessage(
         "You have successfully created an account, please log in."
       );
+      navigate("/login");
     } catch (err) {
       console.error("Error:", err);
     }

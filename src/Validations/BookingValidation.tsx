@@ -4,21 +4,21 @@ const today = new Date();
 today.setHours(0, 0, 0, 0); // Normalize time to avoid issues
 
 const BookingSchema = yup.object().shape({
-  DateFrom: yup
+  dateFrom: yup
     .date()
     .min(today, "Your arrival date cannot be in the past")
     .required("Your arrival date is required"),
-  DateTo: yup
+  dateTo: yup
     .date()
     .required("A departure date is required")
     .test(
       "is-after-start",
       "Checkout date must be after the arrival date",
       function (value) {
-        return value > this.parent.DateFrom;
+        return value > this.parent.dateFrom; // Corrected to `dateFrom`
       }
     ),
-    MaxGuests: yup
+  guests: yup
     .number()
     .typeError("Max guests should be a number.")
     .integer("Max guests must be a whole number")

@@ -1,5 +1,3 @@
-/** @type {import('tailwindcss').Config} */
-
 export default {
   content: [
     "./index.html",
@@ -17,7 +15,7 @@ export default {
         background: "var(--color-background)",
         logoText: "var(--color-logoText)",
         successText: "var(--color-successText)",
-        primaryButton: "var(--color-primaryButton)",
+        accentColor: "var(--color-accentColor)",
         customPurple: {
           50: "#eef9ff",
           100: "#d9f1ff",
@@ -33,8 +31,6 @@ export default {
         },
       },
     },
-    plugins: [
-      require("flowbite/plugin"), // Correctly include the Flowbite plugin
-    ],
   },
+  plugins: [require("flowbite/plugin")],
 };
