@@ -1,7 +1,7 @@
 import Navigation from "./components/navigation/navigation";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RegisterPage from "./pages/Register";
-import LoginPage from "./pages/Login";
+import LoginPage from "./pages/login.tsx";
 import ProfilePage from "./pages/Profile.tsx";
 import { AuthProvider } from "./authentication/AuthProvider.tsx";
 import VenuesPage from "./pages/Venues";

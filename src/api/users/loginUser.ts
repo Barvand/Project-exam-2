@@ -4,16 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { GetHeaders } from "../headers";
 import { useAuth } from "../../authentication/AuthProvider"; // Make sure you're importing the hook
 
+interface LoginData {
+  email: string;
+  password: string;
+}
+
 function LoginUser() {
   const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>("");
-  const [setLoading, setIsLoading] = useState(false);
+  const [loading, setIsLoading] = useState(false);
 
   // Destructure the context values
   const { setIsLoggedIn, setUserProfile } = useAuth();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: LoginData) => {
     setApiError(""); // Clear previous errors
     setSuccessMessage(""); // Clear previous success message
     setIsLoading(true);
@@ -34,11 +39,10 @@ function LoginUser() {
             "An error occurred."
         );
 
-        // Reset the error after 5 seconds
-        const timeout = setTimeout(() => {
+        setTimeout(() => {
           setApiError(null);
         }, 5000);
-        return () => clearTimeout(timeout);
+        return;
       }
 
       setSuccessMessage("You are successfully logged in.");
@@ -64,6 +68,7 @@ function LoginUser() {
     apiError,
     successMessage,
     onSubmit,
+    loading,
   };
 }
 

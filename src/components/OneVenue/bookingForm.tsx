@@ -3,10 +3,15 @@ import { useParams } from "react-router-dom";
 import { fetchData } from "../../api/api";
 import BookingFormComponent from "./bookingFormComponent";
 
+interface BookingProps {
+  price: number;
+  name: string;
+}
+
 function BookingForm() {
   const { id } = useParams();
-  const [booking, setBooking] = useState(null); // State to store booking data
-  const [loading, setLoading] = useState(true); // Loading state to show loading indicator
+  const [booking, setBooking] = useState<BookingProps | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBookingData = async () => {
