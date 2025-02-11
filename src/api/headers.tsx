@@ -1,4 +1,4 @@
-import { API_KEY } from "../vite-env.d.ts";
+import { API_KEY } from "../vite-env.ts";
 import { load } from "./localstorage/load.tsx";
 
 export function GetHeaders() {

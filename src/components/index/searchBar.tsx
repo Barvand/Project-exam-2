@@ -4,16 +4,17 @@ import useFetchAPI from "../../api/fetch";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../features/loading";
 import ErrorMessage from "../../error-handling/error";
+import { Venues } from "../../types/venue.array"; // Ensure Venues type is defined here
 
 export default function SearchBar() {
-  const [data, setData] = useState([]);
-  const [search, setSearch] = useState(undefined);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const searchContainerRef = useRef(null);
+  const [data, setData] = useState<Venues[]>([]); 
+  const [search, setSearch] = useState<string>(""); 
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const searchContainerRef = useRef<HTMLDivElement | null>(null);
 
   const navigate = useNavigate();
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (search.trim()) {
       navigate(`/search?q=${search}`);
@@ -42,16 +43,20 @@ export default function SearchBar() {
   }, [venues, search, isLoading, isError]);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (e: MouseEvent) => {
+      // Check if the click is outside the search container
       if (
         searchContainerRef.current &&
-        !searchContainerRef.current.contains(event.target)
+        !searchContainerRef.current.contains(e.target as Node)
       ) {
-        setIsDropdownOpen(false);
+        setIsDropdownOpen(false); // Close the dropdown if clicked outside
       }
     };
 
+    // Add the event listener to the document for click events
     document.addEventListener("click", handleClickOutside);
+
+    // Cleanup: Remove the event listener on component unmount
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 

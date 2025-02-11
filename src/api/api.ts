@@ -51,7 +51,7 @@ export async function postData(endpoint: string, formData: object) {
   }
 }
 
-export async function updateData(endpoint, data) {
+export async function updateData(endpoint: string, data: object) {
   try {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: "PUT",
@@ -77,7 +77,7 @@ export async function updateData(endpoint, data) {
 }
 
 // DELETE request
-export async function deleteData(endpoint) {
+export async function deleteData(endpoint: string) {
   try {
     const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
       method: "DELETE",
