@@ -1,38 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { API_BASE_URL } from './api/api' 
-import './App.css'
+import Navigation from "./components/navigation/navigation";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import RegisterPage from "./pages/Register";
+import LoginPage from "./pages/Login";
+import ProfilePage from "./pages/Profile.tsx";
+import { AuthProvider } from "./authentication/AuthProvider.tsx";
+import VenuesPage from "./pages/Venues";
+import VenuePage from "./pages/OneVenue.tsx";
+import IndexPage from "./pages/index.tsx";
+import SearchResultsPage from "./pages/search.tsx";
+import BookingsPage from "./pages/bookings.tsx";
+import VenueManagerPage from "./pages/venueManager.tsx";
 
-console.log(API_BASE_URL);
-
-function App() {
-  const [count, setCount] = useState(0)
-
+function App(): JSX.Element {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <AuthProvider>
+        <Navigation />
+        <main className="flex-1 overflow-auto">
+          <Routes>
+            <Route path="/" element={<IndexPage />} />
+            <Route path="register" element={<RegisterPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="venues" element={<VenuesPage />} />
+            <Route path="venues/:id" element={<VenuePage />} />
+            <Route path="profiles/:username" element={<ProfilePage />} />
+            <Route
+              path="profiles/:username/bookings"
+              element={<BookingsPage />}
+            />
+            <Route
+              path="profiles/:username/venueManager"
+              element={<VenueManagerPage />}
+            />
+            <Route path="/search" element={<SearchResultsPage />} />
+          </Routes>
+        </main>
+      </AuthProvider>
+    </Router>
+  );
 }
 
-export default App
+export default App;

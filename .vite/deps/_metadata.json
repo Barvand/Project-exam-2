@@ -1,0 +1,85 @@
+{
+  "hash": "27495c32",
+  "configHash": "95615830",
+  "lockfileHash": "c4fa9ec7",
+  "browserHash": "ba647023",
+  "optimized": {
+    "react/jsx-dev-runtime": {
+      "src": "../../node_modules/react/jsx-dev-runtime.js",
+      "file": "react_jsx-dev-runtime.js",
+      "fileHash": "49ba031c",
+      "needsInterop": true
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "9f5b0c67",
+      "needsInterop": true
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "53594ff5",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.mjs",
+      "file": "react-router-dom.js",
+      "fileHash": "17499047",
+      "needsInterop": false
+    },
+    "react-hook-form": {
+      "src": "../../node_modules/react-hook-form/dist/index.esm.mjs",
+      "file": "react-hook-form.js",
+      "fileHash": "c3962800",
+      "needsInterop": false
+    },
+    "@hookform/resolvers/yup": {
+      "src": "../../node_modules/@hookform/resolvers/yup/dist/yup.mjs",
+      "file": "@hookform_resolvers_yup.js",
+      "fileHash": "9396e363",
+      "needsInterop": false
+    },
+    "react-icons/fa": {
+      "src": "../../node_modules/react-icons/fa/index.mjs",
+      "file": "react-icons_fa.js",
+      "fileHash": "74b67968",
+      "needsInterop": false
+    },
+    "react-icons/io5": {
+      "src": "../../node_modules/react-icons/io5/index.mjs",
+      "file": "react-icons_io5.js",
+      "fileHash": "5e384f28",
+      "needsInterop": false
+    },
+    "react-icons/md": {
+      "src": "../../node_modules/react-icons/md/index.mjs",
+      "file": "react-icons_md.js",
+      "fileHash": "c4558a6f",
+      "needsInterop": false
+    },
+    "yup": {
+      "src": "../../node_modules/yup/index.esm.js",
+      "file": "yup.js",
+      "fileHash": "57743d5a",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-IPYILTUR": {
+      "file": "chunk-IPYILTUR.js"
+    },
+    "chunk-DVMS23PN": {
+      "file": "chunk-DVMS23PN.js"
+    },
+    "chunk-WNYT3RZK": {
+      "file": "chunk-WNYT3RZK.js"
+    },
+    "chunk-4SFRHSJ3": {
+      "file": "chunk-4SFRHSJ3.js"
+    },
+    "chunk-EQCVQC35": {
+      "file": "chunk-EQCVQC35.js"
+    }
+  }
+}

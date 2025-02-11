@@ -1,4 +1,7 @@
-# React + TypeScript + Vite
+# Project-exam-2
+This is my project exam 2 for my Noroff school of technology front end development studies.  
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -48,3 +51,4 @@ export default tseslint.config({
   },
 })
 ```
+>>>>>>> login-feature
