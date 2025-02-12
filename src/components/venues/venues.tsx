@@ -50,10 +50,10 @@ export function RenderVenues({ data, meta, page, setPage }: VenuesProps) {
     <div className="container">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {data.map((venue) => (
-          <div key={venue.id} className="border rounded p-2">
+          <div key={venue.id} className="rounded relative">
             <Link to={`/venues/${venue.id}`}>
               <img
-                className="h-48 object-cover object-center w-full opacity-90 hover:opacity-100"
+                className="h-72 object-cover object-center w-full"
                 loading="lazy"
                 src={
                   venue.media && venue.media.length > 0
@@ -67,12 +67,18 @@ export function RenderVenues({ data, meta, page, setPage }: VenuesProps) {
                 }
               />
             </Link>
-            <div className="flex">
-              <h1 className="text-2xl font-bold">{venue.name}</h1>
-            </div>
-            <StarRating rating={venue.rating} />
-            <div className="flex justify-end">
-              <p className="text-md font-bold"> ${venue.price}</p>
+            <div className="bg-slate-200 bg-opacity-70 p-2 rounded absolute w-full bottom-0 hover:bg-opacity-90">
+              <div className="flex">
+                <h2 className="text-xl font-bold">
+                  {venue.name.length > 50
+                    ? venue.name.slice(0, 25) + "..."
+                    : venue.name}
+                </h2>
+              </div>
+              <div className="flex justify-between">
+                <StarRating rating={venue.rating} />
+                <p className="text-2xl font-bold"> ${venue.price}</p>
+              </div>
             </div>
           </div>
         ))}

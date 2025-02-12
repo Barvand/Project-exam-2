@@ -11,17 +11,13 @@
   --color-accentColor: #ff8a65;
 }
 
-.header {
-  --blue-treshold: calc(100% - 20px);
-  background: linear-gradient(
-    var(--color-primary),
-    var(--color-primary) var(--blue-treshold),
-    transparent var(--blue-treshold)
-  );
-}
-
 body {
   background-color: var(--color-background);
+  font-family: "Istok Web", serif;
+}
+
+h1 {
+  font-family: "Pacifico", serif;
 }
 /* Loader animation */
 .loader {
@@ -52,18 +48,18 @@ body {
 }
 
 .asymmetric {
-  background-color: #13559c;
+  background-color: #1a3b6d;
 }
 .asymmetric::after {
   position: absolute;
   content: "";
   width: 100%;
-  height: 100px;
+  height: 50px;
   top: 2;
   left: 0;
-  background-color: #13559c;
+  background-color: #1a3b6d;
   transform-origin: bottom left;
-  transform: skewY(-2deg);
+  transform: skewY(-1deg);
   z-index: -10;
 }
 

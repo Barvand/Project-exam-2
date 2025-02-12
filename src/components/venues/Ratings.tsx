@@ -16,7 +16,10 @@ function StarRating({ rating }: StarRatingProps) {
       <p className="bg-customPurple-900 text-white text-sm p-1 rounded px-2">
         {rating}
       </p>
-      <p> {getRatingText(rating)} </p>
+      <p className="text-sm font-bold bg-accentColor text-customPurple-900 p-1 rounded px-2">
+        {" "}
+        {getRatingText(rating)}
+      </p>
     </div>
   );
 }
