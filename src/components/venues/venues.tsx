@@ -11,6 +11,10 @@ interface Venue {
   owner: Owner;
   rating: number;
   price: number;
+  location: {
+    city: string;
+    country: string;
+  };
 }
 
 interface Meta {
@@ -67,17 +71,29 @@ export function RenderVenues({ data, meta, page, setPage }: VenuesProps) {
                 }
               />
             </Link>
-            <div className="bg-slate-200 bg-opacity-70 p-2 rounded absolute w-full bottom-0 hover:bg-opacity-90">
-              <div className="flex">
+            <div
+              className=" text-white p-2 py-2 rounded absolute w-full bottom-0"
+              style={{
+                background:
+                  "linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0))",
+                color: "white",
+              }}
+            >
+              <div className="flex justify-between">
+                <StarRating rating={venue.rating} />
+              </div>
+              <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">
                   {venue.name.length > 50
                     ? venue.name.slice(0, 25) + "..."
                     : venue.name}
                 </h2>
-              </div>
-              <div className="flex justify-between">
-                <StarRating rating={venue.rating} />
                 <p className="text-2xl font-bold"> ${venue.price}</p>
+              </div>
+              <div className="flex">
+                <p>
+                  {venue.location.city}, <span> {venue.location.country} </span>
+                </p>
               </div>
             </div>
           </div>
