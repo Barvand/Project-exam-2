@@ -48,7 +48,7 @@ h1 {
 }
 
 .asymmetric {
-  background-color: #1a3b6d;
+  background-color: #1a3b6e;
 }
 .asymmetric::after {
   position: absolute;
@@ -57,7 +57,7 @@ h1 {
   height: 50px;
   top: 2;
   left: 0;
-  background-color: #1a3b6d;
+  background-color: #1a3b6e;
   transform-origin: bottom left;
   transform: skewY(-1deg);
   z-index: -10;
