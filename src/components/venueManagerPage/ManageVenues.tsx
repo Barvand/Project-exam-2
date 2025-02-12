@@ -6,7 +6,7 @@ import RenderVenues from "./RenderVenues";
 function ManageVenues() {
   const { username } = useParams();
   const [venues, setVenues] = useState([]); // Store multiple venues
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,11 +17,10 @@ function ManageVenues() {
         );
 
         setVenues(response.data); // Ensure response is an array
-
-        console.log(response.data);
-      } catch (err) {
-        setError(err.message);
-        console.error(err);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        }
       } finally {
         setLoading(false);
       }

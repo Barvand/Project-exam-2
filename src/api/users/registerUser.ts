@@ -1,11 +1,20 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+export interface RegistrationProps {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  venueManager: boolean;
+}
+
 function CreateUser() {
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string>("");
   const navigate = useNavigate();
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: RegistrationProps) => {
     setApiError("");
     setSuccessMessage("");
 

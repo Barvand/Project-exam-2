@@ -1,6 +1,17 @@
 import { updateData } from "../../api/api";
 
-async function VenueManagerToggle(profile, setProfileState) {
+// Define the profile interface
+interface Profile {
+  name: string;
+  venueManager: boolean;
+}
+
+type SetProfileState = React.Dispatch<React.SetStateAction<Profile>>;
+
+async function VenueManagerToggle(
+  profile: Profile | null,
+  setProfileState: SetProfileState
+) {
   if (!profile) return; // Prevents calling API when profile is null
 
   try {
@@ -17,8 +28,6 @@ async function VenueManagerToggle(profile, setProfileState) {
 
     // Assuming the response contains the updated profile
     const data = response.data;
-    // Log the updated profile to ensure it toggled correctly
-    console.log("Updated profile:", data);
 
     // Update the state with the toggled value from the API response
     setProfileState((prevState) => ({

@@ -84,6 +84,10 @@ export async function deleteData(endpoint: string) {
       headers: GetHeaders(),
     });
 
+    if (response.status === 204) {
+      return {}; // Return an empty object or handle it as needed
+    }
+
     const responseData = await response.json();
     if (!response.ok) {
       throw new Error(
@@ -91,6 +95,8 @@ export async function deleteData(endpoint: string) {
           "An error occurred while fetching data"
       );
     }
+
+    return responseData;
   } catch (error) {
     console.error("Error deleting data:", error);
     throw error;

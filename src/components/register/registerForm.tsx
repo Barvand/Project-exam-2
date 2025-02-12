@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import userSchema from "../../Validations/UserValidation";
 import CreateUser from "../../api/users/registerUser";
+import { RegistrationProps } from "../../api/users/registerUser";
 
 function RegisterForm() {
   const {
@@ -12,8 +13,12 @@ function RegisterForm() {
     resolver: yupResolver(userSchema),
   });
 
-  const url = "https://v2.api.noroff.dev/auth/register";
-  const { apiError, successMessage, onSubmit } = CreateUser(url);
+  const { apiError, successMessage, onSubmit } = CreateUser();
+
+  // Submit handler is only for API call
+  const handleFormSubmit = async (data: RegistrationProps) => {
+    await onSubmit(data); // Call onSubmit from CreateUser
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -27,7 +32,7 @@ function RegisterForm() {
           <p className="text-red-500 mt-2 font-semibold">{apiError}</p>
         )}
 
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <form className="space-y-4" onSubmit={handleSubmit(handleFormSubmit)}>
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Name

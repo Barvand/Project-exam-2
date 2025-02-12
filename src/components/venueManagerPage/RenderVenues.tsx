@@ -1,6 +1,25 @@
 import RenderDeleteVenue from "./deleteVenue";
 
-function RenderVenues({ venues }) {
+interface VenueMedia {
+  url: string;
+}
+
+interface Venue {
+  id: string;
+  name: string;
+  description: string;
+  created: string;
+  media: VenueMedia[];
+  _count?: {
+    bookings: number;
+  };
+}
+
+interface RenderVenueProps {
+  venues: Venue[];
+}
+
+function RenderVenues({ venues }: RenderVenueProps) {
   return (
     <div>
       <div className="">
