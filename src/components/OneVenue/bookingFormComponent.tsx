@@ -9,19 +9,54 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface BookingFormProps {
-  bookingPrice: number;
-  bookingTitle: string;
+  venuePrice: number;
+  venueTitle: string;
 }
 
-function BookingForm({ bookingPrice, bookingTitle }: BookingFormProps) {
-  const { id } = useParams();
-  const today = new Date().toISOString().split("T")[0];
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [bookedDates, setBookedDates] = useState<Date[]>([]);
+interface Booking {
+  dateFrom: Date;
+  dateTo: Date;
+}
 
+// Define the interface for booked dates
+interface UniqueBookedDatesProps {
+  date: Date;
+}
+
+/**
+ * BookingForm component that allows users to make bookings by selecting check-in and check-out dates,
+ * number of guests, and calculating the total price based on selected dates and booking price.
+ * Displays success or error messages based on the form submission outcome.
+ *
+ * @component
+ * @example
+ * const venuePrice = 150;
+ * const venueTitle = "Luxury Villa";
+ * return <BookingForm venuePrice={venuePrice} venueTitle={venueTitle} />;
+ *
+ * @param {Object} props - The component's props.
+ * @param {number} props.venuePrice - The price per day for booking.
+ * @param {string} props.venueTitle - The title or name of the venue being booked.
+ *
+ * @returns {JSX.Element} The BookingForm component.
+ */
+function BookingForm({ venuePrice, venueTitle }: BookingFormProps) {
+  const { id } = useParams<{ id: string }>(); // Ensure `id` is correctly typed as a string
+  const today = new Date();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [bookedDates, setBookedDates] = useState<UniqueBookedDatesProps[]>([]);
+
+  /**
+   * Fetches booked dates for the venue.
+   * This function is called on mount (via useEffect) and retrieves the booking data from the API.
+   *
+   * @async
+   * @function fetchBookings
+   * @returns {Promise<void>}
+   */
   useEffect(() => {
     async function fetchBookings() {
       try {
@@ -32,36 +67,33 @@ function BookingForm({ bookingPrice, bookingTitle }: BookingFormProps) {
 
         // Ensure bookings exist in the response
         if (data && data.bookings && Array.isArray(data.bookings)) {
-          const bookedRanges = data.bookings.map((booking) => {
-            // Ensure the booking is valid and has dateFrom and dateTo properties
-            if (booking && booking.dateFrom && booking.dateTo) {
-              const startDate = new Date(booking.dateFrom);
-              const endDate = new Date(booking.dateTo);
+          const bookedRanges = data.bookings.map((booking: Booking) => {
+            const startDate = new Date(booking.dateFrom);
+            const endDate = new Date(booking.dateTo);
 
-              // Make sure both start and end dates are valid
-              if (startDate.getTime() && endDate.getTime()) {
-                let currentDate = new Date(startDate);
-                let datesInRange = [];
+            // Generate all dates within the range
+            const datesInRange: Date[] = [];
+            const currentDate = new Date(startDate);
 
-                // Generate all dates within the range
-                while (currentDate <= endDate) {
-                  datesInRange.push(new Date(currentDate)); // Add the current date to the range
-                  currentDate.setDate(currentDate.getDate() + 1); // Increment the day
-                }
-
-                return datesInRange;
-              }
+            while (currentDate <= endDate) {
+              datesInRange.push(new Date(currentDate));
+              currentDate.setDate(currentDate.getDate() + 1); // Increment the day
             }
-            // Return empty array if booking is invalid
-            return [];
+
+            return datesInRange;
           });
 
-          // Flatten the array and remove duplicates
-          const uniqueBookedDates = [
-            ...new Set(bookedRanges.flat().map((date) => date.toISOString())),
-          ];
+          // Flatten the array of date ranges and remove duplicates
+          const uniqueBookedDates = Array.from(
+            new Map(
+              bookedRanges.flat().map((date: Date) => [
+                date.toISOString(),
+                { date: new Date(date) }, // Corrected syntax
+              ]) // Correct the map method
+            ).values()
+          );
 
-          setBookedDates(uniqueBookedDates.map((dateStr) => new Date(dateStr))); // Convert ISO strings back to Date objects
+          setBookedDates(uniqueBookedDates as UniqueBookedDatesProps[]);
         }
       } catch (error) {
         console.error("Error fetching bookings:", error);
@@ -70,11 +102,14 @@ function BookingForm({ bookingPrice, bookingTitle }: BookingFormProps) {
 
     fetchBookings();
   }, [id]);
-
+  /**
+   * Formik setup for managing form state and validation.
+   * This function handles form submission, validation, and resetting form values.
+   */
   const formik = useFormik({
     initialValues: {
-      dateFrom: null,
-      dateTo: null,
+      dateFrom: null as Date | null,
+      dateTo: null as Date | null,
       guests: 1,
       venueId: id,
     },
@@ -84,12 +119,15 @@ function BookingForm({ bookingPrice, bookingTitle }: BookingFormProps) {
         await postData("holidaze/bookings/", values);
         actions.resetForm();
         setSuccessMessage("Booking has been successfully made!");
-        setErrorMessage("");
+        setErrorMessage(""); // Clear any error message
       } catch (error) {
-        setErrorMessage(error.message || "An unexpected error occurred.");
+        if (error instanceof Error) {
+          setErrorMessage(error.message || "An unexpected error occurred.");
+        } else {
+          setErrorMessage("An unexpected error occurred.");
+        }
         setSuccessMessage("");
       }
-      setIsModalOpen(false);
     },
   });
 
@@ -100,15 +138,27 @@ function BookingForm({ bookingPrice, bookingTitle }: BookingFormProps) {
     handleChange,
     handleBlur,
     handleSubmit,
+    setFieldValue,
     isValid,
     dirty,
   } = formik;
 
+  /**
+   * Updates the total price based on the selected date range.
+   * This effect runs whenever the dates change and recalculates the total price.
+   */
   useEffect(() => {
-    setTotalPrice(calculateDays(values.dateFrom, values.dateTo) * bookingPrice);
-  }, [values.dateFrom, values.dateTo, bookingPrice]);
+    if (values.dateFrom && values.dateTo) {
+      setTotalPrice(calculateDays(values.dateFrom, values.dateTo) * venuePrice);
+    }
+  }, [values.dateFrom, values.dateTo, venuePrice]);
 
-  const handleOpenModal = (e) => {
+  /**
+   * Handles opening the modal when the user clicks the submit button, only if the form is valid and dirty.
+   *
+   * @param {React.MouseEvent<HTMLButtonElement>} e - The event triggered by the submit button click.
+   */
+  const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isValid && dirty) setIsModalOpen(true);
   };
@@ -118,22 +168,27 @@ function BookingForm({ bookingPrice, bookingTitle }: BookingFormProps) {
       {/* Date From */}
       <label>Check-in date</label>
       <DatePicker
-        selected={formik.values.dateFrom}
+        selected={values.dateFrom}
         onChange={(dates) => {
-          const [start, end] = dates;
-          formik.setFieldValue("dateFrom", start);
-          formik.setFieldValue("dateTo", end);
+          if (dates) {
+            const [start, end] = dates;
+            setFieldValue("dateFrom", start);
+            setFieldValue("dateTo", end);
+          } else {
+            setFieldValue("dateFrom", null);
+            setFieldValue("dateTo", null);
+          }
         }}
-        minDate={today}
-        startDate={formik.values.dateFrom} // Corrected
-        endDate={formik.values.dateTo} // Added for range selection
-        excludeDates={bookedDates}
-        dateFormat="yyyy-MM-dd"
-        className="input"
+        startDate={values.dateFrom}
+        endDate={values.dateTo}
         selectsRange
+        minDate={today}
+        excludeDates={bookedDates.map((booking) => booking.date)}
+        dateFormat="MM/dd/yyyy"
       />
-      {formik.errors.dateFrom && formik.touched.dateFrom && (
-        <p className="error">{formik.errors.dateFrom}</p>
+
+      {errors.dateFrom && touched.dateFrom && (
+        <p className="error">{errors.dateFrom}</p>
       )}
 
       <label>Max Guests</label>
@@ -165,14 +220,24 @@ function BookingForm({ bookingPrice, bookingTitle }: BookingFormProps) {
         <Modal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          title={`Booking for ${bookingTitle}`}
+          title={`Booking for ${venueTitle}`}
         >
-          <p>Total Days: {calculateDays(values.dateFrom, values.dateTo)}</p>
+          <p>
+            Total Days:{" "}
+            {values.dateFrom && values.dateTo
+              ? calculateDays(values.dateFrom, values.dateTo)
+              : 0}
+          </p>
+
           <p>Total Price: ${totalPrice}</p>
           <div className="flex justify-between mt-1">
             <button
               className="p-2 bg-green-500 rounded font-bold text-white"
-              onClick={handleSubmit}
+              onClick={(e) => {
+                e.preventDefault(); // I had to do this to prevent typeScript errors? Am I missing something?
+                handleSubmit();
+                setIsModalOpen(false);
+              }}
             >
               Confirm
             </button>

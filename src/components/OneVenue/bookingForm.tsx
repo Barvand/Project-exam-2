@@ -40,8 +40,8 @@ function BookingForm() {
 
   return (
     <BookingFormComponent
-      bookingPrice={booking.price}
-      bookingTitle={booking.name}
+      venuePrice={booking.price}
+      venueTitle={booking.name}
     />
   );
 }
