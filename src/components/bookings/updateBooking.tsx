@@ -6,8 +6,8 @@ import Modal from "../modals/Modal";
 interface RenderUpdateBookingProps {
   id: string;
   booking: {
-    dateFrom: string;
-    dateTo: string;
+    dateFrom: Date;
+    dateTo: Date;
     guests: number;
     title: string;
     venue: { name: string };

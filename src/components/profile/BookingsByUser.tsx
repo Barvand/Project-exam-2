@@ -1,21 +1,43 @@
 import { Link } from "react-router-dom";
 import RenderDeleteBooking from "../bookings/deleteBooking";
-import { useState } from "react";
 import RenderUpdateBooking from "../bookings/updateBooking";
+import { useState } from "react";
 
-function RenderBookingsProfile({ bookings }) {
-  const [newBookings, setNewBookings] = useState(bookings);
-  const [errorMessage, setErrorMessage] = useState(""); // To handle error messages
-  const [successMessage, setSuccessMessage] = useState(""); // To handle success messages
+// Define types for the booking object and its properties
+interface Booking {
+  id: string;
+  dateFrom: Date;
+  dateTo: Date;
+  title: string;
+  guests: number;
+  venue: {
+    id: string;
+    name: string;
+    media: { url: string; alt: string }[];
+  };
+}
 
-  const handleDeleteBooking = (id) => {
+// Define types for the RenderBookingsProfile props
+interface RenderBookingsProfileProps {
+  bookings: Booking[];
+}
+
+const RenderBookingsProfile: React.FC<RenderBookingsProfileProps> = ({
+  bookings,
+}) => {
+  const [newBookings, setNewBookings] = useState<Booking[]>(bookings);
+
+  const handleDeleteBooking = (id: string) => {
     // Update the newBookings state after deletion
     setNewBookings((prevBookings) =>
       prevBookings.filter((booking) => booking.id !== id)
     );
   };
 
-  const handleUpdateBooking = (id, updatedBooking) => {
+  const handleUpdateBooking = (
+    id: string,
+    updatedBooking: Partial<Booking>
+  ) => {
     // Update the booking state with the updated booking
     setNewBookings((prevBookings) =>
       prevBookings.map((booking) =>
@@ -32,6 +54,7 @@ function RenderBookingsProfile({ bookings }) {
             Upcoming bookings
           </h1>
         </div>
+
         {newBookings.length === 0 ? (
           <p>No bookings available at the moment.</p>
         ) : (
@@ -101,6 +124,6 @@ function RenderBookingsProfile({ bookings }) {
       </div>
     </div>
   );
-}
+};
 
 export default RenderBookingsProfile;

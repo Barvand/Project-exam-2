@@ -1,4 +1,30 @@
-function RenderProfileInfo({ profile, onToggleVenueManager }) {
+import React from "react";
+
+// Define types for the profile data
+interface Profile {
+  banner: {
+    url: string;
+    alt: string;
+  };
+  avatar: {
+    url: string;
+    alt: string;
+  };
+  name: string;
+  bio: string;
+  venueManager: boolean;
+}
+
+// Define types for the props
+interface RenderProfileInfoProps {
+  onToggleVenueManager: () => void; // Assuming this is a function that toggles venue manager status
+  profile: Profile;
+}
+
+const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
+  profile,
+  onToggleVenueManager,
+}) => {
   return (
     <div className="shadow-lg rounded-lg overflow-hidden">
       {/* Banner with shadow effect */}
@@ -57,6 +83,6 @@ function RenderProfileInfo({ profile, onToggleVenueManager }) {
       </div>
     </div>
   );
-}
+};
 
 export default RenderProfileInfo;
