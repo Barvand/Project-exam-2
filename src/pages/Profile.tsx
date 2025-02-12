@@ -5,8 +5,23 @@ import Loading from "../features/loading";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../api/api";
 
+interface Profile {
+  name: string;
+  venueManager: boolean;
+  banner: {
+    url: string;
+    alt: string;
+  };
+  avatar: {
+    url: string;
+    alt: string;
+  };
+  bio: string;
+  bookings: any[];
+}
+
 function ProfilePage() {
-  const [profileState, setProfileState] = useState(null);
+  const [profileState, setProfileState] = useState<Profile | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true); // Track loading state
   const [profileError, setProfileError] = useState(false); // Track error state
@@ -26,11 +41,13 @@ function ProfilePage() {
         const data = response.data;
 
         setProfileState(data);
-      } catch (error) {
-        setProfileError(true);
-        setErrorMessage(
-          error.message || "An error occurred while fetching data"
-        );
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setProfileError(true);
+          setErrorMessage(
+            error.message || "An error occurred while fetching data"
+          );
+        }
       } finally {
         setIsLoading(false);
       }

@@ -1,4 +1,4 @@
-interface StarRatingProps {
+export interface StarRatingProps {
   rating: number;
 }
 

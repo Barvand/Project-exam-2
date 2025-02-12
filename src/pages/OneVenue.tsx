@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom"; // Import useParams
 import RenderVenue from "../components/OneVenue/venue";
 import Loading from "../features/loading";
 import { fetchData } from "../api/api";
-import BookingData from "../components/OneVenue/bookingData";
 
 function VenuePage() {
   const { id } = useParams(); // Get ID from URL params

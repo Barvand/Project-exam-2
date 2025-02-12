@@ -16,8 +16,17 @@ function RegisterForm() {
   const { apiError, successMessage, onSubmit } = CreateUser();
 
   // Submit handler is only for API call
-  const handleFormSubmit = async (data: RegistrationProps) => {
-    await onSubmit(data); // Call onSubmit from CreateUser
+  const handleFormSubmit = async (
+    data: RegistrationProps
+  ): Promise<boolean> => {
+    try {
+      // Call onSubmit from CreateUser
+      await onSubmit(data);
+      return true; // Indicate successful submission
+    } catch (error) {
+      console.error("Submission failed", error);
+      return false; // Indicate failure
+    }
   };
 
   return (

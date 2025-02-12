@@ -1,16 +1,16 @@
-interface Media {
+export interface Media {
   url: string;
   alt: string;
 }
 
-interface Meta {
+export interface Meta {
   wifi: boolean;
   parking: boolean;
   breakfast: boolean;
   pets: boolean;
 }
 
-interface Location {
+export interface Location {
   address: string;
   city: string;
   zip: string;
@@ -20,7 +20,7 @@ interface Location {
   lng: number;
 }
 
-interface Booking {
+export interface Booking {
   id: string;
   dateFrom: string;
   dateTo: string;
@@ -30,7 +30,7 @@ interface Booking {
   customer: Customer;
 }
 
-interface Customer {
+export interface Customer {
   name: string;
   email: string;
   bio: string;
@@ -38,12 +38,12 @@ interface Customer {
   banner: AvatarBanner;
 }
 
-interface AvatarBanner {
+export interface AvatarBanner {
   url: string;
   alt: string;
 }
 
-interface Owner {
+export interface Owner {
   name: string;
   email: string;
   bio: string;

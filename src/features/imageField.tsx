@@ -1,10 +1,26 @@
+import {
+  UseFormRegister,
+  UseFormWatch,
+  FieldValues,
+  UseFieldArrayAppend,
+  UseFieldArrayRemove,
+} from "react-hook-form";
+
+interface ImageFieldProps {
+  index: number;
+  register: UseFormRegister<FieldValues>;
+  watch: UseFormWatch<FieldValues>;
+  removeImageField: UseFieldArrayRemove;
+  addImageField: UseFieldArrayAppend<FieldValues, "media">;
+}
+
 function ImageField({
   index,
   register,
   watch,
   removeImageField,
   addImageField,
-}) {
+}: ImageFieldProps) {
   const imageUrl = watch(`media.${index}.url`);
 
   return (
@@ -14,7 +30,10 @@ function ImageField({
           src={imageUrl || "/public/placeholder.png"}
           alt={watch(`media.${index}.alt`) || "Image Preview"}
           className="w-32 h-32 object-cover border rounded-lg"
-          onError={(e) => (e.target.src = "/placeholder.png")}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement; // Cast target to HTMLImageElement
+            target.src = "/placeholder.png";
+          }}
         />
       </div>
 

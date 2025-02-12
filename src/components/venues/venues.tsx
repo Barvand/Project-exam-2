@@ -9,6 +9,8 @@ interface Venue {
   media: { url: string; alt: string }[];
   meta: { wifi: boolean; breakfast: boolean };
   owner: Owner;
+  rating: number;
+  price: number;
 }
 
 interface Meta {

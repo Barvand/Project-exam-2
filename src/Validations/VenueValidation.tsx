@@ -7,15 +7,28 @@ const venueSchema = yup.object().shape({
     .required("Description for your property is required"),
   media: yup.array().of(
     yup.object().shape({
-      url: yup.string().url().required("An image URL is required"),
-      alt: yup.string().required("Alt text is required"),
+      url: yup
+        .string()
+        .url("Must be a valid URL")
+        .required("An image URL is required")
+        .matches(/^(https?:\/\/)/, "URL must start with http:// or https://"),
     })
   ),
-  price: yup.number().required("Please enter a price"),
+  price: yup
+    .number()
+    .min(1, "Cmon, you want to lose money?")
+    .required("Please enter a price"),
+
   maxGuests: yup
     .number()
+    .min(1, "Are you sure no one is coming?")
     .required("please define the max numbers allowed for your property"),
-  rating: yup.number().default(0).optional(),
+  rating: yup
+    .number()
+    .min(1)
+    .max(5)
+    .default(1)
+    .required("Rating cannot be lower then 1 and higher than 5"),
   meta: yup
     .object()
     .shape({

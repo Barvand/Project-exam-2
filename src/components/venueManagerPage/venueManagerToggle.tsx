@@ -4,9 +4,19 @@ import { updateData } from "../../api/api";
 interface Profile {
   name: string;
   venueManager: boolean;
+  banner: {
+    url: string;
+    alt: string;
+  };
+  avatar: {
+    url: string;
+    alt: string;
+  };
+  bio: string;
+  bookings: any[];
 }
 
-type SetProfileState = React.Dispatch<React.SetStateAction<Profile>>;
+type SetProfileState = React.Dispatch<React.SetStateAction<Profile | null>>;
 
 async function VenueManagerToggle(
   profile: Profile | null,
@@ -30,17 +40,25 @@ async function VenueManagerToggle(
     const data = response.data;
 
     // Update the state with the toggled value from the API response
-    setProfileState((prevState) => ({
-      ...prevState,
-      venueManager: data.venueManager, // Use the updated value from the API
-    }));
+    setProfileState((prevState) =>
+      prevState
+        ? {
+            ...prevState,
+            venueManager: data.venueManager, // Use the updated value from the API
+          }
+        : null
+    );
   } catch (error) {
     console.error("Failed to toggle venue manager status:", error);
     // Revert the toggle in case of an error
-    setProfileState((prevState) => ({
-      ...prevState,
-      venueManager: !prevState.venueManager, // Revert the toggle
-    }));
+    setProfileState((prevState) =>
+      prevState
+        ? {
+            ...prevState,
+            venueManager: !prevState.venueManager, // Revert the toggle
+          }
+        : null
+    );
   }
 }
 
