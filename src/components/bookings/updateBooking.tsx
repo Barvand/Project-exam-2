@@ -58,19 +58,15 @@ function RenderUpdateBooking({
       }, 3000);
       onUpdate(id, response.data);
       setIsModalOpen(false);
-    } catch (error: any) {
-      if (error.response) {
+    } catch (error: unknown) {
+      // Check if the error is an instance of the built-in Error object
+      if (error instanceof Error) {
         setErrorMessage(
-          error.response.data.message ||
-            "An error occurred while updating the booking."
-        );
-      } else if (error.request) {
-        setErrorMessage(
-          "No response from the server. Please check your network connection."
+          error.message || "An error occurred while updating the booking."
         );
       } else {
         setErrorMessage(
-          error.message || "Something went wrong. Please try again."
+          "Something went wrong. Please try again." // Fallback for unknown errors
         );
       }
     }
@@ -96,9 +92,17 @@ function RenderUpdateBooking({
         <label className="block mb-2">Check-in Date:</label>
         <input
           type="date"
-          value={updatedBooking.dateFrom.split("T")[0]}
-          onChange={(e) =>
-            setUpdatedBooking({ ...updatedBooking, dateFrom: e.target.value })
+          value={
+            updatedBooking.dateFrom instanceof Date
+              ? updatedBooking.dateFrom.toISOString().split("T")[0]
+              : ""
+          }
+          onChange={
+            (e) =>
+              setUpdatedBooking({
+                ...updatedBooking,
+                dateFrom: new Date(e.target.value),
+              }) // Convert string back to Date
           }
           className="border p-2 w-full"
         />
@@ -106,9 +110,16 @@ function RenderUpdateBooking({
         <label className="block mt-2">Check-out Date:</label>
         <input
           type="date"
-          value={updatedBooking.dateTo.split("T")[0]}
+          value={
+            updatedBooking.dateTo instanceof Date
+              ? updatedBooking.dateTo.toISOString().split("T")[0]
+              : ""
+          }
           onChange={(e) =>
-            setUpdatedBooking({ ...updatedBooking, dateTo: e.target.value })
+            setUpdatedBooking({
+              ...updatedBooking,
+              dateTo: new Date(e.target.value),
+            })
           }
           className="border p-2 w-full"
         />
