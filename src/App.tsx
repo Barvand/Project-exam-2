@@ -10,13 +10,14 @@ import IndexPage from "./pages/index.tsx";
 import SearchResultsPage from "./pages/search.tsx";
 import BookingsPage from "./pages/bookings.tsx";
 import VenueManagerPage from "./pages/venueManager.tsx";
+import Footer from "./components/footer/Footer.tsx";
 
 function App(): JSX.Element {
   return (
     <Router>
       <AuthProvider>
         <Navigation />
-        <main className="flex-1 overflow-auto">
+        <main>
           <Routes>
             <Route path="/" element={<IndexPage />} />
             <Route path="register" element={<RegisterPage />} />
@@ -35,6 +36,7 @@ function App(): JSX.Element {
             <Route path="/search" element={<SearchResultsPage />} />
           </Routes>
         </main>
+        <Footer />
       </AuthProvider>
     </Router>
   );

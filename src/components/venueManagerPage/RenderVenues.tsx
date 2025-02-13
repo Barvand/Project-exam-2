@@ -1,5 +1,5 @@
 import RenderDeleteVenue from "./deleteVenue";
-
+import UpdateVenue from "./updateVenue";
 interface VenueMedia {
   url: string;
 }
@@ -50,7 +50,11 @@ function RenderVenues({ venues }: RenderVenueProps) {
           </summary>
           <div className="flex justify-start">
             <img
-              src={venue.media[0].url}
+              src={
+                venue.media?.length > 0
+                  ? venue.media[0].url
+                  : "placeholder-image.jpg"
+              }
               alt={`Venue: ${venue.name}`}
               className="h-48 object-contain rounded-md border border-gray-700"
             />
@@ -59,6 +63,7 @@ function RenderVenues({ venues }: RenderVenueProps) {
               <p className="mb-3 text-gray-300">{venue.description}</p>
             </div>
             <RenderDeleteVenue id={venue.id} />
+            <UpdateVenue id={venue.id} />
           </div>
         </details>
       ))}

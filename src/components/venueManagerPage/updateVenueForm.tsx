@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { postData } from "../../api/api";
+import { updateData } from "../../api/api";
 import { useFormik } from "formik";
 import LocationInput from "./VenueFormInputs/locationInput";
 import CommoditiesInput from "./VenueFormInputs/commoditiesInput";
@@ -10,7 +10,7 @@ import venueSchema from "../../Validations/VenueValidation";
 import React from "react";
 import ImageInput from "./VenueFormInputs/ImageInput";
 
-function CreateVenueForm() {
+function UpdateVenueForm({ initialData }: any) {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -18,19 +18,24 @@ function CreateVenueForm() {
   const [currentImage, setCurrentImage] = useState(""); // State to hold the current input value
   const [error, setError] = React.useState("");
 
+  // Set images when the component is mounted
+  useEffect(() => {
+    // Check if initialData and media are provided
+    if (initialData?.media && Array.isArray(initialData.media)) {
+      const imageUrls = initialData.media.map((media: any) => media.url);
+      setImages(imageUrls); // Populate images state with existing media URLs
+    }
+  }, [initialData]); // Only run this effect when initialData changes
+
   const handleInputChange = (e: any) => {
     setCurrentImage(e.target.value);
     setError(""); // Clear error on input change
   };
 
   const addImage = () => {
-    if (currentImage.trim() !== "") {
-      setImages([...images, currentImage]); // Add the current image URL to the array
-      setCurrentImage(""); // Clear the input field
-      if (!currentImage) {
-        setError("Image URL cannot be empty");
-        return;
-      }
+    if (currentImage.trim() === "") {
+      setError("Image URL cannot be empty");
+      return;
     }
 
     const urlRegex = /^(https?:\/\/)/;
@@ -39,35 +44,31 @@ function CreateVenueForm() {
       return;
     }
 
-    // If validation passes, add the image and clear the input
-    formik.setFieldValue("media", [
-      ...formik.values.media,
-      { url: currentImage },
-    ]);
-    setCurrentImage("");
+    // Add valid image URL to the images array
+    setImages([...images, currentImage]);
+    setCurrentImage(""); // Clear the input field
     setError(""); // Clear error on success
   };
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      description: "",
-      price: "",
-      maxGuests: "",
-      rating: "",
-      media: images,
+      name: initialData.name || "",
+      description: initialData.description || "",
+      price: initialData.price || "",
+      maxGuests: initialData.maxGuests || "",
+      rating: initialData.rating || "",
       meta: {
-        wifi: false,
-        parking: false,
-        breakfast: false,
-        pets: false,
+        wifi: initialData.meta?.wifi || false,
+        parking: initialData.meta?.parking || false,
+        breakfast: initialData.meta?.breakfast || false,
+        pets: initialData.meta?.pets || false,
       },
       location: {
-        address: "",
-        city: "",
-        zip: "",
-        country: "",
-        continent: "",
+        address: initialData.location?.address || "",
+        city: initialData.location?.city || "",
+        zip: initialData.location?.zip || "",
+        country: initialData.location?.country || "",
+        continent: initialData.location?.continent || "",
       },
     },
     validationSchema: venueSchema,
@@ -81,10 +82,13 @@ function CreateVenueForm() {
           })),
         };
 
-        const response = await postData("holidaze/venues/", requestData);
+        const response = await updateData(
+          `holidaze/venues/${initialData.id}`,
+          requestData
+        );
 
         // Set success message and navigate after a delay
-        setSuccessMessage("Your venue has been created successfully!");
+        setSuccessMessage("Your venue has been updated successfully!");
         setTimeout(() => {
           setSuccessMessage("");
           navigate(`/venues/${response.data.id}`);
@@ -102,7 +106,7 @@ function CreateVenueForm() {
   return (
     <div className="py-8 flex flex-col items-center">
       <h2 className="text-3xl font-semibold text-center py-4">
-        Post Your Venue
+        Update Your Venue
       </h2>
       <form onSubmit={formik.handleSubmit} className="space-y-6 p-2 w-full">
         <BasicInfo formik={formik} />
@@ -129,7 +133,7 @@ function CreateVenueForm() {
             type="submit"
             className="bg-indigo-600 text-white py-2 px-6 rounded-lg"
           >
-            Post Venue
+            Update Venue
           </button>
         </div>
       </form>
@@ -141,4 +145,4 @@ function CreateVenueForm() {
   );
 }
 
-export default CreateVenueForm;
+export default UpdateVenueForm;
