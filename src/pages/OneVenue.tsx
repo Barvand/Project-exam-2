@@ -8,20 +8,23 @@ function VenuePage() {
   const { id } = useParams(); // Get ID from URL params
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState("");
 
   useEffect(() => {
     if (!id) return; // Prevent fetching if id is missing
 
     async function fetchVenue() {
+      setIsLoading(true); // Set loading state when fetch begins
       try {
         const venueData = await fetchData(`holidaze/venues/${id}?_owner=true`);
 
         setData(venueData.data);
-      } catch (error) {
-        setIsError(true);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setIsError(error.message);
+        }
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Always stop loading
       }
     }
 

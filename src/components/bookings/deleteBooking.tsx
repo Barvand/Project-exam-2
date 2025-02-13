@@ -26,9 +26,9 @@ function RenderDeleteBooking({
         setSuccessMessage("");
         onDelete(id);
       }, 2000);
-    } catch (error: any) {
-      // If error does not have a message, you might want to adjust this logic
-      setErrorMessage("Failed to delete booking. Please try again later.");
+    } catch (error: unknown) {
+      if (error instanceof Error) 
+       setErrorMessage("Failed to delete booking. Please try again later.");
     } finally {
       setIsDeleting(false);
       setShowModal(false);
