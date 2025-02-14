@@ -22,14 +22,11 @@ function Navigation(): JSX.Element {
   };
 
   return (
-    <nav className="bg-white shadow-md relative">
+    <nav className="bg-primary shadow-md relative text-white">
       <div className="container mx-auto px-4 flex items-center justify-between py-4 relative">
-        {/* Logo */}
         <Link to="/" className="flex gap-2">
-          <img src="/holidazelogo.png" className="h-12" alt="Holidaze-Logo" />
-          <span className="self-center text-2xl font-semibold text-customPurple-800">
-            Holidaze
-          </span>
+          <img src="/airplanelogo.png" className="h-12" alt="Holidaze-Logo" />
+          <h1 className="text-4xl font-bold">Holidaze</h1>
         </Link>
 
         {/* Hamburger Button */}
@@ -38,7 +35,7 @@ function Navigation(): JSX.Element {
 
           {/* Mobile Menu (Only appears when open) */}
           {isMenuOpen && (
-            <div className="bg-white border shadow-md absolute right-0 top-full w-64 md:w-80 z-50 rounded-lg mt-2">
+            <div className="bg-white text-black shadow-md absolute right-0 top-full w-64 md:w-80 z-50 rounded-lg mt-2 border-4 border-customPurple-800">
               <ul className="flex flex-col space-y-3 p-4">
                 <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
                   <Link to="/venues" className="block py-2" onClick={closeMenu}>
@@ -97,13 +94,11 @@ function Navigation(): JSX.Element {
                         Venue Manager
                       </Link>
                     </li>
-                    <li>
-                      <button
-                        onClick={() => setShowLogoutConfirm(true)}
-                        className="block py-2 text-red-500"
-                      >
-                        Log out
-                      </button>
+                    <li
+                      className="hover:bg-red-800 p-1 rounded hover:text-customPurple-50 cursor-pointer"
+                      onClick={() => setShowLogoutConfirm(true)}
+                    >
+                      <p className="block py-2">Log out</p>
                     </li>
                   </>
                 )}

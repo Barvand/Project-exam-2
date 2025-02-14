@@ -7,8 +7,8 @@ import ErrorMessage from "../../error-handling/error";
 import { Venues } from "../../types/venue.array"; // Ensure Venues type is defined here
 
 export default function SearchBar() {
-  const [data, setData] = useState<Venues[]>([]); 
-  const [search, setSearch] = useState<string>(""); 
+  const [data, setData] = useState<Venues[]>([]);
+  const [search, setSearch] = useState<string>("");
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
 
@@ -63,7 +63,7 @@ export default function SearchBar() {
   return (
     <div
       ref={searchContainerRef}
-      className="container flex justify-end text-black w-full relative"
+      className="container flex justify-start text-black w-full relative"
     >
       <div className="border-1 p-1 border-white overflow-hidden w-[250px] sm:w-[500px]">
         <div className="flex items-center">
@@ -76,7 +76,7 @@ export default function SearchBar() {
                 setSearch(e.target.value);
                 setIsDropdownOpen(e.target.value !== "");
               }}
-              className="w-full outline-none text-sm text-black rounded"
+              className="w-full outline-none text-sm text-black rounded p-2"
             />
             <div className="p-3 bg-accentColor">
               <svg

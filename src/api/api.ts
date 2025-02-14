@@ -13,17 +13,20 @@ export async function fetchData(endpoint: string) {
       headers: GetHeaders(),
     });
 
-    const data = await response.json();
-
+    // Check if response is ok and ensure it's a JSON response
     if (!response.ok) {
-      throw new Error(
-        data.errors?.[0]?.message || "An error occurred while fetching data"
-      );
+      const errorData = await response.json().catch(() => ({})); // Gracefully handle cases where response is not JSON
+      const errorMessage =
+        errorData.errors?.[0]?.message ||
+        "An error occurred while fetching data";
+      throw new Error(errorMessage);
     }
+
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw error;
+    throw error; 
   }
 }
 

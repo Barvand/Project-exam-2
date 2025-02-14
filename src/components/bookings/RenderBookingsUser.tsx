@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import RenderDeleteBooking from "../bookings/deleteBooking";
-import RenderUpdateBooking from "../bookings/updateBooking";
+import RenderDeleteBooking from "./deleteBooking";
+import RenderUpdateBooking from "./updateBooking";
 import { useState } from "react";
+import { MdGroups2, MdPerson3 } from "react-icons/md";
 
 // Define types for the booking object and its properties
 interface Booking {
@@ -20,11 +21,13 @@ interface Booking {
 // Define types for the RenderBookingsProfile props
 interface RenderBookingsProfileProps {
   bookings: Booking[];
+  header: string;
 }
 
-const RenderBookingsProfile: React.FC<RenderBookingsProfileProps> = ({
+function RenderBookingsProfile({
   bookings,
-}) => {
+  header,
+}: RenderBookingsProfileProps) {
   const [newBookings, setNewBookings] = useState<Booking[]>(bookings);
 
   const handleDeleteBooking = (id: string) => {
@@ -49,11 +52,7 @@ const RenderBookingsProfile: React.FC<RenderBookingsProfileProps> = ({
   return (
     <div>
       <div className="container">
-        <div className="flex justify-start">
-          <h1 className="text-2xl font-bold p-3 text-customPurple-600 shadow-lg">
-            Upcoming bookings
-          </h1>
-        </div>
+        <h1 className="text-2xl pb-4 pt-4"> {header} </h1>
 
         {newBookings.length === 0 ? (
           <p>No bookings available at the moment.</p>
@@ -62,26 +61,24 @@ const RenderBookingsProfile: React.FC<RenderBookingsProfileProps> = ({
             {newBookings.map((booking) => {
               const bookingFromDate = new Date(booking.dateFrom);
               const formattedFromDate = bookingFromDate.toLocaleDateString(
-                "en-US",
+                "en-GB",
                 {
-                  year: "numeric",
-                  month: "long",
                   day: "numeric",
+                  month: "numeric",
                 }
               );
 
               const bookingToDate = new Date(booking.dateTo);
               const formattedToDate = bookingToDate.toLocaleDateString(
-                "en-US",
+                "en-GB",
                 {
-                  year: "numeric",
-                  month: "long",
                   day: "numeric",
+                  month: "numeric",
                 }
               );
 
               return (
-                <div key={booking.id}>
+                <div key={booking.id} className="relative">
                   <Link to={`/venues/${booking.venue.id}`}>
                     <img
                       className="h-56 bg-cover bg-center w-full"
@@ -98,24 +95,44 @@ const RenderBookingsProfile: React.FC<RenderBookingsProfileProps> = ({
                       }
                     />
                   </Link>
-                  <div className="flex">
-                    <h1 className="text-2xl font-bold text-secondary">
-                      {booking.venue.name}
-                    </h1>
+                  <div className="flex flex-col border bg-slate-200 p-2 rounded">
+                    <h2 className="text-2xl font-bold">{booking.venue.name}</h2>
+
+                    <div className="flex flex-col sm:flex-row justify-between gap-4">
+                      <div className="flex flex-col">
+                        <p className="text-lg font-semibold">Check-in</p>
+                        <p className="text-successText">{formattedFromDate}</p>
+                      </div>
+
+                      <div className="flex flex-col">
+                        <p className="text-lg font-semibold">Check-out</p>
+                        <p className="text-red-500">{formattedToDate}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-2xl">
+                        {booking.guests === 1 ? (
+                          <MdPerson3 className="text-customPurple-800" />
+                        ) : (
+                          <MdGroups2 className="text-customPurple-800" />
+                        )}
+                      </p>
+                      <p className="text-bold">{booking.guests}</p>
+                    </div>
+                    <div className="flex justify-end">
+                      <div className="absolute top-0 right-0">
+                        <RenderDeleteBooking
+                          id={booking.id}
+                          onDelete={handleDeleteBooking}
+                        />
+                      </div>
+                      <RenderUpdateBooking
+                        id={booking.id}
+                        booking={booking}
+                        onUpdate={handleUpdateBooking} // Pass handleUpdateBooking here
+                      />
+                    </div>
                   </div>
-                  <p className="text-successText font-bold">
-                    {formattedFromDate}
-                  </p>
-                  <p className="text-red-500 font-bold">{formattedToDate}</p>
-                  <RenderDeleteBooking
-                    id={booking.id}
-                    onDelete={handleDeleteBooking}
-                  />
-                  <RenderUpdateBooking
-                    id={booking.id}
-                    booking={booking}
-                    onUpdate={handleUpdateBooking} // Pass handleUpdateBooking here
-                  />
                 </div>
               );
             })}
@@ -124,6 +141,6 @@ const RenderBookingsProfile: React.FC<RenderBookingsProfileProps> = ({
       </div>
     </div>
   );
-};
+}
 
 export default RenderBookingsProfile;

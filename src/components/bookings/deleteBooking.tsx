@@ -27,8 +27,8 @@ function RenderDeleteBooking({
         onDelete(id);
       }, 2000);
     } catch (error: unknown) {
-      if (error instanceof Error) 
-       setErrorMessage("Failed to delete booking. Please try again later.");
+      if (error instanceof Error)
+        setErrorMessage("Failed to delete booking. Please try again later.");
     } finally {
       setIsDeleting(false);
       setShowModal(false);
@@ -40,7 +40,7 @@ function RenderDeleteBooking({
       {/* Button to open the confirmation modal */}
       <button
         onClick={() => setShowModal(true)}
-        className="bg-red-500 p-2 rounded text-white"
+        className="bg-red-500 bg-opacity-30 hover:bg-opacity-100 p-2 rounded text-white"
       >
         {isDeleting ? (
           "Deleting..."

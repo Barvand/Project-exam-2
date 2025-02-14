@@ -1,42 +1,51 @@
 import { useState, useEffect } from "react";
 import RenderVenues from "../components/venues/venues";
-import Loading from "../features/loading";
 import VenueFilters from "../features/VenueFilter";
-import GetVenues from "../api/venues/getVenues";
 import { Venue } from "../types/venue";
+import { fetchData } from "../api/api";
 
 function VenuesPage() {
   const [page, setPage] = useState<number>(1);
-  const [sortOrder, setSortOrder] = useState<string>("asc");
-  const [limit, setLimit] = useState<number>(100);
+  const [sortOrder, setSortOrder] = useState<string>("desc");
   const [sortBy, setSortBy] = useState<string>("created");
   const [activeSort, setActiveSort] = useState<string>("created");
-  const [accumulatedData, setAccumulatedData] = useState<any>([]); // Correctly typing accumulatedData as Venue[]
+  const [accumulatedData, setAccumulatedData] = useState<Venue[]>([]);
+  const [venues, setVenues] = useState<[]>([]);
+  const [metaData, setMetaData] = useState<any>();
 
-  const { data, isLoading, isError, meta } = GetVenues({
-    page,
-    limit,
-    sortBy,
-    sortOrder,
-  });
-
-  // Accumulate data when new data is fetched, avoiding duplicates
+  // Fetch venues on component mount
   useEffect(() => {
-    if (data && data.length > 0) {
-      setAccumulatedData((prevData: Venue[]) => {
-        const newData = data.filter(
-          (
-            item: Venue // Use the correct type (Venue) here instead of any
-          ) => !prevData.some((existingItem) => existingItem.id === item.id) // Check for duplicates
+    const fetchVenues = async () => {
+      try {
+        const response = await fetchData(
+          `holidaze/venues/?sort=${sortBy}&sortOrder=${sortOrder}&page=${page}&limit=32`
         );
-        return [...prevData, ...newData]; // Add only unique items
+        const data = response.data;
+        const meta = response.meta;
+        setMetaData(meta);
+        setVenues(data); // Update state with fetched data
+      } catch (error) {
+        console.error("Error fetching venues:", error);
+      }
+    };
+
+    fetchVenues();
+  }, [sortBy, sortOrder, page]);
+
+  // Accumulate data and filter duplicates
+  useEffect(() => {
+    if (venues && venues.length > 0) {
+      setAccumulatedData((prevData) => {
+        const newData = venues.filter(
+          (item) =>
+            !prevData.some((existingItem) => existingItem.id === item.id)
+        );
+        return [...prevData, ...newData];
       });
     }
-  }, [data]);
+  }, [venues]);
 
-  if (isLoading) return <Loading />;
-  if (isError) return <div>Error loading data. Please try again later.</div>;
-
+  // Change the sorting field and reset accumulated data
   const changeSortBy = (field: string) => {
     setSortBy(field);
     setActiveSort(field);
@@ -45,10 +54,11 @@ function VenuesPage() {
     setPage(1); // Reset to the first page
   };
 
-  const changeLimit = (newLimit: number) => {
-    setLimit(newLimit);
-    setPage(1);
-    setAccumulatedData([]); // Reset accumulated data when limit changes
+  // Toggle sort order and reset accumulated data
+  const toggleSortOrder = () => {
+    setSortOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+    setAccumulatedData([]); // Reset accumulated data when sorting order changes
+    setPage(1); // Reset to the first page
   };
 
   return (
@@ -57,14 +67,13 @@ function VenuesPage() {
         activeSort={activeSort}
         sortOrder={sortOrder}
         changeSortBy={changeSortBy}
-        limit={limit}
-        changeLimit={changeLimit}
+        toggleSortOrder={toggleSortOrder}
       />
       <RenderVenues
         data={accumulatedData}
         page={page}
         setPage={setPage}
-        meta={meta}
+        meta={metaData}
       />
     </div>
   );

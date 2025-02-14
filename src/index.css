@@ -16,16 +16,15 @@ body {
 
 main {
   flex: 1;
-  
 }
 
 :root {
-  --color-primary: #1a73e8;
-  --color-secondary: #1a73e8;
+  --color-primary: #1a3b6e;
+  --color-secondary: #101820;
   --color-background: #ffffff;
   --color-logoText: #ffbb00;
   --color-successText: #4caf50;
-  --color-accentColor: #ff8a65;
+  --color-accentColor: #ffa500;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -37,7 +36,14 @@ body {
 }
 
 h1 {
-  font-family: "Pacifico", serif;
+  font-family: "K2D", serif;
+}
+
+h2,
+h3,
+h4,
+h5 {
+  font-family: "K2D", serif;
 }
 /* Loader animation */
 .loader {
@@ -69,18 +75,6 @@ h1 {
 
 .asymmetric {
   background-color: #1a3b6e;
-}
-.asymmetric::after {
-  position: absolute;
-  content: "";
-  width: 100%;
-  height: 50px;
-  top: 2;
-  left: 0;
-  background-color: #1a3b6e;
-  transform-origin: bottom left;
-  transform: skewY(-1deg);
-  z-index: -10;
 }
 
 /* Style for input errors */

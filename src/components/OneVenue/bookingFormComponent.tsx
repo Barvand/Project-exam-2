@@ -1,12 +1,13 @@
 import BookingValidation from "../../Validations/BookingValidation";
 import Modal from "../modals/Modal";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { fetchData, postData } from "../../api/api";
 import { calculateDays } from "../../features/calculateDays";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useAuth } from "../../authentication/AuthProvider";
 
 interface BookingFormProps {
   venuePrice: number;
@@ -48,7 +49,8 @@ function BookingForm({ venuePrice, venueTitle }: BookingFormProps) {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [bookedDates, setBookedDates] = useState<UniqueBookedDatesProps[]>([]);
-
+  const { userProfile } = useAuth();
+  const navigate = useNavigate();
   /**
    * Fetches booked dates for the venue.
    * This function is called on mount (via useEffect) and retrieves the booking data from the API.
@@ -118,8 +120,11 @@ function BookingForm({ venuePrice, venueTitle }: BookingFormProps) {
       try {
         await postData("holidaze/bookings/", values);
         actions.resetForm();
-        setSuccessMessage("Booking has been successfully made!");
-        setErrorMessage(""); // Clear any error message
+        setSuccessMessage(
+          "Booking has been successfully made, you will be redirected to your bookings."
+        );
+        setErrorMessage("");
+        navigate(`/profiles/${userProfile.name}/bookings`);
       } catch (error) {
         if (error instanceof Error) {
           setErrorMessage(error.message || "An unexpected error occurred.");
@@ -185,12 +190,11 @@ function BookingForm({ venuePrice, venueTitle }: BookingFormProps) {
         minDate={today}
         excludeDates={bookedDates.map((booking) => booking.date)}
         dateFormat="MM/dd/yyyy"
+        className="p-1 rounded"
       />
-
       {errors.dateFrom && touched.dateFrom && (
         <p className="error">{errors.dateFrom}</p>
       )}
-
       <label>Max Guests</label>
       <input
         type="number"
@@ -199,40 +203,70 @@ function BookingForm({ venuePrice, venueTitle }: BookingFormProps) {
         min="1"
         onChange={handleChange}
         onBlur={handleBlur}
-        className={errors.guests && touched.guests ? "input-error" : ""}
+        className={
+          errors.guests && touched.guests ? "input-error" : "p-1 rounded"
+        }
       />
       {errors.guests && touched.guests && (
         <p className="error">{errors.guests}</p>
       )}
-
-      {successMessage && <p className="text-green-500">{successMessage}</p>}
-      {errorMessage && <p className="error">{errorMessage}</p>}
-
+      {successMessage && (
+        <p
+          className="fixed bottom-5 right-5 bg-green-500 text-white p-3 rounded-lg shadow-lg"
+          style={{ zIndex: 9999 }}
+        >
+          {successMessage}
+        </p>
+      )}
+      {errorMessage && (
+        <p
+          className="fixed bottom-5 right-5 bg-red-500 text-white p-3 rounded-lg shadow-lg"
+          style={{ zIndex: 9999 }}
+        >
+          {errorMessage}
+        </p>
+      )}
       <button
         type="button"
         onClick={handleOpenModal}
         disabled={!dirty || !isValid}
+        className="p-2 rounded bg-accentColor mt-3 font-bold hover:bg-orange-600"
       >
-        Submit
+        Book now
       </button>
-
       {isModalOpen && (
         <Modal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          title={`Booking for ${venueTitle}`}
+          title={`Booking for: ${venueTitle}`}
         >
-          <p>
-            Total Days:{" "}
-            {values.dateFrom && values.dateTo
-              ? calculateDays(values.dateFrom, values.dateTo)
-              : 0}
+          <p className="font-bold">
+            Please verify the booking details, Don't worry. You can always edit
+            your booking later.
           </p>
 
-          <p>Total Price: ${totalPrice}</p>
+          <p className="text-md py-2">
+            Total Days:{" "}
+            <span className="font-bold">
+              {values.dateFrom && values.dateTo
+                ? calculateDays(values.dateFrom, values.dateTo)
+                : 0}
+            </span>
+          </p>
+
+          <p className="text-md">
+            Total Price: <span className="font-bold"> ${totalPrice} </span>
+          </p>
           <div className="flex justify-between mt-1">
             <button
-              className="p-2 bg-green-500 rounded font-bold text-white"
+              className="p-2 bg-red-500 rounded font-bold text-white"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Cancel
+            </button>
+
+            <button
+              className="p-2 bg-green-600 rounded font-bold text-white"
               onClick={(e) => {
                 e.preventDefault(); // I had to do this to prevent typeScript errors? Am I missing something?
                 handleSubmit();
@@ -240,12 +274,6 @@ function BookingForm({ venuePrice, venueTitle }: BookingFormProps) {
               }}
             >
               Confirm
-            </button>
-            <button
-              className="p-2 bg-red-500 rounded font-bold text-white"
-              onClick={() => setIsModalOpen(false)}
-            >
-              Cancel
             </button>
           </div>
         </Modal>

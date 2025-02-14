@@ -42,7 +42,14 @@ function RenderDeleteVenue({ id }: DeleteVenueProps): JSX.Element {
       </button>
 
       {/* Error message */}
-      {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
+      {errorMessage && (
+        <p
+          className="fixed bottom-5 right-5 text-red-500 mt-2"
+          style={{ zIndex: 9999 }}
+        >
+          {errorMessage}
+        </p>
+      )}
 
       {/* Success message */}
       {successMessage && (
