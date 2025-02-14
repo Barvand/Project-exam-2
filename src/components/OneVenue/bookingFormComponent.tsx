@@ -1,7 +1,7 @@
 import BookingValidation from "../../Validations/BookingValidation";
 import Modal from "../modals/Modal";
 import { useState, useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { fetchData, postData } from "../../api/api";
 import { calculateDays } from "../../features/calculateDays";

@@ -10,7 +10,7 @@ function VenuesPage() {
   const [sortBy, setSortBy] = useState<string>("created");
   const [activeSort, setActiveSort] = useState<string>("created");
   const [accumulatedData, setAccumulatedData] = useState<Venue[]>([]);
-  const [venues, setVenues] = useState<[]>([]);
+  const [venues, setVenues] = useState<Venue[]>([]);
   const [metaData, setMetaData] = useState<any>([]);
 
   // Fetch venues on component mount
@@ -37,8 +37,8 @@ function VenuesPage() {
     if (venues && venues.length > 0) {
       setAccumulatedData((prevData) => {
         const newData = venues.filter(
-          (item) =>
-            !prevData.some((existingItem) => existingItem.id === item.id)
+          (venue) =>
+            !prevData.some((existingItem) => existingItem.id === venue.id)
         );
         return [...prevData, ...newData];
       });
