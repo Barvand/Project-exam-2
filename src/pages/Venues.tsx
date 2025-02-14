@@ -11,7 +11,7 @@ function VenuesPage() {
   const [activeSort, setActiveSort] = useState<string>("created");
   const [accumulatedData, setAccumulatedData] = useState<Venue[]>([]);
   const [venues, setVenues] = useState<[]>([]);
-  const [metaData, setMetaData] = useState<any>();
+  const [metaData, setMetaData] = useState<any>([]);
 
   // Fetch venues on component mount
   useEffect(() => {
