@@ -6,6 +6,9 @@ import { FaParking } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import BookingForm from "./bookingForm";
 import { useAuth } from "../../authentication/AuthProvider";
+import { MdHouse } from "react-icons/md";
+import { FaMountainCity } from "react-icons/fa6";
+import { HiOutlineGlobe } from "react-icons/hi";
 
 interface Venue {
   name: string;
@@ -32,9 +35,6 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Image and Title Section */}
         <div className="space-y-6 lg:col-span-2">
-          {" "}
-          {/* Takes 2 columns on larger screens */}
-          {/* Main Image */}
           <div className="w-full h-[500px]">
             <img
               className="object-cover object-center w-full h-full rounded-xl shadow-md"
@@ -79,40 +79,77 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
           </div>
 
           {/* Venue Description */}
-          <p className="text-gray-700 text-sm">{data.description}</p>
+          {data.description ? (
+            <p className="text-gray-700 text-sm">{data.description}</p>
+          ) : (
+            <p className="text-gray-700 text-sm">
+              The Venue Manager forgot a description.
+            </p>
+          )}
 
           {/* Amenities */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-            <div className="flex items-center gap-2 p-3 bg-customPurple-100 rounded-lg">
-              <FaWifi className="text-xl text-customPurple-800" />
+          <div className="grid grid-cols-2 lg:grid-cols-2 gap-1 text-sm">
+            <div className="flex items-center gap-2 p-3 bg-customPurple-100 rounded-lg text-wrap">
+              <FaWifi
+                className={`text-xl ${
+                  data.meta.wifi ? "text-customPurple-800" : "text-red-500"
+                }`}
+              />
               {data.meta.wifi ? "WiFi Available" : "No WiFi"}
             </div>
             <div className="flex items-center gap-2 p-3 bg-customPurple-100 rounded-lg">
-              <IoFastFoodSharp className="text-xl text-customPurple-800" />
+              <IoFastFoodSharp
+                className={`text-xl ${
+                  data.meta.breakfast ? "text-customPurple-800" : "text-red-500"
+                }`}
+              />
               {data.meta.breakfast ? "Breakfast Included" : "No Breakfast"}
             </div>
             <div className="flex items-center gap-2 p-3 bg-customPurple-100 rounded-lg">
-              <MdOutlinePets className="text-xl text-customPurple-800" />
+              <MdOutlinePets
+                className={`text-xl ${
+                  data.meta.pets ? "text-customPurple-800" : "text-red-500"
+                } `}
+              />
               {data.meta.pets ? "Pets Allowed" : "No Pets"}
             </div>
             <div className="flex items-center gap-2 p-3 bg-customPurple-100 rounded-lg">
-              <FaParking className="text-xl text-customPurple-800" />
+              <FaParking
+                className={`text-xl ${
+                  data.meta.parking ? "text-customPurple-800" : "text-red-500"
+                }`}
+              />
               {data.meta.parking ? "Parking Available" : "No Parking"}
             </div>
           </div>
 
           {/* Venue Address */}
-          <div className="p-4 bg-customPurple-200 rounded-lg">
+          <div className="p-4 rounded-lg border border-gray-200 flex flex-col gap-2">
             <h3 className="text-xl font-semibold text-customPurple-800">
               Address
             </h3>
-            <p>{data.location.address || "No address provided"}</p>
-            <p>{data.location.city || "No city provided"}</p>
-            <p>{data.location.country || "No country provided"}</p>
+            <div className="flex items-center gap-2">
+              <MdHouse className="text-xl text-customPurple-800" />
+              <p className="text-md">
+                {data.location.address || "No address provided"}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <FaMountainCity className="text-xl text-customPurple-800" />
+              <p className="text-md font-bold">
+                {data.location.city || "No city provided"}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <HiOutlineGlobe className="text-xl text-customPurple-800" />
+              <p className="text-md font-bold">
+                {data.location.country || "No country provided"}
+              </p>
+            </div>
           </div>
 
           {/* Booking Form */}
-          <div className="mt-4 p-4 bg-customPurple-300 rounded-lg flex items-center justify-center">
+          <div className="mt-4 p-4 bg-customPurple-100 rounded-lg flex items-center justify-center">
             {!isLoggedIn ? (
               <div className="text-center">
                 <p className="font-bold">Log in to book this venue.</p>

@@ -17,12 +17,11 @@ interface Venue {
   };
 }
 
-interface Meta {
+export interface Meta {
   isFirstPage: boolean;
   isLastPage: boolean;
   currentPage: number;
   pageCount: number;
-  totalCount: number;
 }
 
 interface VenuesProps {
@@ -52,12 +51,15 @@ interface VenuesProps {
 export function RenderVenues({ data, meta, page, setPage }: VenuesProps) {
   return (
     <div className="container">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
         {data.map((venue) => (
-          <div key={venue.id} className="rounded relative">
+          <div
+            key={venue.id}
+            className="rounded relative bg-color overflow-hidden group"
+          >
             <Link to={`/venues/${venue.id}`}>
               <img
-                className="h-72 object-cover object-center w-full"
+                className="h-72 object-cover object-center w-full opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all transform" // Added group-hover for scaling effect
                 loading="lazy"
                 src={
                   venue.media && venue.media.length > 0
@@ -70,39 +72,41 @@ export function RenderVenues({ data, meta, page, setPage }: VenuesProps) {
                     : "picture of a villa"
                 }
               />
+              <div
+                className="text-white p-2 py-2 rounded absolute w-full bottom-0"
+                style={{
+                  background:
+                    "linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0))",
+                  color: "white",
+                }}
+              >
+                <div className="flex justify-between">
+                  <StarRating rating={venue.rating} />
+                </div>
+                <div className="flex justify-between items-center">
+                  <h2 className="text-xl font-bold">
+                    {venue.name.length > 40
+                      ? venue.name.slice(0, 25) + "..."
+                      : venue.name}
+                  </h2>
+                  <p className="text-2xl font-bold"> ${venue.price}</p>
+                </div>
+                <div className="flex">
+                  <p>
+                    {venue.location.city},{" "}
+                    <span> {venue.location.country} </span>
+                  </p>
+                </div>
+              </div>
             </Link>
-            <div
-              className=" text-white p-2 py-2 rounded absolute w-full bottom-0"
-              style={{
-                background:
-                  "linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0))",
-                color: "white",
-              }}
-            >
-              <div className="flex justify-between">
-                <StarRating rating={venue.rating} />
-              </div>
-              <div className="flex justify-between items-center">
-                <h2 className="text-xl font-bold">
-                  {venue.name.length > 50
-                    ? venue.name.slice(0, 25) + "..."
-                    : venue.name}
-                </h2>
-                <p className="text-2xl font-bold"> ${venue.price}</p>
-              </div>
-              <div className="flex">
-                <p>
-                  {venue.location.city}, <span> {venue.location.country} </span>
-                </p>
-              </div>
-            </div>
           </div>
         ))}
       </div>
-      <div className="text-center">
+
+      <div className="flex justify-end">
         {!meta.isLastPage && (
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+            className="bg-blue-500 text-white px-4 py-2 rounded m-4"
             onClick={() => setPage(page + 1)}
           >
             Load More
