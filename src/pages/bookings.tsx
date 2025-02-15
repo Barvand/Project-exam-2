@@ -4,7 +4,7 @@ import { fetchData } from "../api/api";
 import Loading from "../features/loading";
 import RenderBookingsProfile from "../components/bookings/RenderBookingsUser";
 import { useAuth } from "../authentication/AuthProvider";
-import { Link } from "react-router-dom";
+import NotFoundPage from "./404";
 
 function BookingsPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -57,21 +57,7 @@ function BookingsPage() {
   }
 
   if (userProfile.name !== username) {
-    return (
-      <div className="container flex justify-center h-[100vh] items-center">
-        <div className="flex flex-col text-center gap-5">
-          <h1 className="text-3xl">
-            Snooping around ey?!! You can only view your own bookings.
-          </h1>
-          <Link
-            to="/"
-            className="btn inline-block p-2 bg-accentColor rounded font-bold text-white"
-          >
-            Return home
-          </Link>
-        </div>
-      </div>
-    );
+    return <NotFoundPage />;
   }
 
   if (isLoading) {

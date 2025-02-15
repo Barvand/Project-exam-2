@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import SearchBar from "../components/index/searchBar";
 
 interface VenueFilterProps {
   activeSort: string;
@@ -90,9 +89,6 @@ function VenueFilters({
           )}
         </button>
       </div>
-
-      {/* Search bar */}
-      <SearchBar />
     </div>
   );
 }

@@ -19,7 +19,7 @@ interface RenderVenueProps {
   venues: Venue[];
 }
 
-function RenderVenues({ venues }: RenderVenueProps) {
+function RenderManagerVenues({ venues }: RenderVenueProps) {
   return (
     <div>
       <div className="">
@@ -71,4 +71,4 @@ function RenderVenues({ venues }: RenderVenueProps) {
   );
 }
 
-export default RenderVenues;
+export default RenderManagerVenues;

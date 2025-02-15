@@ -33,7 +33,6 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
   const [editModeBanner, setEditModeBanner] = useState(false);
   const [editModeAvatar, setEditModeAvatar] = useState(false);
   const [updatedProfile, setUpdatedProfile] = useState<Profile>(profile);
-
   const { userProfile } = useAuth();
   const profileName = userProfile.name;
 
@@ -203,9 +202,7 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
             <div className="toggle bg-customPurple-400 border-customPurple-300 rounded flex flex-col justify-evenly gap-2 p-5 shadow-md">
               {/* Add any fallback or informational content for other users */}
               <p className="text-center">
-                {profile.venueManager
-                  ? "Venue Manager"
-                  : "Regular user"}
+                {profile.venueManager ? "Venue Manager" : "Regular user"}
               </p>
             </div>
           )}

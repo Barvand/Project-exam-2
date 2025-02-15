@@ -1,15 +1,17 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import useFetchAPI from "../../api/fetch";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../features/loading";
 import ErrorMessage from "../../error-handling/error";
+import { fetchData } from "../../api/api";
 import { Venues } from "../../types/venue.array"; // Ensure Venues type is defined here
 
 export default function SearchBar() {
   const [data, setData] = useState<Venues[]>([]);
   const [search, setSearch] = useState<string>("");
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
   const searchContainerRef = useRef<HTMLDivElement | null>(null);
 
   const navigate = useNavigate();
@@ -21,26 +23,31 @@ export default function SearchBar() {
     }
   };
 
-  const {
-    data: venues,
-    isLoading,
-    isError,
-  } = useFetchAPI({
-    url: `https://v2.api.noroff.dev/holidaze/venues/search?q=${search}`,
-  });
-
   useEffect(() => {
-    if (!search) {
-      setData([]);
-      setIsDropdownOpen(false);
-      return;
-    }
+    const fetchVenues = async () => {
+      if (!search.trim()) {
+        setData([]);
+        setIsDropdownOpen(false);
+        return;
+      }
 
-    if (!isLoading && !isError) {
-      setData(venues || []);
-      setIsDropdownOpen(true);
-    }
-  }, [venues, search, isLoading, isError]);
+      setIsLoading(true);
+      setIsError(false);
+
+      try {
+        const response = await fetchData(`holidaze/venues/search?q=${search}`);
+        setData(response.data); // Assuming fetchData returns the array of venues
+        setIsDropdownOpen(true);
+      } catch (error) {
+        console.error("Error fetching venues:", error);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchVenues();
+  }, [search]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -63,9 +70,9 @@ export default function SearchBar() {
   return (
     <div
       ref={searchContainerRef}
-      className="container flex justify-start text-black w-full relative"
+      className="container flex justify-end text-black w-full relative mt-1 mb-1"
     >
-      <div className="border-1 p-1 border-white overflow-hidden w-[250px] sm:w-[500px]">
+      <div className="border-1 p-1 overflow-hidden w-[250px] sm:w-[500px]">
         <div className="flex items-center">
           <form className="w-full flex" onSubmit={handleSearch}>
             <input
@@ -76,7 +83,7 @@ export default function SearchBar() {
                 setSearch(e.target.value);
                 setIsDropdownOpen(e.target.value !== "");
               }}
-              className="w-full outline-none text-sm text-black rounded p-2"
+              className="w-full outline-none text-sm text-black border rounded p-2"
             />
             <div className="p-3 bg-accentColor">
               <svg

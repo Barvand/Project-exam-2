@@ -1,34 +1,48 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import useFetchAPI from "../api/fetch";
 import Loading from "../features/loading";
 import RenderVenues from "../components/venues/venues";
+import { fetchData } from "../api/api";
 
 export default function SearchResultsPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const searchQuery = queryParams.get("q") || "";
+  const searchQuery = queryParams.get("q") || ""; // Ensure "q" is the correct query parameter
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
-  const [meta, setMeta] = useState([]);
-
-  const {
-    data: venues,
-    isLoading,
-    isError,
-    meta: metaData,
-  } = useFetchAPI({
-    url: `https://v2.api.noroff.dev/holidaze/venues/search?q=${searchQuery}&page=${page}`,
-  });
+  const [meta, setMeta] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState("");
 
   useEffect(() => {
     if (!searchQuery) {
       setData([]);
+      setMeta([]);
       return;
     }
-    setMeta(meta);
-    setData(venues || []);
-  }, [venues, searchQuery, meta]);
+
+    const fetchSearchResults = async () => {
+      setIsLoading(true);
+      setIsError("");
+
+      try {
+        const response = await fetchData(
+          `holidaze/venues/search?q=${searchQuery}&page=${page}`
+        );
+
+        setData(response.data || []);
+        setMeta(response.meta || []);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setIsError(error.message);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSearchResults();
+  }, [searchQuery, page]);
 
   if (isLoading) return <Loading />;
   if (isError) return <div>Error loading results. Please try again later.</div>;
@@ -40,15 +54,15 @@ export default function SearchResultsPage() {
           You have searched for the following:
           <span className="font-bold capitalize"> {searchQuery} </span>
         </h1>
-        {metaData.totalCount === 0 ? (
+        {meta.totalCount === 0 ? (
           <p className="py-3 text-gray-600">
-            Unfortunately we did not find a match.
+            Unfortunately, we did not find a match.
           </p>
         ) : (
-          <p>Your search had {metaData.totalCount} matches</p>
+          <p>Your search had {meta.totalCount} matches</p>
         )}
       </div>
-      <RenderVenues data={data} page={page} setPage={setPage} meta={metaData} />
+      <RenderVenues data={data} page={page} setPage={setPage} meta={meta} />
     </div>
   );
 }

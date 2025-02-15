@@ -85,6 +85,7 @@ function Navigation(): JSX.Element {
                         Profile
                       </Link>
                     </li>
+
                     <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
                       <Link
                         to={`/profiles/${userProfile.name}/venueManager`}
@@ -94,6 +95,7 @@ function Navigation(): JSX.Element {
                         Venue Manager
                       </Link>
                     </li>
+
                     <li
                       className="hover:bg-red-800 p-1 rounded hover:text-customPurple-50 cursor-pointer"
                       onClick={() => setShowLogoutConfirm(true)}
