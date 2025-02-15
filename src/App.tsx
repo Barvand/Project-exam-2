@@ -13,19 +13,9 @@ import VenueManagerPage from "./pages/venueManager.tsx";
 import Footer from "./components/footer/Footer.tsx";
 import ProtectedRoute from "./authentication/ProtectedRoute.tsx";
 import UnAuthorized from "./pages/Unauthorized.tsx";
-import { useEffect, useState } from "react";
+import NotFoundPage from "./pages/404.tsx";
 
 function App(): JSX.Element {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    // Check if a token or user data exists in localStorage
-    const token = localStorage.getItem("authToken"); // Adjust according to your app's storage method
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
   return (
     <Router>
       <AuthProvider>
@@ -37,23 +27,24 @@ function App(): JSX.Element {
             <Route path="login" element={<LoginPage />} />
 
             {/* Protected routes only available to logged-in users */}
-            <Route element={<ProtectedRoute loggedInOnly={isLoggedIn} />}>
+            <Route element={<ProtectedRoute loggedInOnly={true} />}>
               <Route path="profiles/:username" element={<ProfilePage />} />
               <Route
                 path="profiles/:username/bookings"
                 element={<BookingsPage />}
               />
-              <Route
-                path="profiles/:username/venueManager"
-                element={<VenueManagerPage />}
-              />
             </Route>
 
             {/* Public routes */}
+            <Route
+              path="profiles/:username/venueManager"
+              element={<VenueManagerPage />}
+            />
             <Route path="/search" element={<SearchResultsPage />} />
             <Route path="venues" element={<VenuesPage />} />
             <Route path="venues/:id" element={<VenuePage />} />
             <Route path="/unauthorized" element={<UnAuthorized />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
         <Footer />

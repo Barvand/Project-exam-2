@@ -23,13 +23,12 @@ interface Profile {
 function ProfilePage() {
   const [profileState, setProfileState] = useState<Profile | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(true); // Track loading state
-  const [profileError, setProfileError] = useState(false); // Track error state
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [profileError, setProfileError] = useState(false);
   const { username } = useParams();
 
   useEffect(() => {
-    if (!username) return;
+    if (!username) return; // Ensure username exists before making the API call
 
     const fetchProfileData = async () => {
       try {

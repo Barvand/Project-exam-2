@@ -6,7 +6,7 @@ import Modal from "../components/modals/Modal";
 import RenderManagerVenues from "../components/venueManagerPage/RenderVenues";
 import { useAuth } from "../authentication/AuthProvider";
 import Loading from "../features/loading";
-import NotFoundPage from "./404";
+import { useNavigate } from "react-router-dom";
 
 function VenueManagerPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,10 +15,15 @@ function VenueManagerPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<any>([]);
+  const navigate = useNavigate();
 
   const { userProfile } = useAuth(); // Get the logged-in user's profile
 
   useEffect(() => {
+    if (userProfile?.name !== username) {
+      navigate("/notFoundPage"); // Redirect to a 404 page or another route
+      return; // Stop further execution
+    }
     const fetchProfiles = async () => {
       try {
         const response = await fetchData(`holidaze/profiles/${username}`);
@@ -52,10 +57,6 @@ function VenueManagerPage() {
   }, [username]);
 
   if (loading) return <Loading />;
-  // Check if the logged-in user's username matches the profile's username
-  if (userProfile?.name !== username) {
-    return <NotFoundPage />; // Or redirect to an error page
-  }
 
   if (error) {
     return (

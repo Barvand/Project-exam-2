@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { GiAirplaneDeparture } from "react-icons/gi";
 
-function UnAuthorized() {
+function UnAuthorizedPage() {
   return (
     <div className="flex flex-col bg-gradient-to-r from-primary to-blue-500 items-center justify-center min-h-screen bg-gray-100 text-center">
       <div className=" text-white p-4 rounded">
@@ -30,4 +30,4 @@ function UnAuthorized() {
   );
 }
 
-export default UnAuthorized;
+export default UnAuthorizedPage;
