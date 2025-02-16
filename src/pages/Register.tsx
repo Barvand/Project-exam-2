@@ -1,4 +1,4 @@
-import RegisterForm from "../components/register/registerForm";
+import RegisterForm from "../components/register/RegisterFormLogic";
 
 function RegisterPage(): JSX.Element {
   return <RegisterForm />;
