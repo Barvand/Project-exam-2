@@ -7,7 +7,7 @@ import { fetchData, postData } from "../../api/api";
 import { calculateDays } from "../../features/calculateDays";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useAuth } from "../../authentication/AuthProvider";
+import { useAuth } from "../../utils/AuthProvider";
 
 interface BookingFormProps {
   venuePrice: number;

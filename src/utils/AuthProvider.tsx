@@ -26,8 +26,14 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    const token = localStorage.getItem("token");
+    const profile = localStorage.getItem("profile");
+    return token && profile ? true : false;
+  });
+
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
   const navigate = useNavigate();
 
   // Check for user info from localStorage (or wherever you store it)
@@ -38,12 +44,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     if (token && profile) {
       try {
         const parsedProfile = JSON.parse(profile);
-        setIsLoggedIn(true);
+
+        if (
+          typeof parsedProfile.name !== "string" ||
+          typeof parsedProfile.email !== "string"
+        ) {
+          throw new Error("Invalid profile structure");
+        }
+
         setUserProfile(parsedProfile);
       } catch (error) {
-        console.error("Failed to parse user profile", error);
+        console.error("Invalid profile in localStorage:", error);
+        localStorage.removeItem("profile"); // Clear corrupted profile
       }
     }
+
+    setIsAuthLoading(false);
   }, []);
 
   // Function to handle logout
@@ -57,7 +73,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, setIsLoggedIn, userProfile, setUserProfile, logout }}
+      value={{
+        isLoggedIn,
+        setIsLoggedIn,
+        userProfile,
+        setUserProfile,
+        logout,
+        isAuthLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>

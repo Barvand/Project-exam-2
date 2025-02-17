@@ -1,5 +1,5 @@
 import VenuesPage from "./Venues";
-import { useAuth } from "../authentication/AuthProvider";
+import { useAuth } from "../utils/AuthProvider";
 
 function IndexPage() {
   const { isLoggedIn } = useAuth(); // Fix: Added parentheses to useAuth()

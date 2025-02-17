@@ -3,7 +3,7 @@ import { RegistrationProps } from "../../api/users/registerUser";
 import userSchema from "../../Validations/UserValidation";
 import { postData } from "../../api/api";
 import { useState } from "react";
-import RegisterFormInputs from "./registerForm";
+import RegisterFormInputs from "./RegisterForm";
 
 function RegisterForm() {
   const [successMessage, setSuccessMessage] = useState(""); // Holds the success message

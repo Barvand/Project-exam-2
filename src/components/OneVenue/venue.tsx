@@ -5,7 +5,7 @@ import { MdOutlinePets } from "react-icons/md";
 import { FaParking } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import BookingForm from "./bookingForm";
-import { useAuth } from "../../authentication/AuthProvider";
+import { useAuth } from "../../utils/AuthProvider";
 import { MdHouse } from "react-icons/md";
 import { FaMountainCity } from "react-icons/fa6";
 import { HiOutlineGlobe } from "react-icons/hi";

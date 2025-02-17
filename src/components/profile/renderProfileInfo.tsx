@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { updateData } from "../../api/api"; // Ensure this is the correct path to your API functions
 import { GiVerticalBanner } from "react-icons/gi";
 import { FaCamera, FaPencilAlt } from "react-icons/fa";
-import { useAuth } from "../../authentication/AuthProvider";
+import { useAuth } from "../../utils/AuthProvider";
 
 // Define types for the profile data
 interface Profile {

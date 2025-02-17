@@ -2,7 +2,7 @@ import { useState } from "react";
 import { save } from "../localstorage/save";
 import { useNavigate } from "react-router-dom";
 import { GetHeaders } from "../headers";
-import { useAuth } from "../../authentication/AuthProvider"; // Make sure you're importing the hook
+import { useAuth } from "../../utils/AuthProvider"; // Make sure you're importing the hook
 
 interface LoginData {
   email: string;

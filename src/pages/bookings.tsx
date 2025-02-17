@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { fetchData } from "../api/api";
 import Loading from "../features/loading";
 import RenderBookingsProfile from "../components/bookings/RenderBookingsUser";
-import { useAuth } from "../authentication/AuthProvider";
+import { useAuth } from "../utils/AuthProvider";
 import NotFoundPage from "./404";
 
 function BookingsPage() {

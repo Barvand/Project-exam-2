@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../authentication/AuthProvider";
+import { useAuth } from "../../utils/AuthProvider";
 import { BsHouses } from "react-icons/bs";
 import { CiLogin } from "react-icons/ci";
 import { IoPersonAddOutline } from "react-icons/io5";

@@ -1,5 +1,7 @@
+import DisplayBookings from "../bookings/displayBookings";
 import RenderDeleteVenue from "./deleteVenue";
 import UpdateVenue from "./updateVenue";
+import { Link } from "react-router-dom";
 interface VenueMedia {
   url: string;
 }
@@ -17,9 +19,10 @@ interface Venue {
 
 interface RenderVenueProps {
   venues: Venue[];
+  userName: string;
 }
 
-function RenderManagerVenues({ venues }: RenderVenueProps) {
+function RenderManagerVenues({ venues, userName }: RenderVenueProps) {
   return (
     <div>
       <div className="">
@@ -49,15 +52,17 @@ function RenderManagerVenues({ venues }: RenderVenueProps) {
             </p>
           </summary>
           <div className="flex justify-start">
-            <img
-              src={
-                venue.media?.length > 0
-                  ? venue.media[0].url
-                  : "placeholder-image.jpg"
-              }
-              alt={`Venue: ${venue.name}`}
-              className="h-48 object-contain rounded-md border border-gray-700"
-            />
+            <Link to={`/profiles/${userName}/venueManager/${venue.id}`}>
+              <img
+                src={
+                  venue.media?.length > 0
+                    ? venue.media[0].url
+                    : "placeholder-image.jpg"
+                }
+                alt={`Venue: ${venue.name}`}
+                className="h-48 object-contain rounded-md border border-gray-700"
+              />
+            </Link>
             <div className="venue-details p-4 bg-gray-900 text-white border-t border-gray-700">
               <h2 className="text-xl"> Description: </h2>
               <p className="mb-3 text-gray-300">{venue.description}</p>
@@ -65,6 +70,7 @@ function RenderManagerVenues({ venues }: RenderVenueProps) {
             <RenderDeleteVenue id={venue.id} />
             <UpdateVenue id={venue.id} />
           </div>
+          <DisplayBookings venueId={venue.id} />
         </details>
       ))}
     </div>

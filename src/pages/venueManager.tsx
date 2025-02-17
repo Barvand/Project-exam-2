@@ -4,10 +4,7 @@ import { useParams } from "react-router-dom";
 import { fetchData } from "../api/api";
 import Modal from "../components/modals/Modal";
 import RenderManagerVenues from "../components/venueManagerPage/RenderVenues";
-import { useAuth } from "../authentication/AuthProvider";
 import Loading from "../features/loading";
-import { useNavigate } from "react-router-dom";
-
 function VenueManagerPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { username } = useParams();
@@ -15,15 +12,10 @@ function VenueManagerPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<any>([]);
-  const navigate = useNavigate();
 
-  const { userProfile } = useAuth(); // Get the logged-in user's profile
 
+  // Fetch profile data
   useEffect(() => {
-    if (userProfile?.name !== username) {
-      navigate("/notFoundPage"); // Redirect to a 404 page or another route
-      return; // Stop further execution
-    }
     const fetchProfiles = async () => {
       try {
         const response = await fetchData(`holidaze/profiles/${username}`);
@@ -37,6 +29,7 @@ function VenueManagerPage() {
     fetchProfiles();
   }, [username]);
 
+  // Fetch venue data
   useEffect(() => {
     async function fetchVenues() {
       try {
@@ -72,7 +65,7 @@ function VenueManagerPage() {
     <>
       {profile.venueManager ? (
         <div className="container">
-          <RenderManagerVenues venues={venues} />
+          <RenderManagerVenues venues={venues} userName={username} />
 
           <h2 className="text-xl transition-all duration-300">
             Would you like to add your own venue?
