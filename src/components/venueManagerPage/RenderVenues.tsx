@@ -69,8 +69,8 @@ function RenderManagerVenues({ venues, userName }: RenderVenueProps) {
             </div>
             <RenderDeleteVenue id={venue.id} />
             <UpdateVenue id={venue.id} />
+            <DisplayBookings venueId={venue.id} />
           </div>
-          <DisplayBookings venueId={venue.id} />
         </details>
       ))}
     </div>

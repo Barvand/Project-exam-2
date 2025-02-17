@@ -44,15 +44,16 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
 
   return (
     <div>
-      {venueBookings.length > 0 ? (
-        venueBookings.map((booking) => (
+      {Array.isArray(venueBookings.bookings) &&
+      venueBookings.bookings.length > 0 ? (
+        venueBookings.bookings.map((booking) => (
           <div key={booking.id}>
             <p>From: {new Date(booking.dateFrom).toLocaleDateString()}</p>
             <p>To: {new Date(booking.dateTo).toLocaleDateString()}</p>
           </div>
         ))
       ) : (
-        <p>No bookings available for this venue.</p>
+        <p>No bookings available</p>
       )}
     </div>
   );
