@@ -22,7 +22,7 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
       try {
         setIsLoading(true); // Start loading
         const response = await fetchData(
-          `holidaze/venues/${venueId}/?_bookings=true`
+          `holidaze/venues/${venueId}/?_bookings=true&_customer=true`
         );
 
         setVenueBookings(response.data.bookings); // Update the state with fetched bookings
@@ -42,7 +42,7 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
     .filter((booking) => new Date(booking.dateFrom) > currentDate) // Filter out past bookings
     .sort(
       (a, b) => new Date(a.dateFrom).getTime() - new Date(b.dateFrom).getTime()
-    ); 
+    );
 
   if (isLoading) {
     return <p>Loading bookings...</p>;
@@ -59,6 +59,7 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
           <h2 className="font-bold">Upcoming bookings</h2>
           {upcomingBookings.map((booking) => (
             <div key={booking.id} className="p-1">
+              <p className="text-sm">Customer: {booking.customer.name}</p>
               <p className="text-sm">
                 <span className="text-green-500 font-bold">Arrival: </span>{" "}
                 {new Date(booking.dateFrom).toLocaleDateString()}

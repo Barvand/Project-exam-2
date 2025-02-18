@@ -39,7 +39,7 @@ function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-page">
       <div
         className={`max-w-md w-full bg-white rounded-xl shadow-lg p-8 ${
           errorVisible ? "border-2 border-red-500" : ""

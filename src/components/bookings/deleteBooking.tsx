@@ -50,7 +50,11 @@ function RenderDeleteBooking({
       </button>
 
       {/* Display error message if there is one */}
-      {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
+      {errorMessage && (
+        <p className="fixed bottom-5 right-5 bg-red-500 text-white mt-2">
+          {errorMessage}
+        </p>
+      )}
 
       {/* Display success message if available */}
       {successMessage && (

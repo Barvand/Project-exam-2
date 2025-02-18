@@ -65,22 +65,29 @@ function BookingsPage() {
   }
 
   return (
-    <div className="container mt-20 mb-20">
-      <RenderBookingsProfile
-        bookings={upcomingBookings}
-        header="Upcoming Bookings"
-      />
-      <RenderBookingsProfile bookings={pastBookings} header="Past Bookings" />
+    <>
+      <div className="mb-2 pb-2 bg-accentColor p-2">
+        <h1 className="text-center text-3xl py-5 text-primary font-bold">
+          Your bookings
+        </h1>
+      </div>
+      <div className="container mb-20">
+        <RenderBookingsProfile
+          bookings={upcomingBookings}
+          header="Upcoming Bookings"
+        />
+        <RenderBookingsProfile bookings={pastBookings} header="Past Bookings" />
 
-      {errorMessage && (
-        <div
-          className="fixed bottom-5 right-5 bg-red-500 text-white p-3 rounded-lg shadow-lg"
-          style={{ zIndex: 9999 }}
-        >
-          {errorMessage}
-        </div>
-      )}
-    </div>
+        {errorMessage && (
+          <div
+            className="fixed bottom-5 right-5 bg-red-500 text-white p-3 rounded-lg shadow-lg"
+            style={{ zIndex: 9999 }}
+          >
+            {errorMessage}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

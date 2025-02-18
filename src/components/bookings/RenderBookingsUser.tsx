@@ -57,7 +57,7 @@ function RenderBookingsProfile({
         {newBookings.length === 0 ? (
           <p>No bookings available at the moment.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {newBookings.map((booking) => {
               const bookingFromDate = new Date(booking.dateFrom);
               const formattedFromDate = bookingFromDate.toLocaleDateString(
@@ -78,10 +78,13 @@ function RenderBookingsProfile({
               );
 
               return (
-                <div key={booking.id} className="relative">
+                <div
+                  key={booking.id}
+                  className="rounded relative bg-color overflow-hidden group"
+                >
                   <Link to={`/venues/${booking.venue.id}`}>
                     <img
-                      className="h-56 bg-cover bg-center w-full"
+                      className="h-56 object-cover object-center w-full opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all transform overflow-hidden"
                       loading="lazy"
                       src={
                         booking.venue.media && booking.venue.media.length > 0
@@ -95,26 +98,38 @@ function RenderBookingsProfile({
                       }
                     />
                   </Link>
-                  <div className="flex flex-col border bg-slate-200 p-2 rounded">
-                    <h2 className="text-2xl font-bold">{booking.venue.name}</h2>
-
+                  <div className="flex flex-col border bg-shadeVenues p-2 rounded">
+                    <div className="flex justify-between">
+                      <h2 className="text-2xl font-bold">
+                        {booking.venue.name}
+                      </h2>
+                      <RenderUpdateBooking
+                        id={booking.id}
+                        booking={booking}
+                        onUpdate={handleUpdateBooking} // Pass handleUpdateBooking here
+                      />
+                    </div>
                     <div className="flex flex-col sm:flex-row justify-between gap-4">
                       <div className="flex flex-col">
                         <p className="text-lg font-semibold">Check-in</p>
-                        <p className="text-successText">{formattedFromDate}</p>
+                        <p className="text-successText font-bold">
+                          {formattedFromDate}
+                        </p>
                       </div>
 
                       <div className="flex flex-col">
                         <p className="text-lg font-semibold">Check-out</p>
-                        <p className="text-red-500">{formattedToDate}</p>
+                        <p className="text-red-500 font-bold">
+                          {formattedToDate}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
                       <p className="text-2xl">
                         {booking.guests === 1 ? (
-                          <MdPerson3 className="text-customPurple-800" />
+                          <MdPerson3 className="text-primary" />
                         ) : (
-                          <MdGroups2 className="text-customPurple-800" />
+                          <MdGroups2 className="text-primary" />
                         )}
                       </p>
                       <p className="text-bold">{booking.guests}</p>
@@ -126,11 +141,6 @@ function RenderBookingsProfile({
                           onDelete={handleDeleteBooking}
                         />
                       </div>
-                      <RenderUpdateBooking
-                        id={booking.id}
-                        booking={booking}
-                        onUpdate={handleUpdateBooking} // Pass handleUpdateBooking here
-                      />
                     </div>
                   </div>
                 </div>

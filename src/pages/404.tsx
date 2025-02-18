@@ -3,7 +3,7 @@ import { GiAirplaneDeparture } from "react-icons/gi";
 
 function NotFoundPage() {
   return (
-    <div className="flex flex-col bg-gradient-to-r from-primary to-blue-500 items-center justify-center min-h-screen bg-gray-100 text-center">
+    <div className="flex flex-col bg-page items-center justify-center min-h-screen bg-gray-100 text-center">
       <div className=" text-white p-4 rounded">
         <h1 className="text-6xl font-bold">404</h1>
         <h2 className="text-3xl mt-2">Oops! Page Not Found</h2>

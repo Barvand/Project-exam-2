@@ -18,8 +18,8 @@ function LoginForm() {
   const { apiError, successMessage, onSubmit } = LoginUser();
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-page">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 ">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
           Log in!
         </h2>
@@ -62,7 +62,7 @@ function LoginForm() {
           </div>
           <button
             type="submit"
-            className="w-full bg-secondary hover:bg-customPurple-900 text-white font-medium py-3 rounded-lg transition-colors flex justify-center"
+            className="w-full flex justify-center bg-accentColor hover:bg-customPurple-900 text-black hover:text-white font-bold py-2.5 rounded-lg transition-colors"
           >
             Login <CiLogin className="text-2xl ml-2" />
           </button>

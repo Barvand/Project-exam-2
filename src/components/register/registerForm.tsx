@@ -96,7 +96,7 @@ function RegisterFormInputs({ touched, errors, isSubmitting }: any) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-secondary hover:bg-purple-700 text-white font-medium py-2.5 rounded-lg transition-colors"
+        className="w-full bg-accentColor hover:bg-customPurple-900 text-black hover:text-white font-bold py-2.5 rounded-lg transition-colors"
       >
         {isSubmitting ? "Submitting..." : "Sign Up"}
       </button>

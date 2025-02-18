@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../api/api";
 import Modal from "../components/modals/Modal";
-import Accordion from "../components/bookings/Accordion";
+import Accordion from "../components/venueManagerPage/BookingAccordion";
 import Loading from "../features/loading";
 function VenueManagerPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -62,6 +62,11 @@ function VenueManagerPage() {
 
   return (
     <>
+      <div className="mb-2 pb-2 bg-accentColor p-2">
+        <h1 className="text-center text-3xl py-5 text-primary font-bold">
+          Venue Manager
+        </h1>
+      </div>
       {profile.venueManager ? (
         <div className="container flex flex-col gap-2 p-1">
           <div className="mt-5 mb-5">

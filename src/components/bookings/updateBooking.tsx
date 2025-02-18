@@ -79,8 +79,7 @@ function RenderUpdateBooking({
         className="bg-customPurple-500 p-2 rounded text-white flex items-center"
         onClick={() => setIsModalOpen(true)}
       >
-        <MdEdit className="mr-2" />
-        Update Booking
+        <MdEdit />
       </button>
 
       {/* Modal for Updating Booking */}

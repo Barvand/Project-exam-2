@@ -22,7 +22,7 @@ function Navigation(): JSX.Element {
   };
 
   return (
-    <nav className="bg-primary shadow-md relative text-white">
+    <nav className="bg-primary relative text-white">
       <div className="container mx-auto px-4 flex items-center justify-between py-4 relative">
         <Link to="/" className="flex gap-2">
           <img src="/airplanelogo.png" className="h-12" alt="Holidaze-Logo" />

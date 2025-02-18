@@ -3,9 +3,11 @@ import { GiAirplaneDeparture } from "react-icons/gi";
 
 function UnAuthorizedPage() {
   return (
-    <div className="flex flex-col bg-gradient-to-r from-primary to-blue-500 items-center justify-center min-h-screen bg-gray-100 text-center">
+    <div className="flex flex-col bg-page items-center justify-center min-h-screen bg-gray-100 text-center">
       <div className=" text-white p-4 rounded">
-        <h1 className="text-4xl mt-2">Sorry, you can't see this page without logging in!</h1>
+        <h1 className="text-4xl mt-2">
+          Sorry, you can't see this page without logging in!
+        </h1>
         <p className="text-lg mt-4">But don't worry!</p>
         <div className="flex justify-center">
           <GiAirplaneDeparture size={120} className="text-accentColor " />

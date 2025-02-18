@@ -30,18 +30,20 @@ function VenueFilters({
   };
 
   return (
-    <div className="mb-5 pb-5 bg-primary container mt-2 rounded p-5">
-      <h2 className="text-center text-3xl py-5 text-white font-bold">
-        Find your dream <span className="text-accentColor">destination</span>
-      </h2>
+    <div className="mb-5 pb-5 bg-accentColor rounded p-5">
+      <div className="container">
+        <h2 className="text-center text-3xl py-5 text-white font-bold">
+          Find your dream <span className="text-primary">destination</span>
+        </h2>
+      </div>
 
-      <div className="flex flex-wrap items-center container justify-end">
+      <div className="flex flex-wrap items-center container justify-end gap-1">
         {/* Custom Dropdown for sorting options */}
         <div className="relative">
           <div className="flex items-center gap-2">
-            <p className="text-xl font-bold text-white"> Sort by </p>
+            <p className="text-xl font-bold text-primary"> Sort by </p>
             <button
-              className="cursor-pointer py-2 px-5 rounded font-bold border border-customPurple-500 shadow-lg transition-all duration-200 bg-white text-customPurple-500 hover:bg-customPurple-500 hover:text-white flex items-center"
+              className="cursor-pointer py-2 px-5 rounded font-bold border-bg-shadeAccent shadow-lg transition-all duration-200 bg-shadeAccent text-white hover:bg-black hover:text-white flex items-center"
               onClick={handleDropdownToggle}
             >
               {selectedSort === "created" && "Date"}
@@ -54,7 +56,7 @@ function VenueFilters({
           </div>
 
           {dropdownOpen && (
-            <ul className="absolute top-full left-0 mt-2 w-full bg-white border border-customPurple-500 rounded shadow-lg z-10">
+            <ul className="absolute top-full left-0 mt-2 w-full bg-shadeAccent border text-primary rounded shadow-lg z-10">
               {[
                 { label: "Date", sortKey: "created" },
                 { label: "Name", sortKey: "name" },
@@ -62,7 +64,7 @@ function VenueFilters({
               ].map(({ label, sortKey }) => (
                 <li
                   key={sortKey}
-                  className="cursor-pointer py-1 px-2 hover:bg-customPurple-100 font-bold text-customPurple-500"
+                  className="cursor-pointer py-1 px-2 hover:bg-customPurple-100 font-bold text-black"
                   onClick={() => handleSortChange(sortKey)}
                 >
                   {label}
@@ -74,10 +76,10 @@ function VenueFilters({
 
         {/* Button for toggling ascending/descending */}
         <button
-          className={`py-2 px-3 rounded h-[42px] flex justify-center items-center font-bold transition-all duration-200 border border-customPurple-500 shadow-lg ${
+          className={`py-2 px-2 rounded h-[40px] flex justify-center items-center font-bold transition-all duration-200 text-white ${
             sortOrder === "asc"
-              ? "bg-customPurple-500 text-white "
-              : "bg-white text-customPurple-500 hover:bg-customPurple-500 hover:text-white"
+              ? " text-white bg-shadeAccent"
+              : "bg-shadeAccent hover:text-white hover:bg-black"
           }`}
           onClick={toggleSortOrder}
         >

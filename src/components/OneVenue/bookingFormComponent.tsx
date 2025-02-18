@@ -207,6 +207,9 @@ function BookingForm({ venuePrice, venueTitle }: BookingFormProps) {
           errors.guests && touched.guests ? "input-error" : "p-1 rounded"
         }
       />
+      <div className="py-2 text-xl font-bold">
+        <p>{totalPrice === 0 ? "" : `$${totalPrice}`}</p>
+      </div>
       {errors.guests && touched.guests && (
         <p className="error">{errors.guests}</p>
       )}
@@ -230,7 +233,7 @@ function BookingForm({ venuePrice, venueTitle }: BookingFormProps) {
         type="button"
         onClick={handleOpenModal}
         disabled={!dirty || !isValid}
-        className="p-2 rounded bg-accentColor mt-3 font-bold hover:bg-orange-600"
+        className="p-2 rounded bg-accentColor mt-3 font-bold hover:bg-primary hover:text-white cursor-pointer"
       >
         Book now
       </button>

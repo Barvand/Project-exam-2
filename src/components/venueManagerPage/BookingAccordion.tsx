@@ -1,8 +1,8 @@
 import { useState } from "react";
-import DisplayBookings from "./displayBookings";
+import DisplayBookings from "../bookings/displayBookings";
 import { Link } from "react-router-dom";
-import RenderDeleteVenue from "../venueManagerPage/deleteVenue";
-import UpdateVenue from "../venueManagerPage/updateVenue";
+import RenderDeleteVenue from "./deleteVenue";
+import UpdateVenue from "./updateVenue";
 
 // Define the types for venue and the data prop
 interface Venue {
@@ -49,7 +49,7 @@ function Accordion({ data }: AccordionProps) {
             style={{
               maxHeight: activeIndex === index ? "10000px" : "0",
               overflow: "hidden",
-              transition: "max-height 0.3s ease", // Adds a smooth transition
+              transition: "max-height 0.3s ease",
             }}
           >
             <DisplayBookings venueId={venue.id} />

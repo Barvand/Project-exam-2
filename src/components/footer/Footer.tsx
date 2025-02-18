@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 function Footer(): JSX.Element {
   return (
-    <footer className="bg-gradient-to-r from-customPurple-600 via-pink-400 to-yellow-500 text-white py-8 px-4">
+    <footer className="bg-primary text-white py-8 px-4">
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         {/* Logo and Branding */}
         <div className="mb-6 lg:mb-0 text-center lg:text-left">
@@ -16,25 +16,25 @@ function Footer(): JSX.Element {
         <div className="flex flex-col lg:flex-row items-center gap-6 mb-6 lg:mb-0">
           <Link
             to="/about"
-            className="text-lg hover:text-customPurple-200 transition duration-300"
+            className="footer-link text-lg transition duration-300"
           >
             About Us
           </Link>
           <Link
             to="/services"
-            className="text-lg hover:text-customPurple-200 transition duration-300"
+            className="footer-link text-lg transition duration-300"
           >
             Services
           </Link>
           <Link
             to="/blog"
-            className="text-lg hover:text-customPurple-200 transition duration-300"
+            className="footer-link text-lg transition duration-300"
           >
             Blog
           </Link>
           <Link
             to="/contact"
-            className="text-lg hover:text-customPurple-200 transition duration-300"
+            className="footer-link text-lg transition duration-300"
           >
             Contact
           </Link>

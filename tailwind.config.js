@@ -12,6 +12,8 @@ export default {
         logoText: "var(--color-logoText)",
         successText: "var(--color-successText)",
         accentColor: "var(--color-accentColor)",
+        shadeAccent: "#CC5500",
+        shadeVenues: "#eee",
         customPurple: {
           50: "#eef9ff",
           100: "#d9f1ff",
