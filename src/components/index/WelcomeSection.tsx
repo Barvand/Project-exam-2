@@ -20,7 +20,7 @@ export default function WelcomeSection({ isLoggedIn }: WelcomeSectionProps) {
           alt="Holidazing"
         />
 
-        <div className="absolute inset-0 bg-black opacity-80"></div>
+        <div className="absolute inset-0 bg-black opacity-20"></div>
 
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
           <h1 className="text-5xl font-bold">Welcome to Holidaze</h1>
