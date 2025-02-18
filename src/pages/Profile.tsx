@@ -78,7 +78,7 @@ function ProfilePage() {
 
   return (
     <>
-      <div className="mb-2 pb-2 bg-accentColor p-2">
+      <div className="mb-2 pb-2 bg-accentColor p-2 container">
         <h1 className="text-center text-3xl py-5 text-primary font-bold">
           Profile Page
         </h1>

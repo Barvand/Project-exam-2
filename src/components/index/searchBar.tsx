@@ -72,7 +72,7 @@ export default function SearchBar() {
       ref={searchContainerRef}
       className="container flex justify-end text-black w-full relative mt-1 mb-1"
     >
-      <div className="border-1 p-1 overflow-hidden w-[250px] sm:w-[500px]">
+      <div className="border-1 p-1 overflow-hidden w-full sm:w-[500px]">
         <div className="flex items-center">
           <form className="w-full flex" onSubmit={handleSearch}>
             <input

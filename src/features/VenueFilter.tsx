@@ -30,7 +30,7 @@ function VenueFilters({
   };
 
   return (
-    <div className="mb-5 pb-5 bg-accentColor rounded p-5">
+    <div className="mb-5 pb-5 bg-accentColor p-5 container">
       <div className="container">
         <h2 className="text-center text-3xl py-5 text-white font-bold">
           Find your dream <span className="text-primary">destination</span>
