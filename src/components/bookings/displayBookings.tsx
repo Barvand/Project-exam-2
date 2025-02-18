@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchData } from "../../api/api";
+
 // Define the interface for each booking object
 interface Booking {
   id: string;
@@ -23,7 +24,8 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
         const response = await fetchData(
           `holidaze/venues/${venueId}/?_bookings=true`
         );
-        setVenueBookings(response.data); // Update the state with fetched bookings
+
+        setVenueBookings(response.data.bookings); // Update the state with fetched bookings
       } catch (error: unknown) {
         if (error instanceof Error) setError(error.message);
       } finally {
@@ -33,6 +35,14 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
 
     renderData(); // Fetch data whenever venueId changes
   }, [venueId]); // Dependency array should only contain venueId
+
+  const currentDate = new Date();
+
+  const upcomingBookings = venueBookings
+    .filter((booking) => new Date(booking.dateFrom) > currentDate) // Filter out past bookings
+    .sort(
+      (a, b) => new Date(a.dateFrom).getTime() - new Date(b.dateFrom).getTime()
+    ); 
 
   if (isLoading) {
     return <p>Loading bookings...</p>;
@@ -44,16 +54,24 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
 
   return (
     <div>
-      {Array.isArray(venueBookings.bookings) &&
-      venueBookings.bookings.length > 0 ? (
-        venueBookings.bookings.map((booking) => (
-          <div key={booking.id}>
-            <p>From: {new Date(booking.dateFrom).toLocaleDateString()}</p>
-            <p>To: {new Date(booking.dateTo).toLocaleDateString()}</p>
-          </div>
-        ))
+      {upcomingBookings.length > 0 ? (
+        <>
+          <h2 className="font-bold">Upcoming bookings</h2>
+          {upcomingBookings.map((booking) => (
+            <div key={booking.id} className="p-1">
+              <p className="text-sm">
+                <span className="text-green-500 font-bold">Arrival: </span>{" "}
+                {new Date(booking.dateFrom).toLocaleDateString()}
+              </p>
+              <p className="text-sm">
+                <span className="text-red-500 font-bold">Check-out: </span>{" "}
+                {new Date(booking.dateTo).toLocaleDateString()}
+              </p>
+            </div>
+          ))}
+        </>
       ) : (
-        <p>No bookings available</p>
+        <p>No upcoming bookings available</p>
       )}
     </div>
   );

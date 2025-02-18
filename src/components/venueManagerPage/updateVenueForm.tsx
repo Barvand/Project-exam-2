@@ -104,7 +104,7 @@ function UpdateVenueForm({ initialData }: any) {
   });
 
   return (
-    <div className="py-8 flex flex-col items-center">
+    <div className="py-8 flex flex-col items-center h-full">
       <h2 className="text-3xl font-semibold text-center py-4">
         Update Your Venue
       </h2>
