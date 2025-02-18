@@ -6,6 +6,11 @@ interface Booking {
   id: string;
   dateFrom: string;
   dateTo: string;
+  customer: Customer;
+}
+
+interface Customer {
+  name: string;
 }
 
 interface DisplayBookingsProps {

@@ -1,5 +1,26 @@
 import { GiVerticalBanner } from "react-icons/gi";
 
+// Define the interface for the banner object
+interface Banner {
+  url: string;
+  alt: string;
+}
+
+interface Profile {
+  name: string;
+  banner: Banner;
+}
+
+// Define the interface for the props
+interface ProfileBannerProps {
+  profile: Profile;
+  localStorageName: string;
+  setState: (state: boolean) => void;
+  state: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
+  onSubmit: () => void;
+}
+
 function ProfileBanner({
   profile,
   localStorageName,
@@ -7,7 +28,7 @@ function ProfileBanner({
   state,
   onChange,
   onSubmit,
-}) {
+}: ProfileBannerProps) {
   return (
     <>
       <div

@@ -14,16 +14,18 @@ function IndexPage() {
         </div>
       )}
 
-      <div className="relative w-full h-[400px]">
+      <div className="relative w-full h-[500px]">
         <img
-          src="/holidazing.jpg"
-          className="h-full object-cover"
+          src="/holidaze-background.jpg"
+          className="h-full object-cover w-full"
           alt="Holidazing"
         />
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
         {/* Text Overlay */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-black text-center">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
           <h1 className="text-5xl font-bold mb-10">Welcome to Holidaze</h1>
-          <h2 className="text-4xl text-accentColor font-semibold">
+          <h2 className="text-4xl font-semibold text-accentColor">
             Get going, Get Holidazing
           </h2>
         </div>

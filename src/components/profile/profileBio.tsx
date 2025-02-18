@@ -1,5 +1,21 @@
 import { FaPencilAlt } from "react-icons/fa";
 
+// Define the interface for the profile object
+interface Profile {
+  name: string;
+  bio: string;
+}
+
+// Define the interface for the props
+interface ProfileBioProps {
+  profile: Profile;
+  localStorageName: string;
+  setState: (state: boolean) => void;
+  state: boolean;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSubmit: () => void;
+}
+
 function ProfileBio({
   profile,
   localStorageName,
@@ -7,7 +23,7 @@ function ProfileBio({
   state,
   onChange,
   onSubmit,
-}) {
+}: ProfileBioProps) {
   return (
     <>
       <div className="p-5 border rounded shadow-md">

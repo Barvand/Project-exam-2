@@ -1,5 +1,24 @@
 import { FaCamera } from "react-icons/fa";
 
+interface Avatar {
+  url: string;
+  alt: string;
+}
+
+interface Profile {
+  name: string;
+  avatar: Avatar;
+}
+
+interface ProfileAvatarProps {
+  profile: Profile;
+  localStorageName: string;
+  setState: (state: boolean) => void;
+  state: boolean;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
+  onSubmit: () => void;
+}
+
 function ProfileAvatar({
   profile,
   localStorageName,
@@ -7,7 +26,7 @@ function ProfileAvatar({
   state,
   onChange,
   onSubmit,
-}) {
+}: ProfileAvatarProps) {
   return (
     <div>
       {/* Avatar with edit option */}

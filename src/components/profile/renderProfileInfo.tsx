@@ -26,36 +26,32 @@ interface RenderProfileInfoProps {
   profile: Profile;
 }
 
+// Define types for the state change handlers
+type HandleChangeEvent = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  field: "bio" | "name" | "avatar" | "banner"
+) => void;
+
 const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
   profile,
   onToggleVenueManager,
 }) => {
-  const [editMode, setEditMode] = useState(false);
-  const [editModeBanner, setEditModeBanner] = useState(false);
-  const [editModeAvatar, setEditModeAvatar] = useState(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editModeBanner, setEditModeBanner] = useState<boolean>(false);
+  const [editModeAvatar, setEditModeAvatar] = useState<boolean>(false);
   const [updatedProfile, setUpdatedProfile] = useState<Profile>(profile);
   const { userProfile } = useAuth();
   const profileName = userProfile.name;
 
-  // Handle input change for bio and name
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setUpdatedProfile((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleImageUrlChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: "banner" | "avatar"
-  ) => {
+  // Handle input change for bio, name, avatar, and banner
+  const handleInputChange: HandleChangeEvent = (e, field) => {
     const { value } = e.target;
     setUpdatedProfile((prevState) => ({
       ...prevState,
-      [field]: { url: value, alt: "" }, // You can set alt as an empty string or let the user input it as well.
+      [field]:
+        field === "bio" || field === "name"
+          ? value
+          : { ...prevState[field], url: value },
     }));
   };
 
@@ -68,6 +64,8 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
         updatedProfile
       );
       setEditMode(false); // Exit edit mode after saving
+      setEditModeBanner(false);
+      setEditModeAvatar(false);
     } catch (error) {
       console.error("Error saving profile:", error);
     }
@@ -81,7 +79,7 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
         localStorageName={profileName}
         state={editModeBanner}
         setState={setEditModeBanner}
-        onChange={handleImageUrlChange}
+        onChange={(e) => handleInputChange(e, "banner")}
         onSubmit={handleSave}
       />
 
@@ -92,7 +90,7 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
             localStorageName={profileName}
             state={editModeAvatar}
             setState={setEditModeAvatar}
-            onChange={handleImageUrlChange}
+            onChange={(e) => handleInputChange(e, "avatar")}
             onSubmit={handleSave}
           />
 
@@ -102,7 +100,7 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
             localStorageName={profileName}
             state={editMode}
             setState={setEditMode}
-            onChange={handleImageUrlChange}
+            onChange={(e) => handleInputChange(e, "bio")}
             onSubmit={handleSave}
           />
 
