@@ -15,10 +15,12 @@ import ProtectedRoute from "./utils/ProtectedRoute.tsx";
 import UnAuthorized from "./pages/Unauthorized.tsx";
 import NotFoundPage from "./pages/404.tsx";
 import ProtectedLoginRoute from "./utils/ProtectedLoginRoute.tsx";
+import ScrollToTop from "./features/scrollToTop.tsx";
 
 function App(): JSX.Element {
   return (
     <Router>
+      <ScrollToTop />
       <AuthProvider>
         <Navigation />
         <main>

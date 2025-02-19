@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 
+/**
+ *
+ * @returns {JSX.Element} - this just renders a JSX element with footer content.
+ */
 function Footer(): JSX.Element {
   return (
     <footer className="bg-primary text-white py-8 px-4">

@@ -1,11 +1,22 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import loginSchema from "../../Validations/LoginValidation";
-// Removed the custom SuccessMessage and ErrorMessage components to use inline styling instead
-import LoginUser from "../../api/users/loginUser";
+import LoginUser from "../../api/hooks/loginUser";
 import { Link } from "react-router-dom";
 import { CiLogin } from "react-icons/ci";
 
+/**
+ * LoginForm component that handles user login using form validation with React Hook Form
+ * and Yup schema validation. It sends the login request to the API and displays
+ * appropriate error or success messages.
+ *
+ * @component
+ * @example
+ * // Usage:
+ * <LoginForm />
+ *
+ * @returns {JSX.Element} The rendered LoginForm component.
+ */
 function LoginForm() {
   const {
     register,

@@ -9,6 +9,35 @@ interface LoginData {
   password: string;
 }
 
+/**
+ * Custom hook for handling user login functionality, including form submission, error handling,
+ * and success messaging. This hook manages the API request to the login endpoint, stores the token
+ * and user profile in local storage, and updates the authentication context.
+ * This function is one of the first ones I created, and I switched to different method of API handling later within the project.
+ *
+ * @function LoginUser
+ * @returns {Object} The hook returns an object with the following properties:
+ *   - `apiError` {string | null}: Error message if the API request fails.
+ *   - `successMessage` {string}: Success message after a successful login.
+ *   - `onSubmit` {function}: The function to call when submitting the login form.
+ *   - `loading` {boolean}: A flag indicating whether the login request is in progress.
+ *
+ * @example
+ * // Usage:
+ * const { apiError, successMessage, onSubmit, loading } = LoginUser();
+ *
+ * const handleLogin = (data) => {
+ *   onSubmit(data); // Call this function when form is submitted
+ * };
+ *
+ * if (apiError) {
+ *   console.error(apiError); // Handle error message
+ * }
+ *
+ * if (successMessage) {
+ *   console.log(successMessage); // Handle success message
+ * }
+ */
 function LoginUser() {
   const navigate = useNavigate();
   const [apiError, setApiError] = useState<string | null>(null);

@@ -6,6 +6,12 @@ import ErrorMessage from "../../error-handling/error";
 import { fetchData } from "../../api/api";
 import { Venues } from "../../types/venue.array"; // Ensure Venues type is defined here
 
+/**
+ * SearchBar component provides the user with a searchbar.
+ * The component fetches venue data based on the users input.
+ * It displays a loading spinner and handles error messages.
+ * @returns {JSX.Element} - shows search result within the searchbar.
+ */
 export default function SearchBar() {
   const [data, setData] = useState<Venues[]>([]);
   const [search, setSearch] = useState<string>("");
@@ -59,11 +65,8 @@ export default function SearchBar() {
         setIsDropdownOpen(false); // Close the dropdown if clicked outside
       }
     };
-
-    // Add the event listener to the document for click events
     document.addEventListener("click", handleClickOutside);
 
-    // Cleanup: Remove the event listener on component unmount
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
@@ -74,7 +77,7 @@ export default function SearchBar() {
     >
       <div className="border-1 p-1 overflow-hidden w-full sm:w-[500px]">
         <div className="flex items-center">
-          <form className="w-full flex" onSubmit={handleSearch}>
+          <form className="w-full flex gap-1" onSubmit={handleSearch}>
             <input
               type="text"
               placeholder="Find your dream destination"
@@ -83,9 +86,9 @@ export default function SearchBar() {
                 setSearch(e.target.value);
                 setIsDropdownOpen(e.target.value !== "");
               }}
-              className="w-full outline-none text-sm text-black border rounded p-2"
+              className="w-full outline-yellow-500 text-sm text-black border border-primary rounded p-2"
             />
-            <div className="p-3 bg-accentColor">
+            <div className="p-3 bg-accentColor rounded">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 192.904 192.904"

@@ -1,4 +1,4 @@
-import RegisterForm from "../components/register/RegisterFormLogic";
+import RegisterForm from "../api/hooks/RegisterFormLogic";
 
 function RegisterPage(): JSX.Element {
   <div> Hallo </div>;

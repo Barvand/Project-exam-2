@@ -5,6 +5,7 @@ import Loading from "../features/loading";
 import RenderBookingsProfile from "../components/bookings/RenderBookingsUser";
 import { useAuth } from "../utils/AuthProvider";
 import NotFoundPage from "./404";
+import Accordion from "../features/Accordion";
 
 function BookingsPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -75,8 +76,17 @@ function BookingsPage() {
         <RenderBookingsProfile
           bookings={upcomingBookings}
           header="Upcoming Bookings"
+          allowEditing={true}
         />
-        <RenderBookingsProfile bookings={pastBookings} header="Past Bookings" />
+        <div className="mt-4">
+          <Accordion title="Past Bookings">
+            <RenderBookingsProfile
+              bookings={pastBookings}
+              header="Past Bookings"
+              allowEditing={false}
+            />
+          </Accordion>
+        </div>
 
         {errorMessage && (
           <div

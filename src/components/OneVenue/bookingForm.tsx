@@ -28,10 +28,10 @@ function BookingForm() {
     };
 
     fetchBookingData();
-  }, [id]); // Re-run when the `id` changes
+  }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>; // Display a loading message while fetching data
+    return <div>Loading...</div>; 
   }
 
   if (!booking) {

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../api/api";
 import Modal from "../components/modals/Modal";
-import Accordion from "../components/venueManagerPage/BookingAccordion";
+import RenderVenueBookings from "../components/venueManagerPage/RenderVenueBookings";
 import Loading from "../features/loading";
 function VenueManagerPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -76,7 +76,7 @@ function VenueManagerPage() {
               delete your venues
             </p>
           </div>
-          <Accordion data={venues} />
+          <RenderVenueBookings data={venues} />
 
           <div className="">
             <h2 className="text-xl transition-all duration-300">

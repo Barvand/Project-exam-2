@@ -17,12 +17,26 @@ interface DisplayBookingsProps {
   venueId: string;
 }
 
+/**
+ * Component to display upcoming bookings for a specific venue on the VenueManager Page.
+ *
+ * @param {object} props - the props for the component -- see above
+ * @param {string} props.venueID the unique ID of the specific venue.
+ * @returns {JSX.Element} the JSX element returns the bookings for a venue.
+ * The data has been filtered to only display bookings in the future to avoid cluttering.
+ * Good idea to implement past bookings as well.
+ */
 function DisplayBookings({ venueId }: DisplayBookingsProps) {
   const [venueBookings, setVenueBookings] = useState<Booking[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    /**
+     * Fetches booking data for the specified venue and updates the state.
+     * @async
+     * @function renderData
+     */
     async function renderData() {
       try {
         setIsLoading(true); // Start loading
@@ -30,24 +44,21 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
           `holidaze/venues/${venueId}/?_bookings=true&_customer=true`
         );
 
-        setVenueBookings(response.data.bookings); // Update the state with fetched bookings
+        setVenueBookings(response.data.bookings);
       } catch (error: unknown) {
         if (error instanceof Error) setError(error.message);
       } finally {
-        setIsLoading(false); // End loading
+        setIsLoading(false); // Stop loading
       }
     }
 
-    renderData(); // Fetch data whenever venueId changes
-  }, [venueId]); // Dependency array should only contain venueId
+    renderData(); // Call the function to fetch data
+  }, [venueId]); // Re-run when `venueId` changes
 
-  const currentDate = new Date();
-
-  const upcomingBookings = venueBookings
-    .filter((booking) => new Date(booking.dateFrom) > currentDate) // Filter out past bookings
-    .sort(
-      (a, b) => new Date(a.dateFrom).getTime() - new Date(b.dateFrom).getTime()
-    );
+  /**
+   * Filters and sorts upcoming bookings.
+   * @type {Booking[]}
+   */
 
   if (isLoading) {
     return <p>Loading bookings...</p>;
@@ -59,10 +70,10 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
 
   return (
     <div>
-      {upcomingBookings.length > 0 ? (
+      {venueBookings.length > 0 ? (
         <>
           <h2 className="font-bold">Upcoming bookings</h2>
-          {upcomingBookings.map((booking) => (
+          {venueBookings.map((booking) => (
             <div key={booking.id} className="p-1">
               <p className="text-sm">Customer: {booking.customer.name}</p>
               <p className="text-sm">

@@ -1,27 +1,62 @@
 import { Formik, Form } from "formik";
-import { RegistrationProps } from "../../api/users/registerUser";
 import userSchema from "../../Validations/UserValidation";
-import { postData } from "../../api/api";
+import { postData } from "../api";
 import { useState } from "react";
-import RegisterFormInputs from "./RegisterFormInputs";
+import RegisterFormInputs from "../../components/register/RegisterFormInputs";
+import { useNavigate } from "react-router-dom";
 
+export interface RegistrationProps {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  venueManager?: boolean;
+}
+
+/**
+ * RegisterForm component renders a user registration form using Formik and Yup for validation.
+ * On submission, it sends the data to the registration API endpoint. If registration is successful,
+ * a success message is displayed and the user is redirected to the login page after a short delay.
+ * In the event of an error, an error message is displayed temporarily.
+ *
+ * @component
+ * @example
+ * // Render the registration form:
+ * <RegisterForm />
+ *
+ * @returns {JSX.Element} The registration form component.
+ */
 function RegisterForm() {
+  const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState(""); // Holds the success message
   const [errorMessage, setErrorMessage] = useState(""); // Holds the error message
   const [errorVisible, setErrorVisible] = useState(false); // Controls visibility of error message
 
+  /**
+   * Handles the registration form submission by calling the registration endpoint.
+   * Displays a success message and redirects to the login page if the registration is successful.
+   * Displays an error message temporarily if the registration fails.
+   *
+   * @async
+   * @param {RegistrationProps} values - The form values for registration.
+   * @returns {Promise<void>}
+   */
   const handleFormSubmit = async (values: RegistrationProps) => {
     try {
       await postData("auth/register", values); // Make the API call to register the user
       setErrorMessage(""); // Clear any previous error messages
-      setSuccessMessage("Registration successful!"); // Set the success message
+      setSuccessMessage(
+        "Registration successful! You will be redirected to the login page"
+      ); // Set the success message
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (error: unknown) {
       setSuccessMessage(""); // Clear the success message in case of failure
 
       if (error instanceof Error) {
         setErrorMessage(error.message); // Set the error message
         setErrorVisible(true); // Show the error message
-        console.log(error.message); // Log the error message to the console
 
         setTimeout(() => {
           setErrorVisible(false); // Hide the error message
