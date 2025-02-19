@@ -26,6 +26,8 @@ function BookingsPage() {
         );
         const data = response.data;
 
+        console.log("bookings page", data);
+
         const currentDate = new Date();
 
         // Filter bookings into upcoming and past
@@ -73,13 +75,15 @@ function BookingsPage() {
         </h1>
       </div>
       <div className="container mb-20">
-        <RenderBookingsProfile
-          bookings={upcomingBookings}
-          header="Upcoming Bookings"
-          allowEditing={true}
-        />
+        <Accordion title="Upcoming Bookings" open={true}>
+          <RenderBookingsProfile
+            bookings={upcomingBookings}
+            header="Upcoming Bookings"
+            allowEditing={true}
+          />
+        </Accordion>
         <div className="mt-4">
-          <Accordion title="Past Bookings">
+          <Accordion title="Past Bookings" open={false}>
             <RenderBookingsProfile
               bookings={pastBookings}
               header="Past Bookings"

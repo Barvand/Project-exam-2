@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import DisplayBookings from "../bookings/displayBookings";
+import DisplayBookings from "./displayBookings";
 import RenderDeleteVenue from "./deleteVenue";
 import UpdateVenue from "./updateVenue";
 import Accordion from "../../features/Accordion";

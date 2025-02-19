@@ -36,15 +36,13 @@ function VenueManagerPage() {
           `holidaze/profiles/${username}/venues/?_bookings?_venues`
         );
         setVenues(response.data); // Store venue data
+        setLoading(false);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
         }
-      } finally {
-        setLoading(false);
       }
     }
-
     fetchVenues();
   }, [username]);
 

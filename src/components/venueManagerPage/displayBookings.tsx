@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { fetchData } from "../../api/api";
 
 // Define the interface for each booking object
@@ -31,12 +31,11 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const hasFetched = useRef(false);
+
   useEffect(() => {
-    /**
-     * Fetches booking data for the specified venue and updates the state.
-     * @async
-     * @function renderData
-     */
+    if (!venueId || hasFetched.current) return; // ✅ Now fetches correctly
+
     async function renderData() {
       try {
         setIsLoading(true); // Start loading
@@ -45,16 +44,16 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
         );
 
         setVenueBookings(response.data.bookings);
+        hasFetched.current = true; // ✅ Prevents re-fetching
       } catch (error: unknown) {
         if (error instanceof Error) setError(error.message);
       } finally {
-        setIsLoading(false); // Stop loading
+        setIsLoading(false); // ✅ Ensures loading state is updated
       }
     }
 
     renderData(); // Call the function to fetch data
-  }, [venueId]); // Re-run when `venueId` changes
-
+  }, [venueId]); // ✅ Runs only when `venueId` changes
   /**
    * Filters and sorts upcoming bookings.
    * @type {Booking[]}
