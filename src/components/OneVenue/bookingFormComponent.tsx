@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { postData } from "../../api/api";
@@ -16,6 +16,7 @@ interface BookingFormProps {
 
 const BookingForm = ({ venuePrice, venueTitle }: BookingFormProps) => {
   const { id } = useParams<{ id: string }>();
+  const bookedDates = useBookedDates(id ?? "");
   const { userProfile } = useAuth();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +24,6 @@ const BookingForm = ({ venuePrice, venueTitle }: BookingFormProps) => {
     success?: string;
     error?: string;
   }>({});
-  const bookedDates = useBookedDates(id);
 
   const formik = useFormik({
     initialValues: {

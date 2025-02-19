@@ -47,7 +47,7 @@ function RenderDeleteBooking({
       setTimeout(() => {
         setSuccessMessage("");
         onDelete(id);
-      }, 1000);
+      }, 2000);
     } catch (error: unknown) {
       if (error instanceof Error)
         setErrorMessage("Failed to delete booking. Please try again later.");

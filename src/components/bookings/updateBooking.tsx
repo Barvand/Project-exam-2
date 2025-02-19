@@ -34,7 +34,10 @@ function RenderUpdateBooking({
 }: RenderUpdateBookingProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const bookedDates = useBookedDates(booking.venue.id);
+  const bookedDates = useBookedDates(id);
+
+  console.log(id);
+
 
   const formik = useFormik({
     initialValues: {
@@ -108,7 +111,9 @@ function RenderUpdateBooking({
           />
 
           {formik.errors.dateFrom && (
-            <div className="text-red-500 mt-2">{formik.errors.dateFrom}</div>
+            <div className="text-red-500 mt-2">
+              {String(formik.errors.dateFrom)}
+            </div>
           )}
 
           {/* Modal Footer */}

@@ -6,9 +6,10 @@ import { MdPerson3, MdGroups2 } from "react-icons/md";
 
 interface Booking {
   id: string;
-  dateFrom: string;
-  dateTo: string;
+  dateFrom: Date;
+  dateTo: Date;
   guests: number;
+  title: string;
   venue: {
     id: string;
     name: string;
@@ -29,19 +30,19 @@ function RenderBookingsProfile({
 }: RenderBookingsProfileProps) {
   const [newBookings, setNewBookings] = useState<Booking[]>([]);
 
+  // Sync state with prop changes
   useEffect(() => {
-    setNewBookings(bookings); // Sync state with prop changes
+    setNewBookings(bookings);
   }, [bookings]);
 
+  // Handle deletion of a booking
   const handleDeleteBooking = (id: string) => {
-    setNewBookings((prevBookings) => {
-      const updatedBookings = prevBookings.filter(
-        (booking) => booking.id !== id
-      );
-      return [...updatedBookings];
-    });
+    setNewBookings((prevBookings) =>
+      prevBookings.filter((booking) => booking.id !== id)
+    );
   };
 
+  // Handle updating a booking
   const handleUpdateBooking = (
     id: string,
     updatedBooking: Partial<Booking>
@@ -60,7 +61,7 @@ function RenderBookingsProfile({
       {newBookings.length === 0 ? (
         <p>No bookings available at the moment.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
           {newBookings.map((booking) => {
             const formattedFromDate = new Date(
               booking.dateFrom
