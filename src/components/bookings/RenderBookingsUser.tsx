@@ -117,8 +117,6 @@ function RenderBookingsProfile({
             // Calculate total price
             const totalPrice = booking.venue.price * totalDays;
 
-            console.log(totalPrice);
-
             return (
               <div
                 key={booking.id}

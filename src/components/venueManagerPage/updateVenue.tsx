@@ -43,8 +43,6 @@ function UpdateVenue({ id }: UpdateVenueProps) {
 
       setVenueData(response.data);
       setShowModal(true);
-
-      console.log(venueData);
     } catch (error: unknown) {
       if (error instanceof Error)
         setErrorMessage("Failed to load venue data. Please try again.");

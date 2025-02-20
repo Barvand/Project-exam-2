@@ -56,8 +56,8 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
     <section className="container mt-8 px-4">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Image and Title Section */}
-        <div className="space-y-6 lg:col-span-2">
-          <div className="w-full h-[500px]">
+        <div className="lg:col-span-2">
+          <div className="w-full h-[300px] md:h-[560px]">
             <img
               className="object-cover object-center w-full h-full rounded-xl shadow-md"
               src={selectedImage}
