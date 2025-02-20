@@ -88,7 +88,7 @@ function RenderDeleteVenue({ id }: DeleteVenueProps): JSX.Element {
           className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
           style={{ zIndex: 9999 }}
         >
-          <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+          <div className="bg-white p-6 rounded-lg shadow-lg md:w-1/3">
             <h2 className="text-lg font-bold mb-4">
               Are you sure you want to delete this venue?
             </h2>

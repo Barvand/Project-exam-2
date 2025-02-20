@@ -2,46 +2,48 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../../utils/useAuth";
 import { BsHouses } from "react-icons/bs";
 import { CiLogin } from "react-icons/ci";
-import { IoPersonAddOutline } from "react-icons/io5";
+import { IoPersonAddOutline, IoPersonCircleOutline } from "react-icons/io5";
+import { FaUserTie, FaSignOutAlt } from "react-icons/fa";
+import { MdOutlineEventAvailable } from "react-icons/md";
 import { Spiral as Hamburger } from "hamburger-react";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import LogoutConfirmModal from "../modals/logoutModal";
 
 /**
  * A responsive navigation bar component for the Holidaze application.
  *
  * @component
- * @description
- * - Displays the Holidaze logo and a mobile-friendly hamburger menu.
- * - Provides navigation links for venues, login, registration, and user-specific pages.
- * - Shows different menu options based on authentication status.
- * - Includes a logout confirmation modal before logging out the user and redirecting them to the homepage.
- * - Supports a mobile dropdown menu that toggles when the hamburger icon is clicked.
- *
- * @example
- * ```tsx
- * <Navigation />
- * ```
- *
  * @returns {JSX.Element} A responsive navigation bar with authentication-aware links.
  */
-
 function Navigation(): JSX.Element {
   const { isLoggedIn, userProfile, logout } = useAuth();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  
+
+  // Function to toggle menu visibility
   const toggleMenu = () => setMenuOpen(!isMenuOpen);
   const closeMenu = () => setMenuOpen(false);
 
-  const handleLogout = () => {
-    logout(); // Perform logout
-    setShowLogoutConfirm(false); // Close the logout confirmation modal
-    closeMenu(); // Close the mobile menu if open
-  };
+  // Handle clicking outside of the menu to close it
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isMenuOpen]);
 
   return (
-    <nav className="bg-primary relative text-white">
-      <div className="container mx-auto px-4 flex items-center justify-between py-4 relative">
+    <nav className="bg-primary text-white shadow-md relative">
+      <div className="container mx-auto px-4 flex items-center justify-between py-4">
         <Link to="/" className="flex gap-2">
           <img src="/airplanelogo.png" className="h-12" alt="Holidaze-Logo" />
           <h1 className="text-4xl font-bold">Holidaze</h1>
@@ -49,89 +51,116 @@ function Navigation(): JSX.Element {
 
         {/* Hamburger Button */}
         <div className="relative">
-          <Hamburger toggled={isMenuOpen} toggle={toggleMenu} size={30} />
+          <Hamburger toggled={isMenuOpen} toggle={toggleMenu} size={30}/>
 
-          {/* Mobile Menu (Only appears when open) */}
+          {/* Full-screen dropdown on mobile, sidebar on desktop */}
           {isMenuOpen && (
-            <div className="bg-white text-black shadow-md absolute right-0 top-full w-64 md:w-80 z-50 rounded-lg mt-2 border-4 border-customPurple-800">
-              <ul className="flex flex-col space-y-3 p-4">
-                <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
-                  <Link to="/venues" className="block py-2" onClick={closeMenu}>
-                    <BsHouses className="inline-block mr-1" /> Venues
+            <div
+              ref={menuRef}
+              className={`fixed top-0 right-0 h-screen w-3/4 sm:w-1/2 md:w-[500px] bg-white text-black shadow-lg p-6 border-l border-black
+              transition-transform duration-300 ease-in-out z-40 
+              ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+            >
+              {/* Close Button */}
+              <div className="flex justify-end">
+                <Hamburger toggled={isMenuOpen} toggle={toggleMenu} size={30} />
+              </div>
+
+              {/* Navigation Links */}
+              <ul className="flex flex-col space-y-3">
+                <li className="hover:bg-gray-100 p-2 rounded transition">
+                  <Link
+                    to="/venues"
+                    className="flex items-center gap-2"
+                    onClick={closeMenu}
+                  >
+                    <BsHouses className="text-xl text-primary" /> Venues
                   </Link>
                 </li>
 
                 {!isLoggedIn ? (
                   <>
-                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                    <li className="hover:bg-gray-100 p-2 rounded transition">
                       <Link
                         to="/login"
-                        className="block py-2"
+                        className="flex items-center gap-2"
                         onClick={closeMenu}
                       >
-                        <CiLogin className="inline-block mr-1" /> Login
+                        <CiLogin className="text-xl text-primary" /> Login
                       </Link>
                     </li>
-                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                    <li className="hover:bg-gray-100 p-2 rounded transition">
                       <Link
                         to="/register"
-                        className="block py-2"
+                        className="flex items-center gap-2"
                         onClick={closeMenu}
                       >
-                        <IoPersonAddOutline className="inline-block mr-1" />{" "}
+                        <IoPersonAddOutline className="text-xl text-primary" />{" "}
                         Register
                       </Link>
                     </li>
                   </>
                 ) : (
                   <>
-                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                    <li className="hover:bg-gray-100 p-2 rounded transition">
                       <Link
                         to={`/profiles/${userProfile.name}/bookings`}
-                        className="block py-2"
+                        className="flex items-center gap-2"
                         onClick={closeMenu}
                       >
+                        <MdOutlineEventAvailable className="text-xl text-primary" />{" "}
                         Your Bookings
                       </Link>
                     </li>
-                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                    <li className="hover:bg-gray-100 p-2 rounded transition">
                       <Link
                         to={`/profiles/${userProfile.name}`}
-                        className="block py-2"
+                        className="flex items-center gap-2"
                         onClick={closeMenu}
                       >
+                        <IoPersonCircleOutline className="text-xl text-primary" />{" "}
                         Profile
                       </Link>
                     </li>
-
-                    <li className="hover:bg-customPurple-800 p-1 rounded hover:text-customPurple-50">
+                    <li className="hover:bg-gray-100 p-2 rounded transition">
                       <Link
                         to={`/profiles/${userProfile.name}/venueManager`}
-                        className="block py-2"
+                        className="flex items-center gap-2"
                         onClick={closeMenu}
                       >
-                        Venue Manager
+                        <FaUserTie className="text-xl text-primary" /> Venue
+                        Manager
                       </Link>
-                    </li>
-
-                    <li
-                      className="hover:bg-red-800 p-1 rounded hover:text-customPurple-50 cursor-pointer"
-                      onClick={() => setShowLogoutConfirm(true)}
-                    >
-                      <p className="block py-2">Log out</p>
                     </li>
                   </>
                 )}
               </ul>
+
+              {/* Logout Button (Bottom) */}
+              {isLoggedIn && (
+                <div className="absolute bottom-4 left-0 w-full px-6">
+                  <button
+                    className="w-full flex items-center justify-center gap-2 py-2 bg-red-600 text-white font-bold rounded shadow-md hover:bg-red-700 transition"
+                    onClick={() => setShowLogoutConfirm(true)}
+                  >
+                    <FaSignOutAlt className="text-xl" />
+                    Log out
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>
       </div>
-      {/* Show the modal if the user wants to log out */}
+
+      {/* Show logout confirmation modal */}
       {showLogoutConfirm && (
         <LogoutConfirmModal
           onCancel={() => setShowLogoutConfirm(false)}
-          onLogout={handleLogout}
+          onLogout={() => {
+            logout();
+            setShowLogoutConfirm(false);
+          }}
         />
       )}
     </nav>
