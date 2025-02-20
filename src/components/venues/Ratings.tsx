@@ -12,7 +12,7 @@ export interface StarRatingProps {
  * @description
  * - Displays the given rating as a small badge.
  * - Converts the numeric rating into a descriptive label (e.g., "Excellent!", "Good", etc.).
- * - Defaults to "No ratings yet" if the rating is below 1.
+ * - Defaults to "No ratings yet" if the rating is below 2.
  *
  * @example
  * ```tsx

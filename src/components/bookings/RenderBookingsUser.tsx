@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import RenderDeleteBooking from "./deleteBooking";
 import RenderUpdateBooking from "./updateBooking";
 import { MdPerson3, MdGroups2 } from "react-icons/md";
+import StarRating from "../venues/Ratings";
 
+interface Location {
+  city: string;
+  country: string;
+}
 interface Booking {
   id: string;
   dateFrom: Date;
@@ -14,6 +19,9 @@ interface Booking {
     id: string;
     name: string;
     media?: { url: string; alt?: string }[];
+    price: number;
+    location: Location;
+    rating: number;
   };
 }
 
@@ -78,27 +86,38 @@ function RenderBookingsProfile({
 
   return (
     <div className="container">
-      <h1 className="text-2xl pb-4 pt-4"> {header} </h1>
+      <h1 className="text-2xl border-b border-black mb-2"> {header} </h1>
 
       {newBookings.length === 0 ? (
         <p>No bookings available at the moment.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2  gap-2">
           {newBookings.map((booking) => {
-            const formattedFromDate = new Date(
-              booking.dateFrom
-            ).toLocaleDateString("en-GB", {
+            const fromDate = new Date(booking.dateFrom);
+            const toDate = new Date(booking.dateTo);
+
+            // Format the dates
+            const formattedFromDate = fromDate.toLocaleDateString("en-GB", {
               day: "numeric",
               month: "numeric",
+              year: "numeric",
             });
 
-            const formattedToDate = new Date(booking.dateTo).toLocaleDateString(
-              "en-GB",
-              {
-                day: "numeric",
-                month: "numeric",
-              }
+            const formattedToDate = toDate.toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "numeric",
+              year: "numeric",
+            });
+
+            // Calculate total days
+            const totalDays = Math.ceil(
+              (toDate.getTime() - fromDate.getTime()) / (1000 * 3600 * 24)
             );
+
+            // Calculate total price
+            const totalPrice = booking.venue.price * totalDays;
+
+            console.log(totalPrice);
 
             return (
               <div
@@ -113,9 +132,11 @@ function RenderBookingsProfile({
                     alt={booking.venue.media?.[0]?.alt || "default alt text"}
                   />
                 </Link>
-                <div className="flex flex-col border bg-shadeVenues p-2 rounded">
-                  <div className="flex justify-between">
-                    <h2 className="text-2xl font-bold">{booking.venue.name}</h2>
+                <div className="p-1 rounded">
+                  <div className="flex justify-between  py-2">
+                    <h2 className="text-2xl text-primary font-bold">
+                      {booking.venue.name}
+                    </h2>
                     {allowEditing && (
                       <RenderUpdateBooking
                         id={booking.id}
@@ -124,32 +145,44 @@ function RenderBookingsProfile({
                       />
                     )}
                   </div>
-                  <div className="flex flex-col sm:flex-row justify-between gap-4">
-                    <div className="flex flex-col">
-                      <p className="text-lg font-semibold">Check-in</p>
-                      <p className="text-successText font-bold">
-                        {formattedFromDate}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col">
-                      <p className="text-lg font-semibold">Check-out</p>
-                      <p className="text-red-500 font-bold">
-                        {formattedToDate}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <p className="text-2xl">
-                      {booking.guests === 1 ? (
-                        <MdPerson3 className="text-primary" />
-                      ) : (
-                        <MdGroups2 className="text-primary" />
-                      )}
+                  <div className="flex justify-between border-b border-gray-200 pb-2">
+                    <p>
+                      {booking.venue.location.city},{" "}
+                      {booking.venue.location.country}
                     </p>
-                    <p className="text-bold">{booking.guests}</p>
+                    <StarRating rating={booking.venue.rating} />
                   </div>
-                  <div className="">
+                  <div className="flex flex-col py-2 border-b border-gray-200">
+                    <p className="text-lg font-semibold">
+                      Check-in:{" "}
+                      <span className="text-green-600 font-normal">
+                        {formattedFromDate}
+                      </span>
+                    </p>
+                    <p className="text-lg font-semibold">
+                      Check-out:{" "}
+                      <span className="text-red-600 font-normal">
+                        {formattedToDate}
+                      </span>
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between py-2 border-b border-gray-200">
+                    <div className="flex flex-row">
+                      <p className="text-2xl">
+                        {booking.guests === 1 ? (
+                          <MdPerson3 className="text-primary" />
+                        ) : (
+                          <MdGroups2 className="text-primary" />
+                        )}
+                      </p>
+                      <p className="text-bold">{booking.guests} </p>
+                    </div>
+                    <p className="text-primary font-bold">
+                      {" "}
+                      ${totalPrice} / Total
+                    </p>
+                  </div>
+                  <div className="py-2 border-black border-b">
                     <p className="font-bold">
                       Booking ref:
                       <span className="font-normal"> {booking.id} </span>

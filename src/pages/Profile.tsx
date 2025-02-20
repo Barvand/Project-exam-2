@@ -55,10 +55,13 @@ function ProfilePage() {
     fetchProfileData();
   }, [username]);
 
-  const handleToggleVenueManager = () => {
-    if (profileState) {
-      VenueManagerToggle(profileState, setProfileState);
-    }
+  const handleToggleVenueManager = async () => {
+    if (!profileState) return;
+
+    await VenueManagerToggle(profileState, setProfileState);
+
+    // Force re-render by updating state with a new object reference
+    setProfileState((prev) => (prev ? { ...prev } : null));
   };
 
   // Handle loading and error states
@@ -77,7 +80,7 @@ function ProfilePage() {
   }
 
   return (
-    <>
+    <div className="px-3">
       <div className="mb-2 pb-2 bg-accentColor p-2 container">
         <h1 className="text-center text-3xl py-5 text-primary font-bold">
           Profile Page
@@ -91,7 +94,7 @@ function ProfilePage() {
           />
         )}
       </div>
-    </>
+    </div>
   );
 }
 

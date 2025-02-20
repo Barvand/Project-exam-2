@@ -96,7 +96,7 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
               {data.name}
             </h2>
           </div>
-          <div className="border-b p-2 flex justify-end">
+          <div className="border-b p-2 flex">
             <p className="text-xl font-bold text-customPurple-600">
               $ {data.price}{" "}
               <span className="text-black text-medium font-normal">
@@ -157,30 +157,28 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
 
           {/* Venue Address */}
           <div className="p-4 border-b flex flex-col gap-2">
-            <h3 className="text-xl font-semibold text-customPurple-800">
-              Address
-            </h3>
+            <h3 className="text-xl font-semibold text-primary">Address</h3>
             <div className="flex items-center gap-2">
-              <MdHouse className="text-xl text-customPurple-800" />
+              <MdHouse className="text-xl text-primary" />
               <p className="text-md">
                 {data.location.address || "No address provided"}
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <FaMountainCity className="text-xl text-customPurple-800" />
+              <FaMountainCity className="text-xl text-primary" />
               <p className="text-md font-bold">
                 {data.location.city || "No city provided"}
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <HiOutlineGlobe className="text-xl text-customPurple-800" />
+              <HiOutlineGlobe className="text-xl text-primary" />
               <p className="text-md font-bold">
                 {data.location.country || "No country provided"}
               </p>
             </div>
           </div>
           {/* Owner Information */}
-          <h3 className="text-xl font-semibold text-customPurple-800">Host</h3>
+          <h3 className="text-xl font-semibold text-primary">Host</h3>
           <div className="mt-6 flex items-center gap-4">
             <img
               className="w-12 h-12 rounded-full"
@@ -189,7 +187,7 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
             />
             <Link
               to={`/profiles/${data.owner.name}`}
-              className="text-md font-bold text-customPurple-800"
+              className="text-md font-bold text-primary"
             >
               {data.owner.name}
             </Link>
@@ -198,12 +196,12 @@ const RenderVenue: React.FC<VenueProps> = ({ data }) => {
       </div>
 
       {/* Booking Form */}
-      <div className="mt-4 p-4 bg-customPurple-100 rounded-lg flex items-center justify-center  lg:w-2/3">
+      <div className="mt-4 p-4 bg-gray-200 rounded-lg flex items-center justify-center lg:w-2/3 mb-5">
         {!isLoggedIn ? (
           <div className="text-center">
             <p className="font-bold">Log in to book this venue.</p>
             <Link
-              className="mt-2 inline-block px-4 py-2 bg-customPurple-50 text-customPurple-900 rounded"
+              className="mt-2 inline-block px-4 py-2 bg-gray-100 text-customPurple-900 rounded"
               to="/login"
             >
               Login here

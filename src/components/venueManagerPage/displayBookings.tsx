@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { fetchData } from "../../api/api";
+import { Link } from "react-router-dom";
+import RenderDeleteVenue from "./deleteVenue";
+import UpdateVenue from "./updateVenue";
 
 // Define the interface for each booking object
 interface Booking {
@@ -36,8 +39,18 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
       try {
         setIsLoading(true); // Start loading
         const response = await fetchData(
-          `holidaze/venues/${venueId}/?_bookings=true&_customer=true`
+          `holidaze/venues/${venueId}/?_bookings=true&_customer=true&sort=dateFrom&sortOrder=asc`
         );
+
+        if (response.data && response.data.bookings) {
+          response.data.bookings.sort(
+            (a: { dateFrom: string }, b: { dateFrom: string }) => {
+              return (
+                new Date(a.dateFrom).getTime() - new Date(b.dateFrom).getTime()
+              );
+            }
+          );
+        }
 
         setVenueBookings(response.data.bookings);
       } catch (error: unknown) {
@@ -66,20 +79,31 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
     <div>
       {venueBookings.length > 0 ? (
         <>
-          <h2 className="font-bold">Upcoming bookings</h2>
           {venueBookings.map((booking) => (
-            <div key={booking.id} className="p-1">
-              <p className="text-sm">Customer: {booking.customer.name}</p>
-              <p className="text-sm">
-                <span className="text-green-500 font-bold">Arrival: </span>{" "}
-                {new Date(booking.dateFrom).toLocaleDateString()}
-              </p>
-              <p className="text-sm">
-                <span className="text-red-500 font-bold">Check-out: </span>{" "}
-                {new Date(booking.dateTo).toLocaleDateString()}
-              </p>
+            <div key={booking.id} className="flex flex-col gap-2">
+              <h2 className="font-bold text-xl">Booking</h2>
+              <div className="border-b border-gray-200">
+                <p className="text-md py-1">
+                  Customer: {booking.customer.name}
+                </p>
+              </div>
+              <div className="border-b border-black py-2">
+                <p className="text-md">
+                  <span className="text-green-600 font-bold">Arrival: </span>{" "}
+                  {new Date(booking.dateFrom).toLocaleDateString()}
+                </p>
+                <p className="text-md">
+                  <span className="text-red-600 font-bold">Check-out: </span>{" "}
+                  {new Date(booking.dateTo).toLocaleDateString()}
+                </p>
+              </div>
             </div>
           ))}
+          <div className="flex flex-col py-2">
+            <Link to={`/venues/${venueId}`}>Visit venue</Link>
+            <RenderDeleteVenue id={venueId} />
+            <UpdateVenue id={venueId} />
+          </div>
         </>
       ) : (
         <p>No upcoming bookings available</p>

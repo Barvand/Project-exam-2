@@ -51,9 +51,9 @@ function Modal({ isOpen, onClose, title, children, height }: ModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-1">
       <div
-        className="bg-white p-6 rounded-lg shadow-lg relative overflow-y-auto"
+        className="bg-white p-6 rounded-lg shadow-lg relative overflow-y-auto w-full md:w-1/2 lg:w-1/3"
         style={{ height: height || "auto" }}
       >
         {/* Close Button */}

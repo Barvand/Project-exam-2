@@ -72,7 +72,7 @@ function ProfileBanner({
         {localStorageName === profile.name && (
           <div
             onClick={() => setState(!state)}
-            className="bg-white absolute rounded-full p-2 right-0 top-0 cursor-pointer m-2"
+            className="bg-primary text-white border absolute rounded-full p-2 right-0 bottom-0 cursor-pointer m-2"
           >
             <GiVerticalBanner className="text-3xl" />
           </div>

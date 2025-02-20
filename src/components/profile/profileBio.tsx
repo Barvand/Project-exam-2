@@ -58,7 +58,7 @@ function ProfileBio({
 }: ProfileBioProps) {
   return (
     <>
-      <div className="p-5 border rounded shadow-md">
+      <div className="p-5 border rounded shadow-md relative">
         {state ? (
           <textarea
             name="bio"
@@ -69,16 +69,16 @@ function ProfileBio({
           />
         ) : (
           <>
-            <h1 className="text-5xl text-customPurple-950">{profile.name}</h1>
+            <h1 className="text-5xl text-primary">{profile.name}</h1>
             <p className="text-1xl">{profile.bio}</p>
           </>
         )}
         {/* Toggle Edit Mode and Save */}
         {localStorageName === profile.name && (
-          <div className="flex justify-between p-4">
+          <div className="flex justify-between p-5">
             <button
               onClick={() => setState(!state)}
-              className={`bg-primary text-white rounded-full p-3 border hover:border-white hover:bg-secondary ${
+              className={`absolute bg-primary right-2 bottom-2 text-white rounded-full p-3 border hover:border-white hover:bg-secondary ${
                 state
                   ? "py-2 px-6 rounded-lg bg-indigo-600 text-white border-none"
                   : ""

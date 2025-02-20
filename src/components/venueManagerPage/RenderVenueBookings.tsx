@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
 import DisplayBookings from "./displayBookings";
-import RenderDeleteVenue from "./deleteVenue";
-import UpdateVenue from "./updateVenue";
 import Accordion from "../../features/Accordion";
 
 // Define the types for venue and the data prop
@@ -42,15 +39,10 @@ function RenderVenueBookings({ data }: VenueAccordionListProps) {
       {data.map((venue) => (
         <Accordion
           key={venue.id}
-          title={`Property name: ${venue.name} (Bookings: ${venue._count.bookings})`}
+          title={`${venue.name} (Bookings: ${venue._count.bookings})`}
         >
-          <div className="flex flex-col sm:flex-row sm:justify-between">
+          <div className="flex flex-col">
             <DisplayBookings venueId={venue.id} />
-            <div className="flex flex-col gap-1 justify-evenly">
-              <Link to={`/venues/${venue.id}`}>Visit venue</Link>
-              <RenderDeleteVenue id={venue.id} />
-              <UpdateVenue id={venue.id} />
-            </div>
           </div>
         </Accordion>
       ))}

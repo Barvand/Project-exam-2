@@ -140,42 +140,85 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
 
           {/* Venue Manager Toggle */}
           {profileName === updatedProfile.name && (
-            <div className="toggle border-customPurple-300 rounded flex flex-col justify-evenly gap-2 p-5 shadow-md">
-              {profile.venueManager ? (
-                <div className="text-center flex flex-col">
-                  <h2 className="text-2xl text-customPurple-950">
-                    You are a Venue Manager
-                  </h2>
-                  <button
-                    className="btn border-customPurple-800 border rounded p-2 bg-customPurple-800 text-customPurple-200 font-bold shadow-md"
-                    onClick={onToggleVenueManager}
-                  >
-                    Click here
-                  </button>
+            <div className="toggle border-customPurple-300 rounded gap-2 p-5 shadow-md">
+              <div className="text-center flex flex-col">
+                <h2 className="text-2xl text-customPurple-950">
+                  {profile.venueManager
+                    ? "You are a Venue Manager"
+                    : "Regular User"}
+                </h2>
+
+                <p className="text-md">
+                  {profile.venueManager
+                    ? "You can now host your own venues!"
+                    : "Want to host your own properties? Toggle below to become a venue manager!"}
+                </p>
+
+                {/* Toggle Button */}
+                <div className="flex justify-center">
+                  <label className="relative cursor-pointer mt-3">
+                    <input
+                      type="checkbox"
+                      checked={profile.venueManager}
+                      onChange={onToggleVenueManager}
+                      className="sr-only peer"
+                    />
+                    <div className="w-16 h-8 bg-gray-400 rounded-full peer-checked:bg-customPurple-800 peer transition-all duration-300"></div>
+                    <div className="absolute left-1 top-1 w-6 h-6 bg-white rounded-full peer-checked:translate-x-8 peer-checked:bg-customPurple-200 transition-all duration-300"></div>
+                  </label>
                 </div>
-              ) : (
-                <div className="flex flex-col justify-center gap-5">
-                  <h2 className="text-2xl">
-                    Want to host your own properties? Become a venue manager
-                    now!
-                  </h2>
-                  <button
-                    className="btn border-customPurple-800 border rounded p-2 bg-customPurple-800 text-customPurple-200 font-bold shadow-md"
-                    onClick={onToggleVenueManager}
-                  >
-                    Click here
-                  </button>
-                </div>
-              )}
+
+                {profile.venueManager ? (
+                  <p className="text-green-600 text-sm font-bold mt-2">
+                    Active
+                  </p>
+                ) : (
+                  <p className="text-red-600 text-sm font-bold mt-2">
+                    Inactive
+                  </p>
+                )}
+
+                {!profile.venueManager && (
+                  <p className="mt-3 text-sm">
+                    If you enable this, the "Venue Manager" tab will appear for
+                    you to manage your own venues. You can toggle this **on and
+                    off** whenever you like.
+                  </p>
+                )}
+              </div>
             </div>
           )}
 
           {/* Fallback content if the logged-in user is not the profile owner */}
           {profileName !== updatedProfile.name && (
-            <div className="toggle bg-customPurple-400 border-customPurple-300 rounded flex flex-col justify-evenly gap-2 p-5 shadow-md">
-              {/* Add any fallback or informational content for other users */}
-              <p className="text-center">
-                {profile.venueManager ? "Venue Manager" : "Regular user"}
+            <div className="border border-gray-300 rounded-lg p-5 shadow-md bg-white flex flex-col items-center text-center">
+              {/* Profile Role Icon */}
+              <div className="text-4xl mb-3">
+                {profile.venueManager ? (
+                  <span className="text-green-600">🏨</span> // Venue Manager icon
+                ) : (
+                  <span className="text-gray-500">👤</span> // Regular user icon
+                )}
+              </div>
+
+              {/* Profile Role Text */}
+              <h3 className="text-xl font-semibold text-gray-800">
+                {profile.venueManager ? "Venue Manager" : "Regular User"}
+              </h3>
+
+              {/* Description */}
+              <p className="text-gray-600 mt-2">
+                {profile.venueManager
+                  ? "This user is a Venue Manager and can host properties."
+                  : "This user is a regular member of the platform."}
+              </p>
+
+              {/* Subtle separator */}
+              <div className="w-full border-t border-gray-300 my-4"></div>
+
+              {/* Additional Message */}
+              <p className="text-sm text-gray-500">
+                Explore their listings and see what they have to offer!
               </p>
             </div>
           )}

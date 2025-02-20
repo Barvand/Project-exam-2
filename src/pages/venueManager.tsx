@@ -66,13 +66,9 @@ function VenueManagerPage() {
         </h1>
       </div>
       {profile.venueManager ? (
-        <div className="container flex flex-col gap-2 p-1">
+        <div className="container flex flex-col gap-2 p-4">
           <div className="mt-5 mb-5">
             <h1 className="text-2xl"> Welcome to the Venue Manager's page. </h1>
-            <p>
-              Here you can see upcoming bookings for your venue and update and
-              delete your venues
-            </p>
           </div>
           <RenderVenueBookings data={venues} />
 
