@@ -5,6 +5,30 @@ import { fetchData } from "../../api/api";
 interface UpdateVenueProps {
   id: string;
 }
+
+/**
+ * A component for fetching and updating venue details within a modal.
+ * 
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {string} props.id - The unique identifier of the venue to be updated.
+ * 
+ * @description
+ * - Fetches venue details by ID when the user clicks "Update Venue."
+ * - Displays a modal containing the `UpdateVenueForm` component.
+ * - Allows users to update venue details and submit the changes.
+ * - Handles loading and error states.
+ * - Enables closing the modal after updating the venue.
+ *
+ * @example
+ * ```tsx
+ * <UpdateVenue id="123" />
+ * ```
+ * 
+ * @returns {JSX.Element} A button that triggers a modal containing the update form.
+ */
+
+
 function UpdateVenue({ id }: UpdateVenueProps) {
   const [showModal, setShowModal] = useState(false);
   const [venueData, setVenueData] = useState(null);
@@ -36,11 +60,7 @@ function UpdateVenue({ id }: UpdateVenueProps) {
   return (
     <div>
       {/* Button to open modal */}
-      <button
-        onClick={openModal}
-        className="bg-blue-500 text-white py-2 px-4 rounded"
-        disabled={loading}
-      >
+      <button onClick={openModal} className="text-blue-500" disabled={loading}>
         {loading ? "Loading..." : "Update Venue"}
       </button>
 

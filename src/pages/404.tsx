@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { GiAirplaneDeparture } from "react-icons/gi";
 
+
+/**
+ * 
+ * @returns {JSX.Element} - renders the not found page.
+ */
 function NotFoundPage() {
   return (
     <div className="flex flex-col bg-page items-center justify-center min-h-screen bg-gray-100 text-center">

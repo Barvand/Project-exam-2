@@ -23,6 +23,28 @@ interface RenderBookingsProfileProps {
   allowEditing?: boolean; // Default is true
 }
 
+/**
+ * A component that displays a list of user bookings, allowing users to view, update, or delete them.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {Booking[]} props.bookings - An array of bookings containing booking details.
+ * @param {string} props.header - A title to be displayed above the booking list.
+ * @param {boolean} [props.allowEditing=true] - A flag to determine whether editing and deletion are enabled.
+ *
+ * @description
+ * - Displays a grid of booking cards, each showing venue details, check-in and check-out dates, and guest count.
+ * - Allows users to update or delete bookings if `allowEditing` is `true`.
+ * - Uses `RenderUpdateBooking` for booking updates and `RenderDeleteBooking` for deletion.
+ * - Handles local state updates to reflect changes dynamically.
+ * - Provides a fallback message if no bookings are available.
+ *
+ * @example
+ * <RenderBookingsProfile bookings={userBookings} header="Your Bookings" allowEditing={true} />
+ * ```
+ *
+ * @returns {JSX.Element} A responsive grid of user bookings with options to update or delete.
+ */
 function RenderBookingsProfile({
   bookings,
   header,

@@ -10,6 +10,27 @@ import venueSchema from "../../Validations/VenueValidation";
 import React from "react";
 import ImageInput from "./VenueFormInputs/ImageInput";
 
+/**
+ * A form component for creating a new venue.
+ *
+ * @component
+ *
+ * @description
+ * - Uses Formik for form management and validation.
+ * - Allows users to input venue details, including name, description, price, max guests, and rating.
+ * - Users can also specify location details and amenities.
+ * - Supports adding multiple images via URLs.
+ * - On successful form submission, sends data to the API and navigates to the newly created venue's page.
+ * - Displays success and error messages based on the API response.
+ *
+ * @example
+ * ```tsx
+ * <CreateVenueForm />
+ * ```
+ *
+ * @returns {JSX.Element} A form for creating a new venue.
+ */
+
 function CreateVenueForm() {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState("");

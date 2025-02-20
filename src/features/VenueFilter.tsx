@@ -8,6 +8,35 @@ interface VenueFilterProps {
   toggleSortOrder: () => void;
 }
 
+/**
+ * A component that provides sorting functionality for venue listings.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {string} props.activeSort - The currently selected sorting key (`created`, `name`, `price`).
+ * @param {string} props.sortOrder - The current sorting order (`asc` or `desc`).
+ * @param {Function} props.changeSortBy - Function to change the sorting key.
+ * @param {Function} props.toggleSortOrder - Function to toggle between ascending and descending sorting order.
+ *
+ * @description
+ * - Displays a dropdown for selecting sorting criteria (`Date`, `Name`, `Price`).
+ * - Provides a button to toggle sorting order (`ascending` or `descending`).
+ * - Updates the sorting state when a new option is selected.
+ * - Uses icons (`IoIosArrowUp` and `IoIosArrowDown`) to indicate sorting order.
+ *
+ * @example
+ * ```tsx
+ * <VenueFilters
+ *   activeSort="price"
+ *   sortOrder="asc"
+ *   changeSortBy={(sortBy) => console.log("Sorting by:", sortBy)}
+ *   toggleSortOrder={() => console.log("Toggled sort order")}
+ * />
+ * ```
+ *
+ * @returns {JSX.Element} A sorting control component with dropdown and sorting order toggle.
+ */
+
 function VenueFilters({
   activeSort,
   sortOrder,

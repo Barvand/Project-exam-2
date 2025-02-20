@@ -5,7 +5,7 @@ import { MdOutlinePets } from "react-icons/md";
 import { FaParking } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import BookingForm from "./bookingForm";
-import { useAuth } from "../../utils/AuthProvider";
+import { useAuth } from "../../utils/useAuth";
 import { MdHouse } from "react-icons/md";
 import { FaMountainCity } from "react-icons/fa6";
 import { HiOutlineGlobe } from "react-icons/hi";
@@ -26,6 +26,26 @@ interface VenueProps {
   data: Venue;
 }
 
+/**
+ * A component that displays detailed information about a venue, including images,
+ * description, amenities, location, host information, and a booking form.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {Venue} props.data - The venue data containing details like name, description, price, rating, media, amenities, owner, and location.
+ *
+ * @description
+ * - Displays a large main image and a gallery of thumbnails for venue images.
+ * - Shows venue details such as name, price per night, description, and rating.
+ * - Lists available amenities such as WiFi, breakfast, pet-friendliness, and parking.
+ * - Provides venue location details including address, city, and country.
+ * - Displays the venue owner's name and avatar, with a link to their profile.
+ * - If a user is logged in, allows them to book the venue via `BookingForm`.
+ * - If a user is not logged in, prompts them to log in before booking.
+ * ```
+ *
+ * @returns {JSX.Element} A detailed venue information page with booking options.
+ */
 const RenderVenue: React.FC<VenueProps> = ({ data }) => {
   const { isLoggedIn } = useAuth();
   const [selectedImage, setSelectedImage] = useState(

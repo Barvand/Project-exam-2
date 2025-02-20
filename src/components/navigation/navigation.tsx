@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../utils/AuthProvider";
+import { useAuth } from "../../utils/useAuth";
 import { BsHouses } from "react-icons/bs";
 import { CiLogin } from "react-icons/ci";
 import { IoPersonAddOutline } from "react-icons/io5";
@@ -7,11 +7,29 @@ import { Spiral as Hamburger } from "hamburger-react";
 import { useState } from "react";
 import LogoutConfirmModal from "../modals/logoutModal";
 
+/**
+ * A responsive navigation bar component for the Holidaze application.
+ *
+ * @component
+ * @description
+ * - Displays the Holidaze logo and a mobile-friendly hamburger menu.
+ * - Provides navigation links for venues, login, registration, and user-specific pages.
+ * - Shows different menu options based on authentication status.
+ * - Includes a logout confirmation modal before logging out the user and redirecting them to the homepage.
+ * - Supports a mobile dropdown menu that toggles when the hamburger icon is clicked.
+ *
+ * @example
+ * ```tsx
+ * <Navigation />
+ * ```
+ *
+ * @returns {JSX.Element} A responsive navigation bar with authentication-aware links.
+ */
+
 function Navigation(): JSX.Element {
   const { isLoggedIn, userProfile, logout } = useAuth();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
-
   const toggleMenu = () => setMenuOpen(!isMenuOpen);
   const closeMenu = () => setMenuOpen(false);
 

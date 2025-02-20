@@ -7,12 +7,37 @@ import VenueDatePicker from "./VenueDatePicker";
 import useBookedDates from "../../api/hooks/useBookedDates";
 import BookingValidation from "../../Validations/BookingValidation";
 import Modal from "../modals/Modal";
-import { useAuth } from "../../utils/AuthProvider";
+import { useAuth } from "../../utils/useAuth";
 
 interface BookingFormProps {
   venuePrice: number;
   venueTitle: string;
 }
+
+/**
+ * A booking form component that allows users to select dates and guests for booking a venue.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {number} props.venuePrice - The price per night for the venue.
+ * @param {string} props.venueTitle - The title of the venue.
+ *
+ * @description
+ * - Uses `react-datepicker` (`VenueDatePicker`) to select check-in and check-out dates.
+ * - Retrieves booked dates using a custom hook (`useBookedDates`).
+ * - Uses Formik for form handling and validation (`BookingValidation`).
+ * - Calculates the total price based on the number of nights.
+ * - Shows a confirmation modal before booking submission.
+ * - Displays success and error messages after submission.
+ * - Redirects users to their bookings page after a successful booking.
+ *
+ * @example
+ * ```tsx
+ * <BookingForm venuePrice={150} venueTitle="Luxury Beachfront Villa" />
+ * ```
+ *
+ * @returns {JSX.Element} A booking form with date selection, guest input, price calculation, and confirmation modal.
+ */
 
 const BookingForm = ({ venuePrice, venueTitle }: BookingFormProps) => {
   const { id } = useParams<{ id: string }>();

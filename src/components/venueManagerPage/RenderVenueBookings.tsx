@@ -14,9 +14,28 @@ interface Venue {
 }
 
 interface VenueAccordionListProps {
-  data: Venue[]; // Array of venue objects
+  data: Venue[];
 }
 
+/**
+ * Renders an accordion component listing venues and their bookings.
+ * Each venue has controls for viewing, updating, and deleting.
+ *
+ * @param {Object} props - Component properties.
+ * @param {Venue[]} props.data - An array of venue objects containing booking details.
+ *
+ * @example
+ * ```tsx
+ * const venues = [
+ *   { id: "1", name: "Hotel ABC", _count: { bookings: 5 } },
+ *   { id: "2", name: "Resort XYZ", _count: { bookings: 3 } }
+ * ];
+ *
+ * <RenderVenueBookings data={venues} />
+ * ```
+ *
+ * @returns {JSX.Element} A list of venues wrapped in an accordion.
+ */
 function RenderVenueBookings({ data }: VenueAccordionListProps) {
   return (
     <div className="container">
@@ -28,11 +47,7 @@ function RenderVenueBookings({ data }: VenueAccordionListProps) {
           <div className="flex flex-col sm:flex-row sm:justify-between">
             <DisplayBookings venueId={venue.id} />
             <div className="flex flex-col gap-1 justify-evenly">
-              <Link to={`/venues/${venue.id}`}>
-                <button className="p-2 bg-green-500 rounded text-white inline-block">
-                  Visit venue
-                </button>
-              </Link>
+              <Link to={`/venues/${venue.id}`}>Visit venue</Link>
               <RenderDeleteVenue id={venue.id} />
               <UpdateVenue id={venue.id} />
             </div>

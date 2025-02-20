@@ -8,6 +8,32 @@ interface ModalProps {
   height?: string;
 }
 
+/**
+ * A reusable modal component for displaying content in an overlay.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {boolean} props.isOpen - Determines whether the modal is open or closed.
+ * @param {Function} props.onClose - Callback function to handle closing the modal.
+ * @param {string} [props.title] - Optional title to display at the top of the modal.
+ * @param {React.ReactNode} props.children - Dynamic content to be displayed inside the modal.
+ * @param {string} [props.height] - Optional custom height for the modal.
+ *
+ * @description
+ * - Displays a modal overlay when `isOpen` is `true`.
+ * - Listens for the `Escape` key to close the modal.
+ * - Accepts a title and dynamic children for flexibility.
+ * - Allows setting a custom height if needed.
+ *
+ * @example
+ * ```tsx
+ * <Modal isOpen={isModalOpen} onClose={handleClose} title="Modal Title">
+ *   <p>This is the modal content.</p>
+ * </Modal>
+ * ```
+ *
+ * @returns {JSX.Element | null} A modal component or `null` if `isOpen` is `false`.
+ */
 function Modal({ isOpen, onClose, title, children, height }: ModalProps) {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

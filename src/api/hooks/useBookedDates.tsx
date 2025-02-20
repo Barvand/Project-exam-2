@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { fetchData } from "../api";
 
-
 /**
- * 
+ *
  * @param venueId id a specific venue
  * @returns bookedDates =
  */
@@ -40,7 +39,7 @@ const useBookedDates = (venueId: string) => {
 
           const uniqueDates = Array.from(
             new Set(dates.map((date) => date.toISOString()))
-          ).map((dateString) => new Date(dateString)); 
+          ).map((dateString) => new Date(dateString));
 
           setBookedDates(uniqueDates);
           hasFetched.current = true;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { updateData } from "../../api/api"; // Ensure this is the correct path to your API functions
-import { useAuth } from "../../utils/AuthProvider";
+import { useAuth } from "../../utils/useAuth";
 import ProfileBanner from "./profileBanner";
 import ProfileAvatar from "./profileAvatar";
 import ProfileBio from "./profileBio";
@@ -31,6 +31,40 @@ type HandleChangeEvent = (
   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   field: "bio" | "name" | "avatar" | "banner"
 ) => void;
+
+/**
+ * A component that displays and allows editing of a user's profile, including
+ * the banner, avatar, bio, and venue manager status.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {Profile} props.profile - The user's profile data including banner, avatar, name, bio, and venue manager status.
+ * @param {Function} props.onToggleVenueManager - Function to toggle the venue manager status.
+ *
+ * @description
+ * - Displays the user's banner, avatar, and bio.
+ * - Allows editing of the banner, avatar, and bio for the profile owner.
+ * - Uses `ProfileBanner`, `ProfileAvatar`, and `ProfileBio` components for each section.
+ * - Handles changes via controlled inputs and updates via an API call.
+ * - Allows profile owners to toggle venue manager status.
+ * - Provides fallback content for users viewing another person's profile.
+ *
+ * @example
+ * ```tsx
+ * <RenderProfileInfo
+ *   profile={{
+ *     banner: { url: "https://example.com/banner.jpg", alt: "Profile Banner" },
+ *     avatar: { url: "https://example.com/avatar.jpg", alt: "Profile Avatar" },
+ *     name: "JohnDoe",
+ *     bio: "Welcome to my profile!",
+ *     venueManager: false,
+ *   }}
+ *   onToggleVenueManager={toggleVenueManager}
+ * />
+ * ```
+ *
+ * @returns {JSX.Element} A profile information component with editable fields.
+ */
 
 const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
   profile,

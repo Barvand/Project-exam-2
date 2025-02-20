@@ -3,10 +3,28 @@ import { useParams } from "react-router-dom";
 import { fetchData } from "../api/api";
 import Loading from "../features/loading";
 import RenderBookingsProfile from "../components/bookings/RenderBookingsUser";
-import { useAuth } from "../utils/AuthProvider";
+import { useAuth } from "../utils/useAuth";
 import NotFoundPage from "./404";
 import Accordion from "../features/Accordion";
 
+/**
+ * A page that displays a user's upcoming and past bookings.
+ *
+ * @component
+ * @description
+ * - Fetches booking data for the logged-in user from the API.
+ * - Categorizes bookings into upcoming and past bookings.
+ * - Displays bookings in an accordion format using `RenderBookingsProfile`.
+ * - Shows a loading indicator while fetching data.
+ * - Redirects to the `NotFoundPage` if the user tries to access another profile's bookings.
+ *
+ * @returns {JSX.Element} A page displaying categorized bookings for the authenticated user.
+ *
+ * @example
+ * ```tsx
+ * <BookingsPage />
+ * ```
+ */
 function BookingsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -25,8 +43,6 @@ function BookingsPage() {
           `holidaze/profiles/${username}/bookings/?_venue=true&sort=dateFrom&sortOrder=asc`
         );
         const data = response.data;
-
-        console.log("bookings page", data);
 
         const currentDate = new Date();
 

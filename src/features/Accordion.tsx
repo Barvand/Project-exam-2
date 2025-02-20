@@ -7,6 +7,31 @@ interface AccordionProps {
   open?: boolean;
 }
 
+/**
+ * A reusable accordion component that expands and collapses content.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {string} props.title - The title displayed in the accordion header.
+ * @param {React.ReactNode} props.children - The content inside the accordion.
+ * @param {boolean} [props.open=false] - Determines if the accordion is open by default.
+ *
+ * @description
+ * - Provides a collapsible section with a title.
+ * - Uses a state (`isOpen`) to toggle visibility.
+ * - Displays an arrow icon (`IoMdArrowDropup` / `IoMdArrowDropdown`) to indicate the state.
+ * - Supports smooth transitions for better user experience.
+ *
+ * @example
+ * ```tsx
+ * <Accordion title="Click to Expand" open={true}>
+ *   <p>This is the content inside the accordion.</p>
+ * </Accordion>
+ * ```
+ *
+ * @returns {JSX.Element} A collapsible accordion section.
+ */
+
 const Accordion: React.FC<AccordionProps> = ({
   title,
   children,

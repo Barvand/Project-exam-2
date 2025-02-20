@@ -6,6 +6,27 @@ interface DeleteVenueProps {
   id: string;
 }
 
+/**
+ * A component for deleting a venue within a modal.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {string} props.id - The unique identifier of the venue to be deleted.
+ *
+ * @description
+ * - Renders a button that opens a modal when clicked.
+ * - The modal provides a confirmation prompt before deleting the venue.
+ * - Handles loading states and displays success or error messages.
+ * - After successful deletion, the user is redirected to the homepage.
+ *
+ * @example
+ * ```tsx
+ * <RenderDeleteVenue id="123" />
+ * ```
+ *
+ * @returns {JSX.Element} A button that triggers a confirmation modal for venue deletion.
+ */
+
 function RenderDeleteVenue({ id }: DeleteVenueProps): JSX.Element {
   const [isDeleting, setIsDeleting] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
@@ -36,7 +57,7 @@ function RenderDeleteVenue({ id }: DeleteVenueProps): JSX.Element {
     <div>
       <button
         onClick={() => setShowModal(true)} // Show the confirmation modal when the button is clicked
-        className="bg-red-500 text-white p-2 rounded"
+        className="text-red-500"
       >
         {isDeleting ? "Deleting..." : "Delete Venue"}
       </button>

@@ -1,5 +1,28 @@
 import { Field } from "formik";
 
+/**
+ * A form component that provides input fields for user registration.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {Object} props.touched - Formik touched object indicating which fields have been interacted with.
+ * @param {Object} props.errors - Formik errors object containing validation messages.
+ * @param {boolean} props.isSubmitting - Indicates whether the form is currently submitting.
+ *
+ * @description
+ * - Renders input fields for name, email, password, and password confirmation.
+ * - Includes a checkbox option for users to register as a venue manager.
+ * - Uses Formik's `<Field>` component for controlled form inputs.
+ * - Displays validation errors when fields are invalid.
+ * - Disables the submit button when the form is submitting.
+ *
+ * @example
+ * ```tsx
+ * <RegisterFormInputs touched={formik.touched} errors={formik.errors} isSubmitting={formik.isSubmitting} />
+ * ```
+ *
+ * @returns {JSX.Element} A set of form inputs for user registration.
+ */
 function RegisterFormInputs({ touched, errors, isSubmitting }: any) {
   return (
     <>

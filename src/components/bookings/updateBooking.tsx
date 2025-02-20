@@ -25,7 +25,43 @@ interface UpdatedBookingProps {
 }
 
 /**
- * RenderUpdateBooking component - Allows users to update booking details.
+ * A component that allows users to update booking details including check-in/check-out dates and the number of guests.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {string} props.id - The unique identifier of the booking.
+ * @param {Object} props.booking - The booking details.
+ * @param {Date} props.booking.dateFrom - The current check-in date of the booking.
+ * @param {Date} props.booking.dateTo - The current check-out date of the booking.
+ * @param {number} props.booking.guests - The number of guests for the booking.
+ * @param {Object} props.booking.venue - The venue associated with the booking.
+ * @param {string} props.booking.venue.id - The unique identifier of the venue.
+ * @param {string} props.booking.venue.name - The name of the venue.
+ * @param {Function} props.onUpdate - A callback function to update the booking data in the parent component.
+ *
+ * @description
+ * - Displays an "Edit" button that opens a modal for updating the booking details.
+ * - Uses `Formik` for form handling and validation.
+ * - Fetches booked dates using `useBookedDates` to prevent overlapping bookings.
+ * - Updates the booking via an API call (`updateData`).
+ * - Displays a success message when the update is successful.
+ *
+ * @example
+ * ```tsx
+ * <RenderUpdateBooking
+ *   id="12345"
+ *   booking={{
+ *     dateFrom: new Date("2024-06-15"),
+ *     dateTo: new Date("2024-06-20"),
+ *     guests: 2,
+ *     title: "Seaside Resort",
+ *     venue: { id: "6789", name: "Seaside Resort" }
+ *   }}
+ *   onUpdate={(id, updatedData) => console.log("Updated Booking:", id, updatedData)}
+ * />
+ * ```
+ *
+ * @returns {JSX.Element} A booking update form inside a modal.
  */
 function RenderUpdateBooking({
   id,
@@ -35,9 +71,6 @@ function RenderUpdateBooking({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const bookedDates = useBookedDates(id);
-
-  console.log(id);
-
 
   const formik = useFormik({
     initialValues: {

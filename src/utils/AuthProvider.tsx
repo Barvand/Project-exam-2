@@ -1,30 +1,30 @@
-import {
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-  ReactNode,
-} from "react";
+// AuthProvider.tsx
+import { useState, useEffect, createContext, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Define the UserProfile type
 interface UserProfile {
   name: string;
   email: string;
-  // Add other fields as necessary
 }
 
-// Create a context to share the login state globally
+// Create a context for authentication
 const AuthContext = createContext<any>(null);
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
+export default AuthContext; // Export only the context
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
+/**
+ * Provides authentication state and methods to its children.
+ *
+ * @component
+ * @param {AuthProviderProps} props - Component properties.
+ * @param {ReactNode} props.children - The child components that need access to authentication state.
+ *
+ * @returns {JSX.Element} A context provider that wraps the application.
+ */
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     const token = localStorage.getItem("token");
@@ -36,7 +36,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Check for user info from localStorage (or wherever you store it)
   useEffect(() => {
     const token = localStorage.getItem("token");
     const profile = localStorage.getItem("profile");
@@ -44,31 +43,34 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     if (token && profile) {
       try {
         const parsedProfile = JSON.parse(profile);
-
         if (
           typeof parsedProfile.name !== "string" ||
           typeof parsedProfile.email !== "string"
         ) {
           throw new Error("Invalid profile structure");
         }
-
         setUserProfile(parsedProfile);
       } catch (error) {
         console.error("Invalid profile in localStorage:", error);
-        localStorage.removeItem("profile"); // Clear corrupted profile
+        localStorage.removeItem("profile");
       }
     }
 
     setIsAuthLoading(false);
   }, []);
 
-  // Function to handle logout
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("profile");
-    setIsLoggedIn(false);
-    setUserProfile(null);
-    navigate("/login");
+
+    // Navigate first before triggering re-renders
+    navigate("/");
+
+    // Delay state reset slightly to allow navigation to complete
+    setTimeout(() => {
+      setIsLoggedIn(false);
+      setUserProfile(null);
+    }, 100);
   };
 
   return (

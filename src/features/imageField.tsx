@@ -14,6 +14,38 @@ interface ImageFieldProps {
   addImageField: UseFieldArrayAppend<FieldValues, "media">;
 }
 
+/**
+ * A component for handling image input fields, including URL and alt text, with preview functionality.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {number} props.index - The index of the image field in the form array.
+ * @param {UseFormRegister<FieldValues>} props.register - Function from `react-hook-form` to register form inputs.
+ * @param {UseFormWatch<FieldValues>} props.watch - Function from `react-hook-form` to watch field values.
+ * @param {UseFieldArrayRemove} props.removeImageField - Function to remove an image field from the form.
+ * @param {UseFieldArrayAppend<FieldValues, "media">} props.addImageField - Function to add a new image field to the form.
+ *
+ * @description
+ * - Displays an image preview based on the entered URL.
+ * - Provides input fields for image URL and alt text.
+ * - Allows users to add or remove image fields dynamically.
+ * - Uses `react-hook-form` for form handling.
+ * - Defaults to a placeholder image if the URL is broken or missing.
+ *
+ * @example
+ * ```tsx
+ * <ImageField
+ *   index={0}
+ *   register={register}
+ *   watch={watch}
+ *   removeImageField={remove}
+ *   addImageField={append}
+ * />
+ * ```
+ *
+ * @returns {JSX.Element} A form input for handling image URLs and alt text with preview and dynamic field management.
+ */
+
 function ImageField({
   index,
   register,

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { fetchData } from "../../api/api";
 
 // Define the interface for each booking object
@@ -24,18 +24,14 @@ interface DisplayBookingsProps {
  * @param {string} props.venueID the unique ID of the specific venue.
  * @returns {JSX.Element} the JSX element returns the bookings for a venue.
  * The data has been filtered to only display bookings in the future to avoid cluttering.
- * Good idea to implement past bookings as well.
+ * Good idea to implement past bookings as well but haven't got there yet.
  */
 function DisplayBookings({ venueId }: DisplayBookingsProps) {
   const [venueBookings, setVenueBookings] = useState<Booking[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const hasFetched = useRef(false);
-
   useEffect(() => {
-    if (!venueId || hasFetched.current) return; // ✅ Now fetches correctly
-
     async function renderData() {
       try {
         setIsLoading(true); // Start loading
@@ -44,16 +40,15 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
         );
 
         setVenueBookings(response.data.bookings);
-        hasFetched.current = true; // ✅ Prevents re-fetching
       } catch (error: unknown) {
         if (error instanceof Error) setError(error.message);
       } finally {
-        setIsLoading(false); // ✅ Ensures loading state is updated
+        setIsLoading(false);
       }
     }
 
     renderData(); // Call the function to fetch data
-  }, [venueId]); // ✅ Runs only when `venueId` changes
+  }, [venueId]);
   /**
    * Filters and sorts upcoming bookings.
    * @type {Booking[]}

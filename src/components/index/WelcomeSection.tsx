@@ -2,6 +2,15 @@ interface WelcomeSectionProps {
   isLoggedIn: boolean;
 }
 
+/** A component that renders the welcome section of the homepage.
+ * @component
+ * @param {boolean} props.IsLoggedIn - property to determine wether the user is logged or not by checking the localStorage for a token.
+ *
+ * @description
+ * Checks wether the user is logged in and if not, it displays a message for the user.
+ * Renders the welcoming header.
+ * @returns {JSX.Element}
+ */
 export default function WelcomeSection({ isLoggedIn }: WelcomeSectionProps) {
   return (
     <>

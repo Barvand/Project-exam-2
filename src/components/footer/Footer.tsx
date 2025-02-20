@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
-/**
- *
+/** This component renders the footer.
+ *@component
  * @returns {JSX.Element} - this just renders a JSX element with footer content.
  */
 function Footer(): JSX.Element {

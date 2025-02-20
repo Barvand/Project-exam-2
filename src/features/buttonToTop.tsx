@@ -1,6 +1,23 @@
 import { useState, useEffect } from "react";
 import { IoMdArrowRoundUp } from "react-icons/io";
 
+/**
+ * A floating button that appears when the user scrolls down and allows them to return to the top of the page smoothly.
+ *
+ * @component
+ * @description
+ * - Listens for the scroll event to determine when to show the button.
+ * - When clicked, scrolls the page back to the top with a smooth animation.
+ * - Uses `IoMdArrowRoundUp` as an icon for the button.
+ *
+ * @returns {JSX.Element} A button that appears when the user scrolls down and scrolls the page to the top when clicked.
+ *
+ * @example
+ * ```tsx
+ * <ButtonToTop />
+ * ```
+ */
+
 function ButtonToTop(): JSX.Element {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 

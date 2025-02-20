@@ -10,6 +10,31 @@ import venueSchema from "../../Validations/VenueValidation";
 import React from "react";
 import ImageInput from "./VenueFormInputs/ImageInput";
 
+/**
+ * A form component for updating an existing venue.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {any} props.initialData - Initial venue data used to prefill the form fields.
+ *
+ * @description
+ * - Uses Formik for form management and validation.
+ * - Allows users to update venue details including name, description, price, max guests, rating, and amenities.
+ * - Users can also update the venue location and add images via URLs.
+ * - On successful submission, the venue is updated in the database via an API call.
+ * - Displays success or error messages based on the API response.
+ * - Redirects the user to the updated venue page upon success.
+ *
+ * @example
+ * ``
+ *   the initial values are gathered from the API and displayed in the form fields.
+ *
+ * <UpdateVenueForm initialData={initialVenueData} />
+ * ```
+ *
+ * @returns {JSX.Element} A form for updating venue details.
+ */
+
 function UpdateVenueForm({ initialData }: any) {
   const navigate = useNavigate();
   const [successMessage, setSuccessMessage] = useState("");

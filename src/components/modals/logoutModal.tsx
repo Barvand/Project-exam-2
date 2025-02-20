@@ -6,6 +6,16 @@ interface LogoutConfirmModalProps {
   onLogout: () => void;
 }
 
+/**
+ *
+ * @component
+ * @param {Function} props.onCancel - function to handle cancelling the log out action.
+ * @param {Function} props.onLogout - function to handle the logout action.
+ * @description
+ * - Displays a confirmation modal when the user initiates logout
+ * - Provides two buttons, logout and cancel.
+ *  @returns {JSX.Element} A logout confirmation modal.
+ */
 const LogoutConfirmModal: React.FC<LogoutConfirmModalProps> = ({
   onCancel,
   onLogout,

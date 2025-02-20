@@ -8,6 +8,24 @@ interface BookingProps {
   name: string;
 }
 
+/**
+ * Fetches venue booking data and renders the `BookingFormComponent` for making a reservation.
+ *
+ * @component
+ * @description
+ * - Retrieves booking information from the API based on the venue ID from the URL.
+ * - Displays a loading state while fetching data.
+ * - If no booking data is found, an error message is shown.
+ * - Once data is loaded, it passes the venue price and name to `BookingFormComponent` for booking.
+ *
+ * @example
+ * ```tsx
+ * <BookingForm />
+ * ```
+ *
+ * @returns {JSX.Element} A component that fetches and displays booking information, allowing users to book a venue.
+ */
+
 function BookingForm() {
   const { id } = useParams();
   const [booking, setBooking] = useState<BookingProps | null>(null);
@@ -31,7 +49,7 @@ function BookingForm() {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   if (!booking) {

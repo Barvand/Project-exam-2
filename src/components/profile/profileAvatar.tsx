@@ -18,6 +18,38 @@ interface ProfileAvatarProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>, field: string) => void;
   onSubmit: () => void;
 }
+/**
+ * A component that displays a user's profile avatar with an optional edit feature.
+ *
+ * @component
+ * @param {Object} props - Component properties.
+ * @param {Profile} props.profile - The user's profile data containing the avatar URL and alt text.
+ * @param {string} props.localStorageName - The username stored in local storage to determine edit permissions.
+ * @param {Function} props.setState - Function to update the edit mode state.
+ * @param {boolean} props.state - Boolean value indicating whether the edit mode is active.
+ * @param {Function} props.onChange - Function to handle avatar URL input changes.
+ * @param {Function} props.onSubmit - Function to handle submitting the updated avatar.
+ *
+ * @description
+ * - Displays a circular avatar image.
+ * - If the logged-in user matches the profile name, a camera icon appears, allowing them to edit their avatar.
+ * - Clicking the camera icon toggles an input field where users can enter a new avatar URL.
+ * - Submitting the form updates the avatar and exits edit mode.
+ *
+ * @example
+ * ```tsx
+ * <ProfileAvatar
+ *   profile={{ name: "JohnDoe", avatar: { url: "https://example.com/avatar.jpg", alt: "Profile Avatar" } }}
+ *   localStorageName="JohnDoe"
+ *   setState={setEditMode}
+ *   state={editMode}
+ *   onChange={(e, field) => handleInputChange(e, field)}
+ *   onSubmit={handleAvatarSubmit}
+ * />
+ * ```
+ *
+ * @returns {JSX.Element} A profile avatar component with an edit feature for the owner.
+ */
 
 function ProfileAvatar({
   profile,
