@@ -5,8 +5,7 @@ import Loading from "../features/loading";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../api/api";
 import { Helmet } from "react-helmet-async";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-
+import InformationIcon from "../features/icons/Information";
 interface Profile {
   name: string;
   venueManager: boolean;
@@ -99,8 +98,8 @@ function ProfilePage() {
       </div>
       <div className="container px-3">
         <div className="text-white bg-primary font-bold py-4 p-2 my-5 flex gap-2 items-center">
-          <IoIosInformationCircleOutline size={34} />
-          <h2>
+          <InformationIcon />
+          <h2 className="text-sm sm:text-md">
             Here you can update your profile. Update your banner, avatar, bio.
             And do not forget to the Venue Manager feature.
           </h2>

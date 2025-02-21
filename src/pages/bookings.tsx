@@ -7,7 +7,7 @@ import { useAuth } from "../utils/useAuth";
 import NotFoundPage from "./404";
 import Accordion from "../features/Accordion";
 import { Helmet } from "react-helmet-async";
-import { IoIosInformationCircleOutline } from "react-icons/io";
+import InformationIcon from "../features/icons/Information";
 
 /**
  * A page that displays a user's upcoming and past bookings.
@@ -103,8 +103,8 @@ function BookingsPage() {
       </div>
       <div className="container px-3">
         <div className="text-white bg-primary font-bold py-4 p-2 my-5 flex gap-2 items-center">
-          <IoIosInformationCircleOutline size={34} />
-          <h2>
+          <InformationIcon />
+          <h2 className="text-sm sm:text-md">
             Here you can find all your upcoming and past bookings. Manage your
             reservations, view venue details, and plan your next trip with ease.
           </h2>
