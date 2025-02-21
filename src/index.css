@@ -22,8 +22,6 @@ main {
   --color-primary: #1a3b6e;
   --color-secondary: #101820;
   --color-background: #ffffff;
-  --color-logoText: #ffbb00;
-  --color-successText: #4caf50;
   --color-accentColor: #ffa500;
   display: flex;
   flex-direction: column;
@@ -39,34 +37,12 @@ body {
   font-family: "Istok Web", serif;
 }
 
-h1 {
-  font-family: "K2D", serif;
-}
-
+h1,
 h2,
 h3,
 h4,
 h5 {
   font-family: "K2D", serif;
-}
-/* Loader animation */
-.loader {
-  color: #000000;
-  font-size: 10px;
-  width: 1em;
-  height: 1em;
-  border-radius: 50%;
-  position: relative;
-  text-indent: -9999em;
-  animation: mulShdSpin 1.3s infinite linear;
-  transform: translateZ(0);
-}
-
-.profile-title {
-  border-top: #1a73e8 2px solid;
-  border-left: #1a73e8 2px solid;
-  border-right: #1a73e8 2px solid;
-  border-radius: 25px 25px 0 0;
 }
 
 /* Error message styling */
