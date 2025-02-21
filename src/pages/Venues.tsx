@@ -3,6 +3,7 @@ import RenderVenues from "../components/venues/venues";
 import VenueFilters from "../features/VenueFilter";
 import { Venue } from "../types/venue";
 import { fetchData } from "../api/api";
+import { Helmet } from "react-helmet-async";
 
 function VenuesPage() {
   const [page, setPage] = useState<number>(1);
@@ -62,20 +63,29 @@ function VenuesPage() {
   };
 
   return (
-    <div>
-      <VenueFilters
-        activeSort={activeSort}
-        sortOrder={sortOrder}
-        changeSortBy={changeSortBy}
-        toggleSortOrder={toggleSortOrder}
-      />
-      <RenderVenues
-        data={accumulatedData}
-        page={page}
-        setPage={setPage}
-        meta={metaData}
-      />
-    </div>
+    <>
+      <Helmet>
+        <title>Holidaze - Get the greatest holiday!</title>
+        <meta
+          name="description"
+          content="Venues , all bookings, customers, holidays, swimming, sun, beach, cheap"
+        />
+      </Helmet>
+      <div>
+        <VenueFilters
+          activeSort={activeSort}
+          sortOrder={sortOrder}
+          changeSortBy={changeSortBy}
+          toggleSortOrder={toggleSortOrder}
+        />
+        <RenderVenues
+          data={accumulatedData}
+          page={page}
+          setPage={setPage}
+          meta={metaData}
+        />
+      </div>
+    </>
   );
 }
 

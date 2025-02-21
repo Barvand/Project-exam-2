@@ -10,8 +10,6 @@ interface Avatar {
   alt: string;
 }
 
-
-
 interface Owner {
   name: string;
   email: string;

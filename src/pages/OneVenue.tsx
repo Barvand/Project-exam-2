@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom"; // Import useParams
 import RenderVenue from "../components/OneVenue/venue";
 import Loading from "../features/loading";
 import { fetchData } from "../api/api";
+import { Helmet } from "react-helmet-async";
 
-function VenuePage() {
+function VenuePage(): JSX.Element {
   const { id } = useParams(); // Get ID from URL params
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<any | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState("");
 
@@ -36,9 +37,18 @@ function VenuePage() {
     return <div>Error loading data. Please try again later.</div>;
 
   return (
-    <div>
-      <RenderVenue data={data} />
-    </div>
+    <>
+      <Helmet>
+        <title>Holidaze - Venue{data.name}</title>
+        <meta
+          name="description"
+          content="Holidaze venuePage, venue, holiday, vacation,  sun, beach, booking, cheap"
+        />
+      </Helmet>
+      <div>
+        <RenderVenue data={data} />
+      </div>
+    </>
   );
 }
 

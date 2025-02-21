@@ -2,6 +2,7 @@ import VenuesPage from "./Venues";
 import { useAuth } from "../utils/useAuth";
 import WelcomeSection from "../components/index/WelcomeSection";
 import ButtonToTop from "../features/buttonToTop";
+import { Helmet } from "react-helmet-async";
 
 /**
  * The homepage of the Holidaze application, displaying a welcome section, venues, and a scroll-to-top button.
@@ -20,11 +21,18 @@ function IndexPage() {
   const { isLoggedIn } = useAuth(); // Fix: Added parentheses to useAuth()
 
   return (
-    <div className="container p-1">
+    <>
+      <Helmet>
+        <title>Holidaze - Get holidazing</title>
+        <meta
+          name="description"
+          content="Holidaze homepage, index page, holiday, vacation,  sun, beach"
+        />
+      </Helmet>
       <WelcomeSection isLoggedIn={isLoggedIn} />
       <VenuesPage />
       <ButtonToTop />
-    </div>
+    </>
   );
 }
 

@@ -16,48 +16,51 @@ import UnAuthorized from "./pages/Unauthorized.tsx";
 import NotFoundPage from "./pages/404.tsx";
 import ProtectedLoginRoute from "./utils/ProtectedLoginRoute.tsx";
 import ScrollToTop from "./features/scrollToTop.tsx";
+import { HelmetProvider } from "react-helmet-async";
 
 function App(): JSX.Element {
   return (
-    <Router>
-      <ScrollToTop />
-      <AuthProvider>
-        <Navigation />
-        <main>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<IndexPage />} />
-            <Route path="register" element={<RegisterPage />} />
-            <Route path="login" element={<LoginPage />} />
+    <HelmetProvider>
+      <Router>
+        <ScrollToTop />
+        <AuthProvider>
+          <Navigation />
+          <main>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<IndexPage />} />
+              <Route path="register" element={<RegisterPage />} />
+              <Route path="login" element={<LoginPage />} />
 
-            {/* Protected Routes */}
-            <Route element={<ProtectedRoute loggedInOnly={true} />}>
-              <Route path="profiles/:username" element={<ProfilePage />} />
-              <Route
-                path="profiles/:username/bookings"
-                element={<BookingsPage />}
-              />
-            </Route>
+              {/* Protected Routes */}
+              <Route element={<ProtectedRoute loggedInOnly={true} />}>
+                <Route path="profiles/:username" element={<ProfilePage />} />
+                <Route
+                  path="profiles/:username/bookings"
+                  element={<BookingsPage />}
+                />
+              </Route>
 
-            <Route element={<ProtectedLoginRoute />}>
-              <Route
-                path="profiles/:username/venueManager"
-                element={<VenueManagerPage />}
-              />
-            </Route>
-            <Route path="/search" element={<SearchResultsPage />} />
-            <Route path="venues" element={<VenuesPage />} />
-            <Route path="venues/:id" element={<VenuePage />} />
+              <Route element={<ProtectedLoginRoute />}>
+                <Route
+                  path="profiles/:username/venueManager"
+                  element={<VenueManagerPage />}
+                />
+              </Route>
+              <Route path="/search" element={<SearchResultsPage />} />
+              <Route path="venues" element={<VenuesPage />} />
+              <Route path="venues/:id" element={<VenuePage />} />
 
-            {/* Unauthorized Access */}
-            <Route path="/unauthorized" element={<UnAuthorized />} />
+              {/* Unauthorized Access */}
+              <Route path="/unauthorized" element={<UnAuthorized />} />
 
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </AuthProvider>
-    </Router>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </AuthProvider>
+      </Router>
+    </HelmetProvider>
   );
 }
 

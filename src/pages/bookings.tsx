@@ -6,6 +6,7 @@ import RenderBookingsProfile from "../components/bookings/RenderBookingsUser";
 import { useAuth } from "../utils/useAuth";
 import NotFoundPage from "./404";
 import Accordion from "../features/Accordion";
+import { Helmet } from "react-helmet-async";
 
 /**
  * A page that displays a user's upcoming and past bookings.
@@ -84,40 +85,55 @@ function BookingsPage() {
   }
 
   return (
-    <div className="container px-3">
-      <div className="mb-2 pb-2 bg-accentColor p-4 container">
-        <h1 className="text-center text-3xl py-5 text-primary font-bold">
-          Your bookings
-        </h1>
+    <>
+      <Helmet>
+        <title>Holidaze - See all your bookings</title>
+        <meta
+          name="description"
+          content="Bookings page, all bookings, customers, holidays"
+        />
+      </Helmet>
+      <div className="">
+        <div className="mb-2 pb-2 bg-accentColor p-4">
+          <h1 className="text-center text-3xl py-5 text-primary font-bold">
+            Your bookings
+          </h1>
+        </div>
       </div>
-      <div className="container mb-20">
-        <Accordion title="Upcoming Bookings" open={true}>
-          <RenderBookingsProfile
-            bookings={upcomingBookings}
-            header="Upcoming Bookings"
-            allowEditing={true}
-          />
-        </Accordion>
-        <div className="mt-4">
-          <Accordion title="Past Bookings" open={false}>
+      <div className="container px-3">
+        <div className="text-white bg-primary font-bold py-4 p-2 my-5">
+          Here you can find all your upcoming and past bookings. Manage your
+          reservations, view venue details, and plan your next trip with ease.
+        </div>
+        <div className="container mb-5">
+          <Accordion title="Upcoming Bookings" open={true}>
             <RenderBookingsProfile
-              bookings={pastBookings}
-              header="Past Bookings"
-              allowEditing={false}
+              bookings={upcomingBookings}
+              header="Upcoming Bookings"
+              allowEditing={true}
             />
           </Accordion>
-        </div>
-
-        {errorMessage && (
-          <div
-            className="fixed bottom-5 right-5 bg-red-500 text-white p-3 rounded-lg shadow-lg"
-            style={{ zIndex: 9999 }}
-          >
-            {errorMessage}
+          <div className="mt-4">
+            <Accordion title="Past Bookings" open={false}>
+              <RenderBookingsProfile
+                bookings={pastBookings}
+                header="Past Bookings"
+                allowEditing={false}
+              />
+            </Accordion>
           </div>
-        )}
+
+          {errorMessage && (
+            <div
+              className="fixed bottom-5 right-5 bg-red-500 text-white p-3 rounded-lg shadow-lg"
+              style={{ zIndex: 9999 }}
+            >
+              {errorMessage}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

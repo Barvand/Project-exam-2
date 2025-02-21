@@ -4,6 +4,7 @@ import VenueManagerToggle from "../components/venueManagerPage/venueManagerToggl
 import Loading from "../features/loading";
 import { useParams } from "react-router-dom";
 import { fetchData } from "../api/api";
+import { Helmet } from "react-helmet-async";
 
 interface Profile {
   name: string;
@@ -80,21 +81,36 @@ function ProfilePage() {
   }
 
   return (
-    <div className="px-3">
-      <div className="mb-2 pb-2 bg-accentColor p-2 container">
-        <h1 className="text-center text-3xl py-5 text-primary font-bold">
-          Profile Page
-        </h1>
+    <>
+      <Helmet>
+        <title>Holidaze - Profile Page </title>
+        <meta
+          name="description"
+          content="Profile page, update profile, edit, banner, avatar, bio, venueManager"
+        />
+      </Helmet>
+      <div className="">
+        <div className="mb-2 pb-2 bg-accentColor p-4">
+          <h1 className="text-center text-3xl py-5 text-primary font-bold">
+            Your Profile
+          </h1>
+        </div>
       </div>
-      <div className="container">
-        {profileState && (
-          <RenderProfileInfo
-            profile={profileState}
-            onToggleVenueManager={handleToggleVenueManager}
-          />
-        )}
+      <div className="container px-3">
+        <div className="text-white bg-primary font-bold py-4 p-2 my-5">
+          Here you can update your profile. Update your banner, avatar, bio. And
+          do not forget to the Venue Manager feature.
+        </div>
+        <div className="container">
+          {profileState && (
+            <RenderProfileInfo
+              profile={profileState}
+              onToggleVenueManager={handleToggleVenueManager}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

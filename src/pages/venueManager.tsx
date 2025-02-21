@@ -5,6 +5,7 @@ import { fetchData } from "../api/api";
 import Modal from "../components/modals/Modal";
 import RenderVenueBookings from "../components/venueManagerPage/RenderVenueBookings";
 import Loading from "../features/loading";
+import { Helmet } from "react-helmet-async";
 function VenueManagerPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { username } = useParams();
@@ -60,16 +61,29 @@ function VenueManagerPage() {
 
   return (
     <>
-      <div className="mb-2 pb-2 bg-accentColor p-2 container">
-        <h1 className="text-center text-3xl py-5 text-primary font-bold">
-          Venue Manager
-        </h1>
+      <Helmet>
+        <title>Holidaze - Venue Manager Page </title>
+        <meta
+          name="description"
+          content="Venue Manager page, update venues, list venues, venues, money, manager"
+        />
+      </Helmet>
+      <div className="">
+        <div className="mb-2 pb-2 bg-accentColor p-4">
+          <h1 className="text-center text-3xl py-5 text-primary font-bold">
+            Venue Manager
+          </h1>
+        </div>
+      </div>
+      <div className="container px-3">
+        <div className="text-white bg-primary font-bold py-4 p-2 my-5">
+          On the venue manager page, you are able to list a venue, update and
+          delete. Most importantly, you are able to see who booked your venue
+          and when their reservation is. ALl information is displayed per venue.
+        </div>
       </div>
       {profile.venueManager ? (
         <div className="container flex flex-col gap-2 p-4">
-          <div className="mt-5 mb-5">
-            <h1 className="text-2xl"> Welcome to the Venue Manager's page. </h1>
-          </div>
           <RenderVenueBookings data={venues} />
 
           <div className="">

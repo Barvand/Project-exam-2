@@ -8,6 +8,7 @@ import { MdOutlineEventAvailable } from "react-icons/md";
 import { useState } from "react";
 import LogoutConfirmModal from "../modals/logoutModal";
 import HamburgerMenu from "./hamburgerMenu";
+import Loading from "../../features/loading";
 
 function Navigation(): JSX.Element {
   const { isLoggedIn, userProfile, logout } = useAuth();
@@ -15,10 +16,8 @@ function Navigation(): JSX.Element {
 
   // Prevent accessing userProfile if it's null
   if (isLoggedIn && !userProfile) {
-    return null; // or return a loading state
+    return <Loading />;
   }
-
-  console.log(userProfile);
 
   return (
     <nav className="bg-primary text-white shadow-md relative">
