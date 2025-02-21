@@ -7,6 +7,7 @@ import { useAuth } from "../utils/useAuth";
 import NotFoundPage from "./404";
 import Accordion from "../features/Accordion";
 import { Helmet } from "react-helmet-async";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 
 /**
  * A page that displays a user's upcoming and past bookings.
@@ -93,7 +94,7 @@ function BookingsPage() {
           content="Bookings page, all bookings, customers, holidays"
         />
       </Helmet>
-      <div className="">
+      <div>
         <div className="mb-2 pb-2 bg-accentColor p-4">
           <h1 className="text-center text-3xl py-5 text-primary font-bold">
             Your bookings
@@ -101,9 +102,12 @@ function BookingsPage() {
         </div>
       </div>
       <div className="container px-3">
-        <div className="text-white bg-primary font-bold py-4 p-2 my-5">
-          Here you can find all your upcoming and past bookings. Manage your
-          reservations, view venue details, and plan your next trip with ease.
+        <div className="text-white bg-primary font-bold py-4 p-2 my-5 flex gap-2 items-center">
+          <IoIosInformationCircleOutline size={34} />
+          <h2>
+            Here you can find all your upcoming and past bookings. Manage your
+            reservations, view venue details, and plan your next trip with ease.
+          </h2>
         </div>
         <div className="container mb-5">
           <Accordion title="Upcoming Bookings" open={true}>

@@ -6,6 +6,7 @@ import Modal from "../components/modals/Modal";
 import RenderVenueBookings from "../components/venueManagerPage/RenderVenueBookings";
 import Loading from "../features/loading";
 import { Helmet } from "react-helmet-async";
+import { IoIosInformationCircleOutline } from "react-icons/io";
 function VenueManagerPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { username } = useParams();
@@ -76,10 +77,14 @@ function VenueManagerPage() {
         </div>
       </div>
       <div className="container px-3">
-        <div className="text-white bg-primary font-bold py-4 p-2 my-5">
-          On the venue manager page, you are able to list a venue, update and
-          delete. Most importantly, you are able to see who booked your venue
-          and when their reservation is. ALl information is displayed per venue.
+        <div className="text-white bg-primary font-bold py-4 p-2 my-5 flex gap-2 items-center">
+          <IoIosInformationCircleOutline size={34} />
+          <h2>
+            On the venue manager page, you are able to list a venue, update and
+            delete. Most importantly, you are able to see who booked your venue
+            and when their reservation is. ALl information is displayed per
+            venue.
+          </h2>
         </div>
       </div>
       {profile.venueManager ? (
