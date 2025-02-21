@@ -20,11 +20,11 @@ function IndexPage() {
   const { isLoggedIn } = useAuth(); // Fix: Added parentheses to useAuth()
 
   return (
-    <>
+    <div className="container p-1">
       <WelcomeSection isLoggedIn={isLoggedIn} />
       <VenuesPage />
       <ButtonToTop />
-    </>
+    </div>
   );
 }
 

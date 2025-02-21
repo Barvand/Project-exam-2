@@ -77,12 +77,6 @@ h5 {
   display: block;
 }
 
-.asymmetric {
-  background-color: #1a3b6e;
-}
-
-
-
 /* Style for input errors */
 .input-error {
   border-color: red;
