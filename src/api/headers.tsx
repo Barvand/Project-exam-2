@@ -1,4 +1,5 @@
-import { API_KEY } from "../vite-env.ts";
+const apiKey = import.meta.env.VITE_API_KEY;
+console.log(apiKey);
 import { load } from "./localstorage/load.tsx";
 
 export function GetHeaders() {
@@ -7,6 +8,6 @@ export function GetHeaders() {
   return {
     "Content-Type": "application/json",
     Authorization: `Bearer ${token}`,
-    "X-Noroff-API-Key": API_KEY,
+    "X-Noroff-API-Key": apiKey,
   };
 }

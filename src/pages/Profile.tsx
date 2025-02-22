@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { fetchData } from "../api/api";
 import { Helmet } from "react-helmet-async";
 import InformationIcon from "../features/icons/Information";
+import { useAuth } from "../utils/useAuth";
 interface Profile {
   name: string;
   venueManager: boolean;
@@ -27,7 +28,7 @@ function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [profileError, setProfileError] = useState(false);
   const { username } = useParams();
-
+  const { userProfile } = useAuth();
   useEffect(() => {
     if (!username) return; // Ensure username exists before making the API call
 
@@ -97,13 +98,15 @@ function ProfilePage() {
         </div>
       </div>
       <div className="container px-3">
-        <div className="text-white bg-primary font-bold py-4 p-2 my-5 flex gap-2 items-center">
-          <InformationIcon />
-          <h2 className="text-sm sm:text-md">
-            Here you can update your profile. Update your banner, avatar, bio.
-            And do not forget to the Venue Manager feature.
-          </h2>
-        </div>
+        {userProfile.name === username && (
+          <div className="text-white bg-primary font-bold py-4 p-2 my-5 flex gap-2 items-center">
+            <InformationIcon />
+            <h2 className="text-sm sm:text-md">
+              Here you can update your profile. Update your banner, avatar, bio.
+              And do not forget to the Venue Manager feature.
+            </h2>
+          </div>
+        )}
         <div className="container">
           {profileState && (
             <RenderProfileInfo
