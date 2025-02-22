@@ -1,54 +1,103 @@
-# Project-exam-2
-This is my project exam 2 for my Noroff school of technology front end development studies.  
+# Holidaze
 
-## React + TypeScript + Vite
+![img](public\holidazingtime-readme.png)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
 
-Currently, two official plugins are available:
+Holidaze is a modern accommodation booking application designed to showcase the front-end development capabilities of the candidate. The project consists of two main aspects:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. A **customer-facing** website where users can browse and book holiday venues.
+2. An **admin-facing** dashboard where venue managers can register, manage venues, and oversee bookings.
 
-## Expanding the ESLint configuration
+## Goals
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The goal of this project is to apply skills learned over the past two years to develop a complete front-end application that integrates seamlessly with an existing API. The final product should demonstrate proficiency in front-end development, UI/UX design, and technical implementation.
 
-- Configure the top-level `parserOptions` property like this:
+## Features
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Customer Features
+
+- View a list of venues.
+- Search for specific venues.
+- View detailed information about a venue.
+- Check venue availability via a calendar.
+- Register as a customer using a `stud.noroff.no` email.
+- Create and manage bookings.
+
+### Venue Manager Features
+
+- Register as a venue manager using a `stud.noroff.no` email.
+- Create, update, and delete venues.
+- View bookings for managed venues.
+
+### General User Features
+
+- Login and logout functionality.
+- Update user avatar.
+
+## API
+
+The project integrates with the Holidaze API provided in the Noroff API documentation.
+
+## Technical Stack
+
+### Approved JavaScript Frameworks
+
+- React (>16)
+
+### Design & Planning Tools
+
+- **Design Applications:** Figma,
+- **Planning Applications:** GitHub Projects
+
+## Project Management
+
+## Installation & Setup
+
+### Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js (>16)
+- npm or yarn
+
+### Clone the Repository
+
+```sh
+git clone https://github.com/barvand/Project-exam-2.git
+cd holidaze
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Install Dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+npm install
 ```
->>>>>>> login-feature
+
+### Run the Application Locally
+
+```sh
+npm start
+```
+
+The application will be available at `http://localhost:5173/`.
+
+### Build for Production
+
+```sh
+npm run build
+```
+
+## Deployment
+
+The project is hosted on [Netlify](https://holidazingtime.netlify.app/). Follow the respective deployment guides for your chosen platform.
+
+## Testing
+
+To run tests, use:
+
+```sh
+npm test
+```
+
+This README serves as a comprehensive guide for setting up, using, and contributing to the Holidaze project. Ensure all required links are included before submission.
