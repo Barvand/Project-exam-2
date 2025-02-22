@@ -24,8 +24,7 @@ function Navigation(): JSX.Element {
       <div className="container mx-auto px-4 flex items-center justify-between py-4">
         {/* Logo */}
         <Link to="/" className="flex gap-2">
-          <img src="/airplanelogo.png" className="h-12" alt="Holidaze-Logo" />
-          <h1 className="text-4xl font-bold">Holidaze</h1>
+          <img src="/Holidaze-logo.svg" alt="Holidaze-Logo" />
         </Link>
 
         {/* Desktop Navigation */}
