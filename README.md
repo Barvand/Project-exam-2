@@ -1,6 +1,6 @@
 # Holidaze
 
-![img](public\holidazingtime-readme.png)
+![img](/public//holidazingtime-readme.png)
 
 ## Project Overview
 
