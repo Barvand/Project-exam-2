@@ -65,7 +65,7 @@ Ensure you have the following installed:
 
 ```sh
 git clone https://github.com/barvand/Project-exam-2.git
-cd holidaze
+cd your-folder
 ```
 
 ### Install Dependencies
@@ -90,7 +90,7 @@ npm run build
 
 ## Deployment
 
-The project is hosted on [Netlify](https://holidazingtime.netlify.app/). Follow the respective deployment guides for your chosen platform.
+The project is hosted on [Netlify](https://holidazingtime.netlify.app/).
 
 ## Testing
 
@@ -99,5 +99,3 @@ To run tests, use:
 ```sh
 npm test
 ```
-
-This README serves as a comprehensive guide for setting up, using, and contributing to the Holidaze project. Ensure all required links are included before submission.
