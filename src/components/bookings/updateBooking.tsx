@@ -70,7 +70,7 @@ function RenderUpdateBooking({
 }: RenderUpdateBookingProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const bookedDates = useBookedDates(id);
+  const bookedDates = useBookedDates(booking.venue.id);
 
   const formik = useFormik({
     initialValues: {

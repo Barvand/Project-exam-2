@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { fetchData } from "../api";
 
 /**
@@ -8,11 +8,8 @@ import { fetchData } from "../api";
  */
 const useBookedDates = (venueId: string) => {
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
-  const hasFetched = useRef(true);
 
   useEffect(() => {
-    if (!venueId || hasFetched.current) return;
-
     const fetchBookings = async () => {
       try {
         const response = await fetchData(
@@ -42,7 +39,6 @@ const useBookedDates = (venueId: string) => {
           ).map((dateString) => new Date(dateString));
 
           setBookedDates(uniqueDates);
-          hasFetched.current = true;
         }
       } catch (error) {
         console.error("Error fetching bookings:", error);
