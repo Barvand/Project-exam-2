@@ -93,7 +93,7 @@ function VenueFilters({
               ].map(({ label, sortKey }) => (
                 <li
                   key={sortKey}
-                  className="cursor-pointer py-1 px-2 hover:bg-customPurple-100 font-bold text-black"
+                  className="cursor-pointer py-1 px-2 hover:bg-gray-700 font-bold text-white"
                   onClick={() => handleSortChange(sortKey)}
                 >
                   {label}
@@ -112,6 +112,7 @@ function VenueFilters({
           }`}
           onClick={toggleSortOrder}
         >
+          <span className="sr-only"> Toggle asc or desc </span>
           {sortOrder === "asc" && (
             <IoIosArrowUp className="text-xl font-bold" />
           )}

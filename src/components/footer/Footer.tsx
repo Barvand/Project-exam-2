@@ -59,30 +59,33 @@ function Footer(): JSX.Element {
 
         {/* ✅ Social Media Icons with React Icons */}
         <div className="flex items-center gap-4 mb-6 lg:mb-0">
-          <a
-            href="https://facebook.com"
+          <Link
+            to="https://facebook.com"
             className="text-white hover:text-customPurple-200 transition duration-300 text-3xl"
             target="_blank"
             rel="noopener noreferrer"
           >
+            <span className="sr-only"> Facebook </span>
             <FaFacebookSquare />
-          </a>
-          <a
-            href="https://twitter.com"
+          </Link>
+          <Link
+            to="https://twitter.com"
             className="text-white hover:text-customPurple-200 transition duration-300 text-3xl"
             target="_blank"
             rel="noopener noreferrer"
           >
+            <span className="sr-only"> Twitter/X </span>
             <FaTwitterSquare />
-          </a>
-          <a
-            href="https://instagram.com"
+          </Link>
+          <Link
+            to="https://instagram.com"
             className="text-white hover:text-customPurple-200 transition duration-300 text-3xl"
             target="_blank"
             rel="noopener noreferrer"
           >
+            <span className="sr-only"> Instagram </span>
             <FaInstagramSquare />
-          </a>
+          </Link>
         </div>
       </div>
 

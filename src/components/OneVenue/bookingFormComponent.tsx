@@ -154,7 +154,11 @@ const BookingForm = ({ venuePrice, venueTitle }: BookingFormProps) => {
             </button>
             <button
               className="p-2 bg-green-600 rounded font-bold text-white"
-              onClick={formik.submitForm}
+              onClick={(e) => {
+                e.preventDefault();
+                setIsModalOpen(false);
+                formik.submitForm(); 
+              }}
             >
               Confirm
             </button>

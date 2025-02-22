@@ -20,65 +20,29 @@ interface Profile {
   venueManager: boolean;
 }
 
-// Define types for the props
 interface RenderProfileInfoProps {
   onToggleVenueManager: () => void;
   profile: Profile;
 }
 
-// Define types for the state change handlers
-type HandleChangeEvent = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  field: "bio" | "name" | "avatar" | "banner"
-) => void;
-
-/**
- * A component that displays and allows editing of a user's profile, including
- * the banner, avatar, bio, and venue manager status.
- *
- * @component
- * @param {Object} props - Component properties.
- * @param {Profile} props.profile - The user's profile data including banner, avatar, name, bio, and venue manager status.
- * @param {Function} props.onToggleVenueManager - Function to toggle the venue manager status.
- *
- * @description
- * - Displays the user's banner, avatar, and bio.
- * - Allows editing of the banner, avatar, and bio for the profile owner.
- * - Uses `ProfileBanner`, `ProfileAvatar`, and `ProfileBio` components for each section.
- * - Handles changes via controlled inputs and updates via an API call.
- * - Allows profile owners to toggle venue manager status.
- * - Provides fallback content for users viewing another person's profile.
- *
- * @example
- * ```tsx
- * <RenderProfileInfo
- *   profile={{
- *     banner: { url: "https://example.com/banner.jpg", alt: "Profile Banner" },
- *     avatar: { url: "https://example.com/avatar.jpg", alt: "Profile Avatar" },
- *     name: "JohnDoe",
- *     bio: "Welcome to my profile!",
- *     venueManager: false,
- *   }}
- *   onToggleVenueManager={toggleVenueManager}
- * />
- * ```
- *
- * @returns {JSX.Element} A profile information component with editable fields.
- */
-
 const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
   profile,
   onToggleVenueManager,
 }) => {
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const [editModeBanner, setEditModeBanner] = useState<boolean>(false);
-  const [editModeAvatar, setEditModeAvatar] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState(false);
+  const [editModeBanner, setEditModeBanner] = useState(false);
+  const [editModeAvatar, setEditModeAvatar] = useState(false);
   const [updatedProfile, setUpdatedProfile] = useState<Profile>(profile);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const { userProfile } = useAuth();
   const profileName = userProfile.name;
 
   // Handle input change for bio, name, avatar, and banner
-  const handleInputChange: HandleChangeEvent = (e, field) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: "bio" | "name" | "avatar" | "banner"
+  ) => {
     const { value } = e.target;
     setUpdatedProfile((prevState) => ({
       ...prevState,
@@ -89,25 +53,41 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
     }));
   };
 
-  // Handle save
+  // Handle Save
   const handleSave = async () => {
     try {
-      // Make API call to save the updated profile
+      setErrorMessage(null); // Clear old errors
+      setSuccessMessage(null); // Clear old success messages
+
       await updateData(
         `holidaze/profiles/${updatedProfile.name}`,
         updatedProfile
       );
-      setEditMode(false); // Exit edit mode after saving
+
+      setEditMode(false);
       setEditModeBanner(false);
       setEditModeAvatar(false);
-    } catch (error) {
-      console.error("Error saving profile:", error);
+
+      setSuccessMessage("Profile updated successfully!");
+
+      // Automatically clear the success message after 3 seconds
+      setTimeout(() => setSuccessMessage(null), 3000);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Error saving profile:", error);
+        setErrorMessage(error.message);
+
+        // Automatically clear the error message after 3 seconds
+        setTimeout(() => setErrorMessage(null), 3000);
+      } else {
+        console.error("An unknown error occurred:", error);
+      }
     }
   };
 
   return (
     <div className="rounded-lg overflow-hidden">
-      {/* Banner with edit option */}
+      {/* Banner */}
       <ProfileBanner
         profile={updatedProfile}
         localStorageName={profileName}
@@ -119,6 +99,7 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
 
       <div className="container">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1 transform py-2 rounded">
+          {/* Avatar */}
           <ProfileAvatar
             profile={updatedProfile}
             localStorageName={profileName}
@@ -128,7 +109,7 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
             onSubmit={handleSave}
           />
 
-          {/* Profile Info with edit fields */}
+          {/* Bio */}
           <ProfileBio
             profile={updatedProfile}
             localStorageName={profileName}
@@ -154,7 +135,6 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
                     : "Want to host your own properties? Toggle below to become a venue manager!"}
                 </p>
 
-                {/* Toggle Button */}
                 <div className="flex justify-center">
                   <label className="relative cursor-pointer mt-3">
                     <input
@@ -188,41 +168,21 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
               </div>
             </div>
           )}
-
-          {/* Fallback content if the logged-in user is not the profile owner */}
-          {profileName !== updatedProfile.name && (
-            <div className="border border-gray-300 rounded-lg p-5 shadow-md bg-white flex flex-col items-center text-center">
-              {/* Profile Role Icon */}
-              <div className="text-4xl mb-3">
-                {profile.venueManager ? (
-                  <span className="text-green-600">🏨</span> // Venue Manager icon
-                ) : (
-                  <span className="text-gray-500">👤</span> // Regular user icon
-                )}
-              </div>
-
-              {/* Profile Role Text */}
-              <h3 className="text-xl font-semibold text-gray-800">
-                {profile.venueManager ? "Venue Manager" : "Regular User"}
-              </h3>
-
-              {/* Description */}
-              <p className="text-gray-600 mt-2">
-                {profile.venueManager
-                  ? "This user is a Venue Manager and can host properties."
-                  : "This user is a regular member of the platform."}
-              </p>
-
-              {/* Subtle separator */}
-              <div className="w-full border-t border-gray-300 my-4"></div>
-
-              {/* Additional Message */}
-              <p className="text-sm text-gray-500">
-                Explore their listings and see what they have to offer!
-              </p>
-            </div>
-          )}
         </div>
+
+        {/* Error Message */}
+        {errorMessage && (
+          <p className="bg-red-500 text-white mt-2 p-3 rounded-lg shadow-lg text-center">
+            {errorMessage}
+          </p>
+        )}
+
+        {/* Success Message */}
+        {successMessage && (
+          <div className="bg-green-500 text-white p-3 rounded-lg shadow-lg text-center">
+            {successMessage}
+          </div>
+        )}
       </div>
     </div>
   );

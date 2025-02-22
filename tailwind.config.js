@@ -10,7 +10,7 @@ export default {
         secondary: "var(--color-secondary)",
         background: "var(--color-background)",
         accentColor: "var(--color-accentColor)",
-        shadeAccent: "#CC5500",
+        shadeAccent: "var(--color-secondary)",
         customPurple: {
           50: "#eef9ff",
           100: "#d9f1ff",

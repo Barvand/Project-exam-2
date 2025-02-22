@@ -14,6 +14,7 @@ interface ProfileBioProps {
   state: boolean;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: () => void;
+
 }
 
 /**

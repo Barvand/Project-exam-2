@@ -83,6 +83,7 @@ function ProfileAvatar({
         <div className="flex flex-col w-full">
           <input
             type="text"
+            value={profile.avatar.url}
             onChange={(e) => onChange(e, "avatar")}
             className="p-2 border rounded"
             placeholder="Enter an image url"

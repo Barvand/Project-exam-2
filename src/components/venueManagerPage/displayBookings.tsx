@@ -106,7 +106,14 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
           </div>
         </>
       ) : (
-        <p>No upcoming bookings available</p>
+        <>
+          <p>No upcoming bookings available</p>
+          <div className="flex flex-col py-2">
+            <Link to={`/venues/${venueId}`}>Visit venue</Link>
+            <RenderDeleteVenue id={venueId} />
+            <UpdateVenue id={venueId} />
+          </div>
+        </>
       )}
     </div>
   );

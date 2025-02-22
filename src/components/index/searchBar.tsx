@@ -78,7 +78,11 @@ export default function SearchBar() {
       <div className="border-1 p-1 overflow-hidden w-full sm:w-[500px]">
         <div className="flex items-center">
           <form className="w-full flex gap-1" onSubmit={handleSearch}>
+            <label htmlFor="search-input" className="sr-only">
+              Search bar
+            </label>
             <input
+              id="search-input"
               type="text"
               placeholder="Find your dream destination"
               value={search}

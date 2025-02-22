@@ -45,13 +45,9 @@ function CreateVenueForm() {
   };
 
   const addImage = () => {
-    if (currentImage.trim() !== "") {
-      setImages([...images, currentImage]); // Add the current image URL to the array
-      setCurrentImage(""); // Clear the input field
-      if (!currentImage) {
-        setError("Image URL cannot be empty");
-        return;
-      }
+    if (!currentImage.trim()) {
+      setError("Image URL cannot be empty");
+      return;
     }
 
     const urlRegex = /^(https?:\/\/)/;
@@ -59,6 +55,11 @@ function CreateVenueForm() {
       setError("URL must start with http:// or https://");
       return;
     }
+
+    // If validation passes, add the image and clear the input
+    setImages([...images, currentImage]);
+    setCurrentImage("");
+    setError(""); // Clear error on success
 
     // If validation passes, add the image and clear the input
     formik.setFieldValue("media", [
@@ -121,11 +122,14 @@ function CreateVenueForm() {
   });
 
   return (
-    <div className="py-8 flex flex-col items-center">
+    <div className="py-8 flex flex-col items-center ">
       <h2 className="text-3xl font-semibold text-center py-4">
         Post Your Venue
       </h2>
-      <form onSubmit={formik.handleSubmit} className="space-y-6 p-2 w-full">
+      <form
+        onSubmit={formik.handleSubmit}
+        className="scrollable-form space-y-6 p-2 w-full"
+      >
         <BasicInfo formik={formik} />
         {/* Pricing Information */}
         <PricingInput formik={formik} />
