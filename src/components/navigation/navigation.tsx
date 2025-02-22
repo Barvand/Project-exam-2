@@ -28,11 +28,11 @@ function Navigation(): JSX.Element {
         </Link>
 
         {/* Desktop Navigation */}
-        <ul className="hidden lg:flex space-x-6">
+        <ul className="hidden lg:flex space-x-6 gap-5">
           <li>
             <Link
               to="/venues"
-              className="flex items-center gap-2 hover:text-gray-300"
+              className="flex items-center gap-2 footer-link text-lg transition duration-300"
             >
               <BsHouses className="text-xl" /> Venues
             </Link>
@@ -42,7 +42,7 @@ function Navigation(): JSX.Element {
               <li>
                 <Link
                   to="/login"
-                  className="flex items-center gap-2 hover:text-gray-300"
+                  className="flex items-center gap-2 footer-link text-lg transition duration-300"
                 >
                   <CiLogin className="text-xl" /> Login
                 </Link>
@@ -50,7 +50,7 @@ function Navigation(): JSX.Element {
               <li>
                 <Link
                   to="/register"
-                  className="flex items-center gap-2 hover:text-gray-300"
+                  className="flex items-center gap-2 footer-link text-lg transition duration-300"
                 >
                   <IoPersonAddOutline className="text-xl" /> Register
                 </Link>
@@ -61,7 +61,7 @@ function Navigation(): JSX.Element {
               <li>
                 <Link
                   to={`/profiles/${userProfile.name}/bookings`}
-                  className="flex items-center gap-2 hover:text-gray-300"
+                  className="flex items-center gap-2 footer-link text-lg transition duration-300"
                 >
                   <MdOutlineEventAvailable className="text-xl" /> Your Bookings
                 </Link>
@@ -69,7 +69,7 @@ function Navigation(): JSX.Element {
               <li>
                 <Link
                   to={`/profiles/${userProfile.name}`}
-                  className="flex items-center gap-2 hover:text-gray-300"
+                  className="flex items-center gap-2 footer-link text-lg transition duration-300"
                 >
                   <IoPersonCircleOutline className="text-xl" /> Profile
                 </Link>
@@ -77,14 +77,14 @@ function Navigation(): JSX.Element {
               <li>
                 <Link
                   to={`/profiles/${userProfile.name}/venueManager`}
-                  className="flex items-center gap-2 hover:text-gray-300"
+                  className="flex items-center gap-2 footer-link text-lg transition duration-300"
                 >
                   <FaUserTie className="text-xl" /> Venue Manager
                 </Link>
               </li>
               <li>
                 <button
-                  className="flex items-center gap-2 text-red-500 hover:text-red-700"
+                  className="flex items-center gap-2 footer-link text-lg transition duration-300"
                   onClick={() => setShowLogoutConfirm(true)}
                 >
                   <FaSignOutAlt className="text-xl" />

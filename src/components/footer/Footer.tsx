@@ -21,7 +21,10 @@ function Footer(): JSX.Element {
       <div className="container mx-auto flex flex-col lg:flex-row justify-between items-center">
         {/* Logo and Branding */}
         <div className="mb-6 lg:mb-0 text-center lg:text-left">
-          <h1 className="text-4xl font-bold text-white">Holidaze</h1>
+          {/* Logo */}
+          <Link to="/" className="flex gap-2">
+            <img src="/Holidaze-logo.svg" alt="Holidaze-Logo" />
+          </Link>
           <p className="text-lg mt-2">
             Your gateway to unforgettable vacations
           </p>
