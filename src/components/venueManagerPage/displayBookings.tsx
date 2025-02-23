@@ -83,24 +83,27 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
             <div key={booking.id} className="flex flex-col gap-2">
               <h2 className="font-bold text-xl">Booking</h2>
               <div className="border-b border-gray-200">
-                <p className="text-md py-1">
-                  Customer: {booking.customer.name}
+                <p className="text-md py-1 font-bold">
+                  Customer:{" "}
+                  <span className="font-normal">{booking.customer.name}</span>
                 </p>
               </div>
               <div className="border-b border-black py-2">
                 <p className="text-md">
-                  <span className="text-green-600 font-bold">Arrival: </span>{" "}
+                  <span className="text-green-800 font-bold">Arrival: </span>{" "}
                   {new Date(booking.dateFrom).toLocaleDateString()}
                 </p>
                 <p className="text-md">
-                  <span className="text-red-600 font-bold">Check-out: </span>{" "}
+                  <span className="text-red-800 font-bold">Check-out: </span>{" "}
                   {new Date(booking.dateTo).toLocaleDateString()}
                 </p>
               </div>
             </div>
           ))}
           <div className="flex flex-col py-2">
-            <Link to={`/venues/${venueId}`}>Visit venue</Link>
+            <Link className="font-bold" to={`/venues/${venueId}`}>
+              Visit venue
+            </Link>
             <RenderDeleteVenue id={venueId} />
             <UpdateVenue id={venueId} />
           </div>
@@ -109,7 +112,9 @@ function DisplayBookings({ venueId }: DisplayBookingsProps) {
         <>
           <p>No upcoming bookings available</p>
           <div className="flex flex-col py-2">
-            <Link to={`/venues/${venueId}`}>Visit venue</Link>
+            <Link className="font-bold" to={`/venues/${venueId}`}>
+              Visit venue
+            </Link>
             <RenderDeleteVenue id={venueId} />
             <UpdateVenue id={venueId} />
           </div>

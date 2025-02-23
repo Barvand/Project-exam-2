@@ -4,10 +4,14 @@ function PricingInput({ formik }: any) {
       <h2 className="text-xl font-bold mb-2">Pricing information</h2>
       <div className="flex flex-row gap-5 justify-between">
         <div className="flex flex-col">
-          <label className="block text-sm font-bold text-gray-700">
-            Price / night $ <span className="text-red-500">*</span>
+          <label
+            htmlFor="venuePrice"
+            className="block text-sm font-bold text-gray-700"
+          >
+            Price / night $ <span className="text-red-800">*</span>
           </label>
           <input
+            id="venuePrice"
             type="number"
             {...formik.getFieldProps("price")}
             className={`w-full px-4 py-2 border rounded-lg focus:ring-1 outline-none ${
@@ -22,10 +26,14 @@ function PricingInput({ formik }: any) {
           )}
         </div>
         <div className="flex flex-col">
-          <label className="block text-sm font-bold text-gray-700">
-            Max Guests <span className="text-red-500">*</span>
+          <label
+            htmlFor="venueGuests"
+            className="block text-sm font-bold text-gray-700"
+          >
+            Max Guests <span className="text-red-800">*</span>
           </label>
           <input
+            id="venueGuests"
             type="number"
             {...formik.getFieldProps("maxGuests")}
             className={`w-full px-4 py-2 border rounded-lg focus:ring-1 outline-none ${
@@ -41,11 +49,15 @@ function PricingInput({ formik }: any) {
         </div>
       </div>
       <div className="flex flex-col">
-        <label className="block text-sm font-bold text-gray-700">
-          Rating <span className="text-red-500">*</span>
+        <label
+          htmlFor="venueRating"
+          className="block text-sm font-bold text-gray-700"
+        >
+          Rating <span className="text-red-800">*</span>
         </label>
         <input
           type="number"
+          id="venueRating"
           {...formik.getFieldProps("rating")}
           className={`w-full px-4 py-2 border rounded-lg focus:ring-1 outline-none ${
             formik.touched.rating && formik.errors.rating

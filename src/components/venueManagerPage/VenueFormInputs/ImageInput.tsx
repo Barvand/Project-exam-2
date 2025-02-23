@@ -17,9 +17,12 @@ function ImageInput({
 }: ImageInputProps) {
   return (
     <div>
-      <h2 className="text-xl">Add Images of Your Venue</h2>
+      <label htmlFor="venueImages" className="text-xl">
+        Add Images of Your Venue
+      </label>
       <div className="space-y-2">
         <input
+          id="venueImages"
           type="text"
           placeholder="Enter image URL"
           value={currentImage}

@@ -100,7 +100,7 @@ function VenueManagerPage() {
           {/* Button to open modal */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-blue-500 text-white px-4 py-2 rounded mt-2 self-start"
+            className="bg-primary text-white px-4 py-2 rounded mt-2 self-start"
           >
             Add Venue
           </button>

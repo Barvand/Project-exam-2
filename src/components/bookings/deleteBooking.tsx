@@ -62,7 +62,7 @@ function RenderDeleteBooking({
       {/* Button to open the confirmation modal */}
       <button
         onClick={() => setShowModal(true)}
-        className="bg-red-500 bg-opacity-30 hover:bg-opacity-100 p-2 rounded text-white"
+        className="bg-red-500 hover:bg-red-800 p-2 rounded text-white"
       >
         {isDeleting ? (
           "Deleting..."

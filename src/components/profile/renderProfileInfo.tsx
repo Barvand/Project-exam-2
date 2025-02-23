@@ -137,6 +137,7 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
 
                 <div className="flex justify-center">
                   <label className="relative cursor-pointer mt-3">
+                    <span className="sr-only">Toggle Venue Manager</span>
                     <input
                       type="checkbox"
                       checked={profile.venueManager}
@@ -149,11 +150,11 @@ const RenderProfileInfo: React.FC<RenderProfileInfoProps> = ({
                 </div>
 
                 {profile.venueManager ? (
-                  <p className="text-green-600 text-sm font-bold mt-2">
+                  <p className="text-green-800 text-sm font-bold mt-2">
                     Active
                   </p>
                 ) : (
-                  <p className="text-red-600 text-sm font-bold mt-2">
+                  <p className="text-red-800 text-sm font-bold mt-2">
                     Inactive
                   </p>
                 )}

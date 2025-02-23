@@ -28,9 +28,15 @@ function RegisterFormInputs({ touched, errors, isSubmitting }: any) {
     <>
       {/* Name Field */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">Name</label>
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Name
+        </label>
         <Field
           name="name"
+          id="name"
           className={`w-full px-4 py-2 border rounded-lg focus:ring-2 outline-none ${
             touched.name && errors.name
               ? "border-red-500 focus:ring-red-500"
@@ -45,8 +51,14 @@ function RegisterFormInputs({ touched, errors, isSubmitting }: any) {
 
       {/* Email Field */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">Email</label>
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Email
+        </label>
         <Field
+          id="email"
           name="email"
           type="email"
           className={`w-full px-4 py-2 border rounded-lg focus:ring-2 outline-none ${
@@ -63,10 +75,14 @@ function RegisterFormInputs({ touched, errors, isSubmitting }: any) {
 
       {/* Password Field */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium text-gray-700"
+        >
           Password
         </label>
         <Field
+          id="password"
           name="password"
           type="password"
           className={`w-full px-4 py-2 border rounded-lg focus:ring-2 outline-none ${
@@ -83,10 +99,14 @@ function RegisterFormInputs({ touched, errors, isSubmitting }: any) {
 
       {/* Confirm Password Field */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="confirmPassword"
+          className="block text-sm font-medium text-gray-700"
+        >
           Confirm Password
         </label>
         <Field
+          id="confirmPassword"
           name="confirmPassword"
           type="password"
           className={`w-full px-4 py-2 border rounded-lg focus:ring-2 outline-none ${
@@ -105,10 +125,14 @@ function RegisterFormInputs({ touched, errors, isSubmitting }: any) {
 
       {/* Venue Manager Checkbox */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">
+        <label
+          htmlFor="venueManager"
+          className="block text-sm font-medium text-gray-700"
+        >
           Want to become a venue manager?
         </label>
         <Field
+          id="venueManager"
           name="venueManager"
           type="checkbox"
           className="border rounded border-gray-300 focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"

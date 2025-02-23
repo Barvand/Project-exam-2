@@ -42,11 +42,15 @@ function LoginForm() {
 
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="email-login"
+              className="block text-sm font-medium text-gray-700"
+            >
               Email
             </label>
             <input
               {...register("email")}
+              id="email-login"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
             />
             {errors.email && (
@@ -57,12 +61,16 @@ function LoginForm() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="password-login"
+              className="block text-sm font-medium text-gray-700"
+            >
               Password
             </label>
             <input
               {...register("password")}
               type="password"
+              id="password-login"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-secondary focus:border-indigo-500 outline-none"
             />
             {errors.password && (

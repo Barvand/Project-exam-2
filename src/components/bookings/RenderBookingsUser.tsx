@@ -91,7 +91,7 @@ function RenderBookingsProfile({
       {newBookings.length === 0 ? (
         <p>No bookings available at the moment.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2  gap-2">
+        <div className="grid grid-cols-1  xl:grid-cols-2 gap-2">
           {newBookings.map((booking) => {
             const fromDate = new Date(booking.dateFrom);
             const toDate = new Date(booking.dateTo);
@@ -120,17 +120,19 @@ function RenderBookingsProfile({
             return (
               <div
                 key={booking.id}
-                className="rounded relative bg-color overflow-hidden group"
+                className="rounded relative bg-color overflow-hidden group border border-gray-500 p-2 md:flex gap-3 md:h-72"
               >
-                <Link to={`/venues/${booking.venue.id}`}>
-                  <img
-                    className="h-56 object-cover object-center w-full opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all transform overflow-hidden"
-                    loading="lazy"
-                    src={booking.venue.media?.[0]?.url || "default-image-url"}
-                    alt={booking.venue.media?.[0]?.alt || "default alt text"}
-                  />
-                </Link>
-                <div className="p-1 rounded">
+                <div className="w-full h-64 md:w-72">
+                  <Link to={`/venues/${booking.venue.id}`}>
+                    <img
+                      className="h-full object-cover object-center w-full opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all transform overflow-hidden"
+                      loading="lazy"
+                      src={booking.venue.media?.[0]?.url || "default-image-url"}
+                      alt={booking.venue.media?.[0]?.alt || "default alt text"}
+                    />
+                  </Link>
+                </div>
+                <div className="p-1 rounded w-full">
                   <div className="flex justify-between  py-2">
                     <h2 className="text-2xl text-primary font-bold">
                       {booking.venue.name}
@@ -180,7 +182,7 @@ function RenderBookingsProfile({
                       ${totalPrice} / Total
                     </p>
                   </div>
-                  <div className="py-2 border-black border-b">
+                  <div className="py-2">
                     <p className="font-bold">
                       Booking ref:
                       <span className="font-normal"> {booking.id} </span>
@@ -188,7 +190,7 @@ function RenderBookingsProfile({
                   </div>
                   {allowEditing && (
                     <div className="flex justify-end">
-                      <div className="absolute top-0 right-0">
+                      <div className="absolute top-2 left-2">
                         <RenderDeleteBooking
                           id={booking.id}
                           onDelete={handleDeleteBooking}

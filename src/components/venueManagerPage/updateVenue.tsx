@@ -8,11 +8,11 @@ interface UpdateVenueProps {
 
 /**
  * A component for fetching and updating venue details within a modal.
- * 
+ *
  * @component
  * @param {Object} props - Component properties.
  * @param {string} props.id - The unique identifier of the venue to be updated.
- * 
+ *
  * @description
  * - Fetches venue details by ID when the user clicks "Update Venue."
  * - Displays a modal containing the `UpdateVenueForm` component.
@@ -24,10 +24,9 @@ interface UpdateVenueProps {
  * ```tsx
  * <UpdateVenue id="123" />
  * ```
- * 
+ *
  * @returns {JSX.Element} A button that triggers a modal containing the update form.
  */
-
 
 function UpdateVenue({ id }: UpdateVenueProps) {
   const [showModal, setShowModal] = useState(false);
@@ -58,7 +57,11 @@ function UpdateVenue({ id }: UpdateVenueProps) {
   return (
     <div>
       {/* Button to open modal */}
-      <button onClick={openModal} className="text-blue-500" disabled={loading}>
+      <button
+        onClick={openModal}
+        className="text-blue-800 font-bold"
+        disabled={loading}
+      >
         {loading ? "Loading..." : "Update Venue"}
       </button>
 
@@ -68,7 +71,7 @@ function UpdateVenue({ id }: UpdateVenueProps) {
       {/* Modal */}
       {showModal && venueData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative scrollable-form ">
             {/* Close Button */}
             <button
               onClick={closeModal}

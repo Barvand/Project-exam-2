@@ -122,21 +122,24 @@ function RenderUpdateBooking({
         height={"425px"}
       >
         <form onSubmit={formik.handleSubmit} className="flex flex-col">
-          <label className="block mb-2">Check-in / Check-out Dates:</label>
-          <div className="border">
-            <VenueDatePicker
-              selectedDates={[formik.values.dateFrom, formik.values.dateTo]}
-              onDateChange={(dates) => {
-                formik.setFieldValue("dateFrom", dates[0]);
-                formik.setFieldValue("dateTo", dates[1]);
-              }}
-              bookedDates={bookedDates}
-            />
-          </div>
+          <label htmlFor="venue-datepicker" className="block mb-2">
+            Check-in / Check-out Dates:
+          </label>
+          <VenueDatePicker
+            selectedDates={[formik.values.dateFrom, formik.values.dateTo]}
+            onDateChange={(dates) => {
+              formik.setFieldValue("dateFrom", dates[0]);
+              formik.setFieldValue("dateTo", dates[1]);
+            }}
+            bookedDates={bookedDates}
+          />
 
-          <label className="block mt-2">Guests:</label>
+          <label htmlFor="guests" className="block mt-2">
+            Guests:
+          </label>
           <input
             type="number"
+            id="guests"
             name="guests"
             value={formik.values.guests}
             min="1"
@@ -151,16 +154,16 @@ function RenderUpdateBooking({
           )}
 
           {/* Modal Footer */}
-          <div className="mt-4 flex justify-end">
+          <div className="mt-4 flex justify-between">
             <button
-              className="bg-gray-500 p-2 rounded text-white mr-2"
+              className="bg-black p-2 rounded text-white mr-2"
               type="button"
               onClick={() => setIsModalOpen(false)}
             >
               Cancel
             </button>
             <button
-              className="bg-green-500 p-2 rounded text-white"
+              className="bg-green-700 p-2 rounded text-white"
               type="submit"
             >
               Save Changes
