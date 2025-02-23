@@ -153,13 +153,13 @@ function RenderBookingsProfile({
                   <div className="flex flex-col py-2 border-b border-gray-200">
                     <p className="text-lg font-semibold">
                       Check-in:{" "}
-                      <span className="text-green-600 font-normal">
+                      <span className="text-green-700 font-bold">
                         {formattedFromDate}
                       </span>
                     </p>
                     <p className="text-lg font-semibold">
                       Check-out:{" "}
-                      <span className="text-red-600 font-normal">
+                      <span className="text-red-700 font-bold">
                         {formattedToDate}
                       </span>
                     </p>

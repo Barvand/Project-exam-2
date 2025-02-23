@@ -69,6 +69,7 @@ function RenderDeleteBooking({
         ) : (
           <MdOutlineDeleteOutline className="text-2xl" />
         )}
+        <span className="sr-only">delete</span>
       </button>
 
       {/* Display error message if there is one */}

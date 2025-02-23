@@ -47,16 +47,19 @@ function BookingsPage() {
         const data = response.data;
 
         const currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); // Reset time to 00:00:00 for an accurate comparison
 
-        // Filter bookings into upcoming and past
+        // Filter bookings into upcoming (including today) and past (before today)
         const upcoming = data.filter((booking: any) => {
           const bookingDate = new Date(booking.dateFrom);
-          return bookingDate >= currentDate; // Future bookings
+          bookingDate.setHours(0, 0, 0, 0); // Reset booking date time to 00:00:00
+          return bookingDate >= currentDate; // Today and future bookings
         });
 
         const past = data.filter((booking: any) => {
           const bookingDate = new Date(booking.dateFrom);
-          return bookingDate < currentDate; // Past bookings
+          bookingDate.setHours(0, 0, 0, 0); // Reset booking date time to 00:00:00
+          return bookingDate < currentDate; // Only dates before today
         });
         setUpcomingBookings(upcoming);
         setPastBookings(past);
