@@ -111,6 +111,7 @@ function RenderUpdateBooking({
         onClick={() => setIsModalOpen(true)}
       >
         <MdEdit />
+        <span className="sr-only">update</span>
       </button>
 
       {/* Modal */}
