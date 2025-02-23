@@ -47,6 +47,7 @@ function VenueDatePicker({
   return (
     <DatePicker
       selected={selectedDates[0]}
+      id="venue-datepicker"
       onChange={(dates) => onDateChange(dates as [Date | null, Date | null])}
       startDate={selectedDates[0]}
       endDate={selectedDates[1]}
@@ -54,7 +55,7 @@ function VenueDatePicker({
       minDate={today}
       excludeDates={bookedDates}
       dateFormat="dd/MM/yyyy"
-      className="p-1 rounded"
+      className="p-1 rounded w-full"
     />
   );
 }

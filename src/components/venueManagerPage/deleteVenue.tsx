@@ -57,7 +57,7 @@ function RenderDeleteVenue({ id }: DeleteVenueProps): JSX.Element {
     <div>
       <button
         onClick={() => setShowModal(true)} // Show the confirmation modal when the button is clicked
-        className="text-red-500"
+        className="text-red-800 font-bold"
       >
         {isDeleting ? "Deleting..." : "Delete Venue"}
       </button>

@@ -14,7 +14,6 @@ interface ProfileBioProps {
   state: boolean;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmit: () => void;
-
 }
 
 /**
@@ -85,6 +84,7 @@ function ProfileBio({
                   : ""
               }`}
             >
+              <span className="sr-only">Edit bio</span>
               {state ? "Cancel" : <FaPencilAlt />}
             </button>
             {state && localStorageName === profile.name && (

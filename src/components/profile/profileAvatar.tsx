@@ -81,7 +81,11 @@ function ProfileAvatar({
       </div>
       {state && localStorageName === profile.name && (
         <div className="flex flex-col w-full">
+          <label htmlFor="profileAvatar">
+            <span className="sr-only"> Avatar </span>
+          </label>
           <input
+            id="profileAvatar"
             type="text"
             value={profile.avatar.url}
             onChange={(e) => onChange(e, "avatar")}
