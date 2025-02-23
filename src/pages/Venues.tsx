@@ -65,7 +65,7 @@ function VenuesPage() {
   return (
     <>
       <Helmet>
-        <title>Holidaze - Get the greatest holiday!</title>
+        <title>Holidaze - Your gateway to unforgettable vacations </title>
         <meta
           name="description"
           content="Venues , all bookings, customers, holidays, swimming, sun, beach, cheap"

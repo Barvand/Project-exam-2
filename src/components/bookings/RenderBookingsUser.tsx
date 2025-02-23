@@ -120,7 +120,7 @@ function RenderBookingsProfile({
             return (
               <div
                 key={booking.id}
-                className="rounded relative bg-color overflow-hidden group border border-gray-500 p-2 md:flex gap-3 md:h-72"
+                className="rounded relative bg-color overflow-hidden group border border-gray-300 shadow-md p-2 md:flex gap-3 md:h-72"
               >
                 <div className="w-full h-64 md:w-72">
                   <Link to={`/venues/${booking.venue.id}`}>

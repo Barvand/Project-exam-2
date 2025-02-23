@@ -53,11 +53,11 @@ export function RenderVenues({ data, meta, page, setPage }: VenuesProps) {
   return (
     <div className="container">
       <SearchBar />
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
         {data.map((venue) => (
           <div
             key={venue.id}
-            className="rounded relative bg-color overflow-hidden group"
+            className="rounded relative overflow-hidden group shadow-md"
           >
             <Link to={`/venues/${venue.id}`}>
               <img
